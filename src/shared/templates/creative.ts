@@ -1,0 +1,136 @@
+import { PromptTemplate } from '../types'
+
+export const creativeTemplates: PromptTemplate[] = [
+  {
+    id: 'cr1',
+    category: 'creative',
+    title: { zh: '头脑风暴', en: 'Brainstorming' },
+    description: { zh: '激发创意灵感的头脑风暴', en: 'Creative brainstorming session' },
+    prompt: {
+      zh: '请围绕以下主题进行头脑风暴，生成尽可能多的创意点子。\n\n主题：{topic}\n约束条件：{constraints}\n\n要求：\n- 先发散后收敛\n- 至少生成 20 个点子(不要自我审查)\n- 包含常规思路和疯狂想法\n- 用 SCAMPER 方法拓展：\n  S-替代 C-组合 A-调整 M-放大/缩小 P-另作他用 E-消除 R-重排\n- 最后筛选出 Top 5 最有潜力的，说明理由\n- 对 Top 5 给出初步可行性评估',
+      en: 'Please brainstorm around the following topic and generate as many ideas as possible.\n\nTopic: {topic}\nConstraints: {constraints}\n\nRequirements:\n- Diverge first, then converge\n- Generate at least 20 ideas (no self-censorship)\n- Include conventional and wild ideas\n- Use SCAMPER method to expand:\n  S-Substitute C-Combine A-Adapt M-Magnify/Minify P-Put to other use E-Eliminate R-Rearrange\n- Select Top 5 most promising ideas with rationale\n- Provide initial feasibility assessment for Top 5',
+    },
+    variables: ['topic', 'constraints'],
+    tags: [{ zh: '头脑风暴', en: 'brainstorm' }, { zh: '创意', en: 'creative' }, { zh: '灵感', en: 'inspiration' }],
+  },
+  {
+    id: 'cr2',
+    category: 'creative',
+    title: { zh: '产品命名', en: 'Product Naming' },
+    description: { zh: '为产品/品牌起一个好名字', en: 'Create great product/brand names' },
+    prompt: {
+      zh: '请为以下产品/品牌起名。\n\n产品描述：{product}\n目标受众：{audience}\n品牌调性：{tone}\n\n请从以下维度各生成 5 个候选名：\n1. 描述型(直接说明功能)\n2. 隐喻型(用比喻传达理念)\n3. 造词型(新造词汇)\n4. 缩写型(首字母/音节组合)\n5. 情感型(唤起特定感受)\n\n每个名字附带：\n- 含义解释\n- 域名可用性建议(.com/.cn)\n- 商标风险评估(高/中/低)\n- 国际化友好度',
+      en: 'Please name the following product/brand.\n\nProduct Description: {product}\nTarget Audience: {audience}\nBrand Tone: {tone}\n\nGenerate 5 candidates per dimension:\n1. Descriptive (directly stating function)\n2. Metaphorical (using analogies)\n3. Coined (newly created words)\n4. Acronym (initial letters/syllable combinations)\n5. Emotional (evoking specific feelings)\n\nEach name includes:\n- Meaning explanation\n- Domain availability suggestion (.com/.cn)\n- Trademark risk assessment (high/medium/low)\n- International friendliness',
+    },
+    variables: ['product', 'audience', 'tone'],
+    tags: [{ zh: '命名', en: 'naming' }, { zh: '品牌', en: 'brand' }, { zh: '创意', en: 'creative' }],
+  },
+  {
+    id: 'cr3',
+    category: 'creative',
+    title: { zh: 'Midjourney 提示词', en: 'Midjourney Prompt' },
+    description: { zh: '生成高质量的 AI 绘画提示词', en: 'Generate high-quality AI art prompts' },
+    prompt: {
+      zh: '请为以下画面描述生成 Midjourney 提示词。\n\n想要的画面：{description}\n风格偏好：{style}\n\n请生成 5 个版本的提示词，每个包含：\n- 主体描述(subject)\n- 环境/背景(environment)\n- 光照(lighting)\n- 风格(style/artist reference)\n- 技术参数(--ar, --v, --s, --q)\n\n格式示例：\n`[主体], [环境], [光照], [风格], [细节] --ar 16:9 --v 6 --s 750`\n\n从写实到抽象，风格递进排列',
+      en: 'Please generate Midjourney prompts for the following image description.\n\nDesired Image: {description}\nStyle Preference: {style}\n\nGenerate 5 prompt versions, each containing:\n- Subject description\n- Environment/background\n- Lighting\n- Style/artist reference\n- Technical parameters (--ar, --v, --s, --q)\n\nFormat example:\n`[subject], [environment], [lighting], [style], [details] --ar 16:9 --v 6 --s 750`\n\nProgress from realistic to abstract',
+    },
+    variables: ['description', 'style'],
+    tags: [{ zh: 'Midjourney', en: 'midjourney' }, { zh: 'AI绘画', en: 'ai-art' }, { zh: '提示词', en: 'prompt' }],
+  },
+  {
+    id: 'cr4',
+    category: 'creative',
+    title: { zh: '短视频脚本', en: 'Short Video Script' },
+    description: { zh: '创作吸引人的短视频脚本', en: 'Create engaging short video scripts' },
+    prompt: {
+      zh: '请为以下内容创作一个短视频脚本。\n\n视频主题：{topic}\n目标平台：{platform}\n时长：{duration}秒\n\n脚本格式：\n| 时间 | 画面 | 台词/旁白 | 字幕 | BGM/音效 |\n\n要求：\n- 前3秒必须有强钩子(hook)\n- 节奏紧凑，信息密度高\n- 结尾有互动引导或反转\n- 适合竖屏拍摄\n- 标注需要的道具/场景\n- 给出3个标题选项和话题标签',
+      en: 'Please create a short video script for the following content.\n\nVideo Topic: {topic}\nTarget Platform: {platform}\nDuration: {duration} seconds\n\nScript Format:\n| Time | Visual | Voiceover/Lines | Subtitles | BGM/SFX |\n\nRequirements:\n- Must have a strong hook in first 3 seconds\n- Tight pacing, high information density\n- End with interaction prompt or twist\n- Suitable for vertical filming\n- Note required props/scenes\n- Provide 3 title options and hashtags',
+    },
+    variables: ['topic', 'platform', 'duration'],
+    tags: [{ zh: '短视频', en: 'short-video' }, { zh: '脚本', en: 'script' }, { zh: '创作', en: 'creative' }],
+  },
+  {
+    id: 'cr5',
+    category: 'creative',
+    title: { zh: '活动策划方案', en: 'Event Planning' },
+    description: { zh: '策划完整的线上/线下活动', en: 'Plan complete online/offline events' },
+    prompt: {
+      zh: '请为以下活动策划一个完整方案。\n\n活动目的：{purpose}\n目标人群：{audience}\n预算范围：{budget}\n时间/场地：{venue}\n\n方案结构：\n1. 活动概述(主题、slogan、形式)\n2. 目标设定(量化指标)\n3. 活动流程(时间线)\n4. 创意亮点(3个差异化环节)\n5. 传播计划(预热-引爆-长尾)\n6. 预算分配\n7. 风险预案\n8. 效果评估方案\n\n要求：方案可落地执行，创意与可行性兼顾',
+      en: 'Please plan a complete event plan for the following.\n\nEvent Purpose: {purpose}\nTarget Audience: {audience}\nBudget Range: {budget}\nTime/Venue: {venue}\n\nPlan Structure:\n1. Event overview (theme, slogan, format)\n2. Goals (quantified metrics)\n3. Event flow (timeline)\n4. Creative highlights (3 differentiated segments)\n5. Promotion plan (pre-event, climax, long-tail)\n6. Budget allocation\n7. Risk contingency\n8. Effectiveness evaluation plan\n\nRequirement: Executable plan balancing creativity and feasibility',
+    },
+    variables: ['purpose', 'audience', 'budget', 'venue'],
+    tags: [{ zh: '活动', en: 'event' }, { zh: '策划', en: 'planning' }, { zh: '方案', en: 'plan' }],
+  },
+  {
+    id: 'cr6',
+    category: 'creative',
+    title: { zh: '角色设定', en: 'Character Design' },
+    description: { zh: '创建丰满的虚构角色', en: 'Create well-rounded fictional characters' },
+    prompt: {
+      zh: '请为以下故事/项目创建一个角色设定。\n\n故事背景：{background}\n角色定位：{role}\n\n请包含：\n1. 基本信息(姓名、年龄、外貌、职业)\n2. 性格特征(MBTI、核心性格、矛盾点)\n3. 背景故事(成长经历、关键转折)\n4. 动机与目标(表面目标 vs 深层需求)\n5. 人际关系网\n6. 说话风格与口头禅\n7. 习惯与小癖好\n8. 角色弧光(成长方向)\n9. 代表性场景描写(200字)',
+      en: 'Please create a character profile for the following story/project.\n\nStory Background: {background}\nCharacter Role: {role}\n\nInclude:\n1. Basic info (name, age, appearance, occupation)\n2. Personality (MBTI, core traits, contradictions)\n3. Backstory (upbringing, key turning points)\n4. Motivations and goals (surface goal vs deep need)\n5. Relationship network\n6. Speech style and catchphrases\n7. Habits and quirks\n8. Character arc (growth direction)\n9. Representative scene description (200 words)',
+    },
+    variables: ['background', 'role'],
+    tags: [{ zh: '角色', en: 'character' }, { zh: '设定', en: 'design' }, { zh: '创作', en: 'creative' }],
+  },
+  {
+    id: 'cr7',
+    category: 'creative',
+    title: { zh: '口播脚本', en: 'Talking Head Script' },
+    description: { zh: '适合真人出镜的口播视频脚本', en: 'Script for talking-head videos' },
+    prompt: {
+      zh: '请为以下主题写一个口播视频脚本。\n\n主题：{topic}\n人设/账号定位：{persona}\n时长：{duration}分钟\n\n脚本格式：\n- 开场钩子(前5秒，必须抓人)\n- 正文(分3-5个要点，每个要点有过渡)\n- 结尾(总结+互动引导)\n\n要求：\n- 口语化，像跟朋友聊天\n- 节奏感强，每30秒有一个信息点或情绪转折\n- 标注语气、表情、手势提示\n- 标注需要插入的画面/字幕/贴纸\n- 避免书面语和长句',
+      en: 'Please write a talking-head video script for the following topic.\n\nTopic: {topic}\nPersona/Account Positioning: {persona}\nDuration: {duration} minutes\n\nScript Format:\n- Opening hook (first 5 seconds, must grab attention)\n- Main body (3-5 points with transitions)\n- Ending (summary + interaction prompt)\n\nRequirements:\n- Conversational, like chatting with a friend\n- Strong rhythm, an info point or emotional shift every 30 seconds\n- Note tone, expression, gesture cues\n- Mark visuals/subtitles/stickers to insert\n- Avoid formal language and long sentences',
+    },
+    variables: ['topic', 'persona', 'duration'],
+    tags: [{ zh: '口播', en: 'talking-head' }, { zh: '视频', en: 'video' }, { zh: '脚本', en: 'script' }],
+  },
+  {
+    id: 'cr8',
+    category: 'creative',
+    title: { zh: '带货视频脚本', en: 'Product Review Video Script' },
+    description: { zh: '种草/带货类视频脚本', en: 'Product promotion video script' },
+    prompt: {
+      zh: '请为以下产品写一个带货/种草视频脚本。\n\n产品：{product}\n目标人群：{audience}\n视频平台：{platform}\n时长：{duration}秒\n\n脚本结构(FABE法则)：\n1. Feature(产品特点)：展示产品外观/功能\n2. Advantage(优势)：对比竞品/痛点解决\n3. Benefit(利益)：用户能获得什么\n4. Evidence(证据)：使用效果/数据/口碑\n\n格式：\n| 时间 | 画面 | 台词 | 产品展示动作 | 字幕/贴纸 |\n\n要求：\n- 前3秒痛点切入或效果前置\n- 真实感强，不要硬广感\n- 结尾有限时优惠/链接引导',
+      en: 'Please write a product promotion/review video script.\n\nProduct: {product}\nTarget Audience: {audience}\nVideo Platform: {platform}\nDuration: {duration} seconds\n\nScript Structure (FABE):\n1. Feature: Show product appearance/function\n2. Advantage: Comparison with competitors / pain point solving\n3. Benefit: What users gain\n4. Evidence: Usage results/data/testimonials\n\nFormat:\n| Time | Visual | Lines | Product Display Action | Subtitle/Sticker |\n\nRequirements:\n- First 3 seconds: pain point intro or effect preview\n- Authentic feel, avoid hard-sell tone\n- End with limited-time offer/link CTA',
+    },
+    variables: ['product', 'audience', 'platform', 'duration'],
+    tags: [{ zh: '带货', en: 'product-promo' }, { zh: '种草', en: 'recommendation' }, { zh: '脚本', en: 'script' }],
+  },
+  {
+    id: 'cr9',
+    category: 'creative',
+    title: { zh: '长视频分镜脚本', en: 'Long Video Storyboard' },
+    description: { zh: '5-15分钟视频的完整分镜', en: 'Complete storyboard for 5-15 min videos' },
+    prompt: {
+      zh: '请为以下视频创作完整的分镜脚本。\n\n视频主题：{topic}\n视频类型：{type}\n目标时长：{duration}分钟\n\n请输出：\n1. 视频结构大纲(起承转合)\n2. 详细分镜表：\n| 镜号 | 时长 | 景别 | 画面描述 | 台词/旁白 | BGM/音效 | 转场 |\n\n3. 开头钩子设计(3个备选方案)\n4. 高潮/转折点设计\n5. 结尾设计(引导订阅/下期预告)\n6. 所需素材清单\n7. 拍摄注意事项\n\n要求：节奏张弛有度，每2-3分钟有一个小高潮',
+      en: 'Please create a complete storyboard for the following video.\n\nVideo Topic: {topic}\nVideo Type: {type}\nTarget Duration: {duration} minutes\n\nOutput:\n1. Video structure outline (setup-development-twist-resolution)\n2. Detailed storyboard:\n| Shot # | Duration | Shot Size | Visual Description | Lines/Voiceover | BGM/SFX | Transition |\n\n3. Opening hook design (3 alternatives)\n4. Climax/turning point design\n5. Ending design (subscribe prompt / next episode preview)\n6. Required asset list\n7. Filming notes\n\nRequirement: Balanced pacing with a mini-climax every 2-3 minutes',
+    },
+    variables: ['topic', 'type', 'duration'],
+    tags: [{ zh: '分镜', en: 'storyboard' }, { zh: '长视频', en: 'long-video' }, { zh: '脚本', en: 'script' }],
+  },
+  {
+    id: 'cr10',
+    category: 'creative',
+    title: { zh: '视频选题策划', en: 'Video Topic Planning' },
+    description: { zh: '批量生成视频选题创意', en: 'Batch generate video topic ideas' },
+    prompt: {
+      zh: '请为以下账号策划一批视频选题。\n\n账号定位：{positioning}\n目标平台：{platform}\n近期热点/趋势：{trends}\n\n请生成 20 个选题，每个包含：\n- 选题标题(吸引点击)\n- 一句话内容概要\n- 预估热度(高/中/低)\n- 内容类型(教程/故事/测评/盘点/反转/科普)\n- 难度(拍摄成本高/中/低)\n\n分类输出：\n- 蹭热点类(5个)\n- 常青内容类(5个)\n- 争议/讨论类(5个)\n- 系列/连载类(5个)\n\n最后推荐本周优先拍摄的 Top 3 并说明理由',
+      en: 'Please plan a batch of video topics for the following account.\n\nAccount Positioning: {positioning}\nTarget Platform: {platform}\nRecent Trends: {trends}\n\nGenerate 20 topics, each with:\n- Topic title (click-worthy)\n- One-line content summary\n- Estimated popularity (high/medium/low)\n- Content type (tutorial/story/review/list/twist/explainer)\n- Difficulty (filming cost high/medium/low)\n\nCategorized output:\n- Trend-based (5)\n- Evergreen (5)\n- Controversial/discussion (5)\n- Series/serial (5)\n\nFinally recommend Top 3 to film this week with rationale',
+    },
+    variables: ['positioning', 'platform', 'trends'],
+    tags: [{ zh: '选题', en: 'topic' }, { zh: '策划', en: 'planning' }, { zh: '视频', en: 'video' }],
+  },
+  {
+    id: 'cr11',
+    category: 'creative',
+    title: { zh: 'Vlog 脚本', en: 'Vlog Script' },
+    description: { zh: '生活记录类 Vlog 的叙事脚本', en: 'Narrative script for lifestyle vlogs' },
+    prompt: {
+      zh: '请为以下 Vlog 写一个脚本。\n\nVlog 主题：{topic}\n拍摄场景/地点：{location}\n预计时长：{duration}分钟\n个人风格：{style}\n\n脚本结构：\n1. 开场(营造氛围，交代今天要做什么)\n2. 主体内容(按时间线/场景切换组织)\n3. 结尾(感悟/总结/预告下期)\n\n每个片段包含：\n| 场景 | 画面描述 | 旁白/自言自语 | 情绪氛围 | BGM风格 | 拍摄手法 |\n\n要求：\n- 生活感强，不要像念稿\n- 注重情绪节奏(轻松→专注→惊喜→温暖等)\n- 标注适合用空镜/延时/慢动作的地方\n- 旁白口语化，像内心独白或跟观众聊天\n- 预留"意外惊喜"或"真实反应"的即兴空间\n- 配乐建议(具体风格/节奏，不需要歌名)\n- 封面和标题建议(3个选项)',
+      en: 'Please write a script for the following vlog.\n\nVlog Topic: {topic}\nFilming Location: {location}\nDuration: {duration} minutes\nPersonal Style: {style}\n\nScript Structure:\n1. Opening (set atmosphere, state today\'s plan)\n2. Main content (organized by timeline/scene transitions)\n3. Ending (reflection/summary/next episode preview)\n\nEach segment includes:\n| Scene | Visual Description | Voiceover/Self-talk | Mood | BGM Style | Filming Technique |\n\nRequirements:\n- Strong life feel, not script-like\n- Focus on emotional rhythm (relaxed → focused → surprised → warm, etc.)\n- Note where to use B-roll/timelapse/slow-motion\n- Conversational voiceover, like inner monologue or chatting with viewers\n- Leave space for "unexpected moments" and "authentic reactions"\n- BGM suggestions (specific style/tempo, not song titles)\n- Cover image and title suggestions (3 options)',
+    },
+    variables: ['topic', 'location', 'duration', 'style'],
+    tags: [{ zh: 'Vlog', en: 'vlog' }, { zh: '生活', en: 'lifestyle' }, { zh: '脚本', en: 'script' }],
+  },
+]

@@ -1,0 +1,124 @@
+import { PromptTemplate } from '../types'
+
+export const workplaceTemplates: PromptTemplate[] = [
+  {
+    id: 'wp1',
+    category: 'workplace',
+    title: { zh: '转正述职报告', en: 'Probation Review Report' },
+    description: { zh: '生成结构化的转正述职报告', en: 'Generate a structured probation review report' },
+    prompt: {
+      zh: '请帮我撰写一份转正述职报告。\n\n基本信息：\n- 岗位：{position}\n- 试用期时长：{duration}\n- 主要工作内容：{work_content}\n\n请按以下结构撰写：\n1. 开头：简述入职背景和对岗位的理解\n2. 试用期工作总结（按项目/职责分类，量化成果）\n3. 个人成长与收获（技能提升、团队协作、文化融入）\n4. 不足与改进方向（真诚但不过度自贬）\n5. 未来工作计划与目标\n6. 结尾：表达对团队的感谢和转正意愿\n\n风格：专业诚恳，数据说话，突出价值贡献，1500-2000字',
+      en: 'Please help me write a probation review report.\n\nBasic Info:\n- Position: {position}\n- Probation Duration: {duration}\n- Main Work Content: {work_content}\n\nStructure:\n1. Opening: Brief background and understanding of the role\n2. Probation work summary (categorized by project/responsibility, with quantified results)\n3. Personal growth and gains (skills, collaboration, culture fit)\n4. Areas for improvement (sincere but not overly self-deprecating)\n5. Future work plan and goals\n6. Closing: Express gratitude to the team and intent to be confirmed\n\nStyle: Professional and sincere, data-driven, emphasize value contribution, 1500-2000 words',
+    },
+    variables: ['position', 'duration', 'work_content'],
+    tags: [{ zh: '转正', en: 'probation' }, { zh: '述职', en: 'review' }, { zh: '职场', en: 'workplace' }],
+  },
+  {
+    id: 'wp2',
+    category: 'workplace',
+    title: { zh: '年终总结报告', en: 'Annual Review Report' },
+    description: { zh: '生成全面的年终工作总结', en: 'Generate a comprehensive annual work review' },
+    prompt: {
+      zh: '请帮我撰写一份年终工作总结报告。\n\n基本信息：\n- 岗位/部门：{position}\n- 年度主要工作：{work_content}\n- 关键数据/成果：{achievements}\n\n请按以下结构撰写：\n1. 年度工作概述（一段话总结全年亮点）\n2. 重点工作成果（3-5个核心项目，每个包含：背景、行动、结果、数据）\n3. 能力成长（专业技能、管理能力、跨部门协作）\n4. 问题与反思（遇到的挑战、失误及教训）\n5. 明年规划（目标、策略、所需资源支持）\n\n风格：结构清晰、数据驱动、成果导向，2000-3000字。用STAR法则描述项目成果。',
+      en: 'Please help me write a comprehensive annual work review report.\n\nBasic Info:\n- Position/Department: {position}\n- Main Work This Year: {work_content}\n- Key Data/Achievements: {achievements}\n\nStructure:\n1. Annual overview (one paragraph summarizing year highlights)\n2. Key achievements (3-5 core projects, each with: background, actions, results, data)\n3. Skill growth (technical, management, cross-functional collaboration)\n4. Challenges and reflections (issues, mistakes, lessons learned)\n5. Next year plan (goals, strategies, resource needs)\n\nStyle: Well-structured, data-driven, results-oriented, 2000-3000 words. Use the STAR framework for project descriptions.',
+    },
+    variables: ['position', 'work_content', 'achievements'],
+    tags: [{ zh: '年终', en: 'annual' }, { zh: '总结', en: 'summary' }, { zh: '职场', en: 'workplace' }],
+  },
+  {
+    id: 'wp3',
+    category: 'workplace',
+    title: { zh: 'OKR 撰写', en: 'OKR Writing' },
+    description: { zh: '制定清晰可衡量的 OKR', en: 'Write clear and measurable OKRs' },
+    prompt: {
+      zh: '请帮我制定下季度的 OKR（目标与关键结果）。\n\n岗位/职责：{role}\n业务方向：{direction}\n\n要求：\n- 2-3 个 Objective（鼓舞人心、有挑战性）\n- 每个 O 下 3-4 个 Key Results（可量化、有明确标准）\n- KR 符合 SMART 原则\n- 区分承诺型 KR 和挑战型 KR\n- 给出信心指数（0.3-0.7 为佳）\n- 附带简要行动计划',
+      en: 'Please help me draft OKRs (Objectives and Key Results) for next quarter.\n\nRole: {role}\nBusiness Direction: {direction}\n\nRequirements:\n- 2-3 Objectives (inspiring and challenging)\n- 3-4 Key Results per Objective (quantifiable with clear criteria)\n- KRs follow the SMART principle\n- Distinguish between committed and aspirational KRs\n- Provide confidence index (0.3-0.7 is ideal)\n- Include a brief action plan',
+    },
+    variables: ['role', 'direction'],
+    tags: [{ zh: 'OKR', en: 'okr' }, { zh: '目标', en: 'goal' }, { zh: '规划', en: 'planning' }],
+  },
+  {
+    id: 'wp4',
+    category: 'workplace',
+    title: { zh: '晋升答辩材料', en: 'Promotion Defense Material' },
+    description: { zh: '准备晋升答辩的结构化材料', en: 'Prepare structured promotion defense materials' },
+    prompt: {
+      zh: '请帮我准备晋升答辩材料。\n\n当前职级：{current_level}\n目标职级：{target_level}\n核心项目/成果：{achievements}\n\n请按以下结构准备：\n1. 个人简介与职业发展路径\n2. 核心能力展示（对标目标职级能力模型）\n3. 代表性项目详述（2-3个，用STAR法则）\n4. 技术/业务影响力（团队贡献、知识分享、流程优化）\n5. 未来规划与更高层级的价值承诺\n\n风格：自信不自大，用事实和数据说话，突出超出当前职级的贡献',
+      en: 'Please help me prepare promotion defense materials.\n\nCurrent Level: {current_level}\nTarget Level: {target_level}\nKey Projects/Achievements: {achievements}\n\nStructure:\n1. Personal intro and career development path\n2. Core capability showcase (mapped to target level competency model)\n3. Representative projects in detail (2-3 projects, using STAR framework)\n4. Technical/business influence (team contribution, knowledge sharing, process optimization)\n5. Future plans and value commitment at the higher level\n\nStyle: Confident but not arrogant, fact and data driven, highlight contributions exceeding current level',
+    },
+    variables: ['current_level', 'target_level', 'achievements'],
+    tags: [{ zh: '晋升', en: 'promotion' }, { zh: '答辩', en: 'defense' }, { zh: '职场', en: 'workplace' }],
+  },
+  {
+    id: 'wp5',
+    category: 'workplace',
+    title: { zh: '周报生成器', en: 'Weekly Report Generator' },
+    description: { zh: '快速生成结构化周报', en: 'Quickly generate structured weekly reports' },
+    prompt: {
+      zh: '请根据以下工作内容，帮我生成一份结构化的周报。\n\n本周工作内容：{work_content}\n\n格式要求：\n1. 本周完成事项（按重要性排序）\n2. 进行中的工作及进度\n3. 遇到的问题及解决方案\n4. 下周计划\n\n风格：简洁专业，用数据说话',
+      en: 'Please help me generate a structured weekly report based on the following work content.\n\nThis Week\'s Work: {work_content}\n\nFormat:\n1. Completed items this week (sorted by importance)\n2. In-progress work and status\n3. Issues encountered and solutions\n4. Plan for next week\n\nStyle: Concise and professional, data-driven',
+    },
+    variables: ['work_content'],
+    tags: [{ zh: '周报', en: 'weekly-report' }, { zh: '工作', en: 'work' }, { zh: '汇报', en: 'report' }],
+  },
+  {
+    id: 'wp6',
+    category: 'workplace',
+    title: { zh: '会议纪要整理', en: 'Meeting Minutes' },
+    description: { zh: '将会议内容整理成结构化纪要', en: 'Organize meeting content into structured minutes' },
+    prompt: {
+      zh: '请将以下会议内容整理成结构化的会议纪要。\n\n会议内容：{meeting_content}\n\n格式：\n- 会议主题\n- 参会人员（如有提及）\n- 讨论要点（按议题分类）\n- 决议事项\n- 待办事项（标注负责人和截止时间）\n- 下次会议安排',
+      en: 'Please organize the following meeting content into structured meeting minutes.\n\nMeeting Content: {meeting_content}\n\nFormat:\n- Meeting topic\n- Attendees (if mentioned)\n- Discussion points (categorized by agenda)\n- Decisions made\n- Action items (with owner and deadline)\n- Next meeting schedule',
+    },
+    variables: ['meeting_content'],
+    tags: [{ zh: '会议', en: 'meeting' }, { zh: '纪要', en: 'minutes' }, { zh: '整理', en: 'organize' }],
+  },
+  {
+    id: 'wp7',
+    category: 'workplace',
+    title: { zh: '邮件润色', en: 'Email Polish' },
+    description: { zh: '让邮件更专业、得体', en: 'Make emails more professional' },
+    prompt: {
+      zh: '请帮我润色以下邮件内容，使其更加专业、得体、简洁。保持原意不变，优化表达方式和语气。\n\n原始邮件：\n{email_content}\n\n要求：\n- 语气正式但不生硬\n- 逻辑清晰，重点突出\n- 适当使用过渡词\n- 结尾礼貌得体',
+      en: 'Please polish the following email to make it more professional, appropriate, and concise. Keep the original meaning, but optimize expression and tone.\n\nOriginal Email:\n{email_content}\n\nRequirements:\n- Formal but not stiff tone\n- Clear logic with emphasized key points\n- Appropriate use of transition words\n- Polite and appropriate closing',
+    },
+    variables: ['email_content'],
+    tags: [{ zh: '邮件', en: 'email' }, { zh: '润色', en: 'polish' }, { zh: '商务', en: 'business' }],
+  },
+  {
+    id: 'wp8',
+    category: 'workplace',
+    title: { zh: '项目复盘报告', en: 'Project Retrospective' },
+    description: { zh: '系统化的项目复盘总结', en: 'Systematic project retrospective summary' },
+    prompt: {
+      zh: '请帮我撰写一份项目复盘报告。\n\n项目信息：\n- 项目名称：{project_name}\n- 项目周期：{duration}\n- 项目成果：{results}\n- 遇到的问题：{issues}\n\n请按以下结构撰写：\n1. 项目背景与目标回顾\n2. 关键里程碑与实际达成情况\n3. 做得好的地方（Continue）\n4. 需要改进的地方（Stop）\n5. 新的尝试建议（Start）\n6. 关键经验教训（可复用到其他项目）\n7. 数据对比（目标 vs 实际）\n8. 致谢与后续计划',
+      en: 'Please help me write a project retrospective report.\n\nProject Info:\n- Project Name: {project_name}\n- Duration: {duration}\n- Results: {results}\n- Issues Encountered: {issues}\n\nStructure:\n1. Project background and goal review\n2. Key milestones vs actual delivery\n3. What went well (Continue)\n4. What needs improvement (Stop)\n5. New experiments to try (Start)\n6. Key lessons learned (reusable for other projects)\n7. Data comparison (target vs actual)\n8. Acknowledgements and next steps',
+    },
+    variables: ['project_name', 'duration', 'results', 'issues'],
+    tags: [{ zh: '复盘', en: 'retrospective' }, { zh: '项目', en: 'project' }, { zh: '总结', en: 'summary' }],
+  },
+  {
+    id: 'wp9',
+    category: 'workplace',
+    title: { zh: '工作交接文档', en: 'Work Handover Document' },
+    description: { zh: '生成清晰的工作交接文档', en: 'Generate clear work handover documents' },
+    prompt: {
+      zh: '请帮我撰写工作交接文档。\n\n交接信息：\n- 岗位：{position}\n- 负责的工作内容：{responsibilities}\n- 进行中的项目：{ongoing_projects}\n\n请包含：\n1. 日常工作职责清单（按频率分类：每日/每周/每月）\n2. 进行中项目状态与下一步\n3. 关键联系人与协作关系\n4. 常用工具/系统/账号（不含密码）\n5. 重要文档/资料位置索引\n6. 常见问题与处理方式（FAQ）\n7. 注意事项与避坑指南\n8. 建议优先处理的事项',
+      en: 'Please help me write a work handover document.\n\nHandover Info:\n- Position: {position}\n- Responsibilities: {responsibilities}\n- Ongoing Projects: {ongoing_projects}\n\nInclude:\n1. Daily responsibility list (categorized by frequency: daily/weekly/monthly)\n2. Ongoing project status and next steps\n3. Key contacts and collaboration relationships\n4. Common tools/systems/accounts (no passwords)\n5. Important document/resource location index\n6. Common issues and resolution methods (FAQ)\n7. Cautions and pitfall guide\n8. Suggested priority items',
+    },
+    variables: ['position', 'responsibilities', 'ongoing_projects'],
+    tags: [{ zh: '交接', en: 'handover' }, { zh: '文档', en: 'document' }, { zh: '职场', en: 'workplace' }],
+  },
+  {
+    id: 'wp10',
+    category: 'workplace',
+    title: { zh: '绩效自评', en: 'Performance Self-Review' },
+    description: { zh: '撰写有说服力的绩效自评', en: 'Write a persuasive performance self-review' },
+    prompt: {
+      zh: '请帮我撰写本季度/年度的绩效自评。\n\n岗位：{position}\n考核周期内的工作：{work_content}\n量化成果：{metrics}\n\n要求：\n1. 对照 KPI/OKR 逐项评估完成情况\n2. 用 STAR 法则描述 2-3 个代表性成果\n3. 量化贡献（节省成本、提升效率、增长数据等）\n4. 展示超出岗位职责的额外贡献\n5. 诚实提及不足，但重点放在改进行动\n6. 语气自信专业，避免过度谦虚或自夸\n\n风格：数据驱动，成果导向，800-1200字',
+      en: 'Please help me write a quarterly/annual performance self-review.\n\nPosition: {position}\nWork During Review Period: {work_content}\nQuantified Results: {metrics}\n\nRequirements:\n1. Evaluate completion of KPIs/OKRs item by item\n2. Use STAR framework to describe 2-3 representative achievements\n3. Quantify contributions (cost savings, efficiency gains, growth metrics)\n4. Showcase contributions beyond core responsibilities\n5. Honestly mention shortcomings but focus on improvement actions\n6. Confident and professional tone, avoid excessive humility or boasting\n\nStyle: Data-driven, results-oriented, 800-1200 words',
+    },
+    variables: ['position', 'work_content', 'metrics'],
+    tags: [{ zh: '绩效', en: 'performance' }, { zh: '自评', en: 'self-review' }, { zh: '考核', en: 'evaluation' }],
+  },
+]

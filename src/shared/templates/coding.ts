@@ -1,0 +1,124 @@
+import { PromptTemplate } from '../types'
+
+export const codingTemplates: PromptTemplate[] = [
+  {
+    id: 'c1',
+    category: 'coding',
+    title: { zh: '代码审查', en: 'Code Review' },
+    description: { zh: '对代码进行专业审查', en: 'Professional code review' },
+    prompt: {
+      zh: '你是一位资深软件工程师。请对以下代码进行审查。\n\n```\n{code}\n```\n\n请从以下维度评审：\n1. 代码质量（可读性、命名规范）\n2. 潜在 Bug 和边界情况\n3. 性能问题\n4. 安全隐患\n5. 改进建议（附修改后的代码）\n\n格式：按严重程度排序，给出具体行号和修改建议。',
+      en: 'You are a senior software engineer. Please review the following code.\n\n```\n{code}\n```\n\nReview dimensions:\n1. Code quality (readability, naming conventions)\n2. Potential bugs and edge cases\n3. Performance issues\n4. Security risks\n5. Improvement suggestions (with revised code)\n\nFormat: Sort by severity, provide specific line numbers and suggested changes.',
+    },
+    variables: ['code'],
+    tags: [{ zh: '代码审查', en: 'code-review' }, { zh: '质量', en: 'quality' }, { zh: '最佳实践', en: 'best-practice' }],
+  },
+  {
+    id: 'c2',
+    category: 'coding',
+    title: { zh: '需求转代码', en: 'Requirements to Code' },
+    description: { zh: '将需求描述转为可执行代码', en: 'Convert requirements to executable code' },
+    prompt: {
+      zh: '请根据以下需求描述，编写完整的实现代码。\n\n需求：{requirement}\n技术栈：{tech_stack}\n\n要求：\n- 代码完整可运行\n- 包含必要的错误处理\n- 关键逻辑添加注释\n- 遵循该语言的最佳实践\n- 如有多种实现方案，说明选择理由',
+      en: 'Please write complete implementation code based on the following requirements.\n\nRequirement: {requirement}\nTech Stack: {tech_stack}\n\nRequirements:\n- Complete, runnable code\n- Include necessary error handling\n- Add comments for key logic\n- Follow language best practices\n- If multiple approaches exist, explain why you chose one',
+    },
+    variables: ['requirement', 'tech_stack'],
+    tags: [{ zh: '实现', en: 'implementation' }, { zh: '需求', en: 'requirements' }, { zh: '编码', en: 'coding' }],
+  },
+  {
+    id: 'c3',
+    category: 'coding',
+    title: { zh: 'Bug 诊断', en: 'Bug Diagnosis' },
+    description: { zh: '分析代码问题并给出修复方案', en: 'Analyze code issues and provide fixes' },
+    prompt: {
+      zh: '我遇到了一个 Bug，请帮我诊断并修复。\n\n代码：\n```\n{code}\n```\n\n错误信息/异常行为：{error}\n\n请：\n1. 分析根本原因\n2. 解释为什么会出现这个问题\n3. 给出修复方案（附完整修改后的代码）\n4. 建议如何避免类似问题',
+      en: 'I have a bug, please help diagnose and fix it.\n\nCode:\n```\n{code}\n```\n\nError/Unexpected Behavior: {error}\n\nPlease:\n1. Analyze the root cause\n2. Explain why this issue occurred\n3. Provide a fix (with complete revised code)\n4. Suggest how to avoid similar issues',
+    },
+    variables: ['code', 'error'],
+    tags: [{ zh: '调试', en: 'debug' }, { zh: 'Bug', en: 'bug' }, { zh: '修复', en: 'fix' }],
+  },
+  {
+    id: 'c4',
+    category: 'coding',
+    title: { zh: '单元测试生成', en: 'Unit Test Generator' },
+    description: { zh: '为代码生成全面的单元测试', en: 'Generate comprehensive unit tests' },
+    prompt: {
+      zh: '请为以下代码编写全面的单元测试。\n\n```\n{code}\n```\n\n测试框架：{framework}\n\n要求：\n- 覆盖正常路径和边界情况\n- 包含错误输入的测试\n- 测试命名清晰描述测试意图\n- 使用 AAA 模式（Arrange-Act-Assert）\n- 目标覆盖率 > 90%',
+      en: 'Please write comprehensive unit tests for the following code.\n\n```\n{code}\n```\n\nTest Framework: {framework}\n\nRequirements:\n- Cover happy paths and edge cases\n- Include tests for invalid inputs\n- Test names clearly describe intent\n- Use AAA pattern (Arrange-Act-Assert)\n- Target coverage > 90%',
+    },
+    variables: ['code', 'framework'],
+    tags: [{ zh: '测试', en: 'testing' }, { zh: '单元测试', en: 'unit-test' }, { zh: '质量', en: 'quality' }],
+  },
+  {
+    id: 'c5',
+    category: 'coding',
+    title: { zh: '代码重构', en: 'Code Refactoring' },
+    description: { zh: '优化代码结构和可维护性', en: 'Optimize code structure and maintainability' },
+    prompt: {
+      zh: '请重构以下代码，提升其可读性、可维护性和性能。\n\n```\n{code}\n```\n\n重构目标：{goal}\n\n要求：\n- 保持功能不变\n- 解释每处重构的理由\n- 应用适当的设计模式\n- 消除代码异味\n- 给出重构前后的对比说明',
+      en: 'Please refactor the following code to improve readability, maintainability, and performance.\n\n```\n{code}\n```\n\nRefactoring Goal: {goal}\n\nRequirements:\n- Preserve functionality\n- Explain the rationale for each refactor\n- Apply appropriate design patterns\n- Eliminate code smells\n- Provide before/after comparison',
+    },
+    variables: ['code', 'goal'],
+    tags: [{ zh: '重构', en: 'refactor' }, { zh: '优化', en: 'optimization' }, { zh: '设计模式', en: 'design-pattern' }],
+  },
+  {
+    id: 'c6',
+    category: 'coding',
+    title: { zh: 'API 设计', en: 'API Design' },
+    description: { zh: '设计 RESTful API 接口', en: 'Design RESTful API endpoints' },
+    prompt: {
+      zh: '请为以下业务场景设计 RESTful API。\n\n业务场景：{scenario}\n\n要求：\n- 遵循 RESTful 规范\n- 包含请求方法、路径、参数、响应格式\n- 考虑分页、过滤、排序\n- 包含错误响应格式\n- 给出 OpenAPI/Swagger 格式的文档\n- 考虑版本控制策略',
+      en: 'Please design RESTful APIs for the following business scenario.\n\nScenario: {scenario}\n\nRequirements:\n- Follow RESTful conventions\n- Include HTTP methods, paths, parameters, response formats\n- Consider pagination, filtering, sorting\n- Include error response formats\n- Provide OpenAPI/Swagger documentation\n- Consider versioning strategy',
+    },
+    variables: ['scenario'],
+    tags: [{ zh: 'API', en: 'api' }, { zh: 'REST', en: 'rest' }, { zh: '设计', en: 'design' }],
+  },
+  {
+    id: 'c7',
+    category: 'coding',
+    title: { zh: '正则表达式生成', en: 'Regex Generator' },
+    description: { zh: '根据需求生成正则表达式', en: 'Generate regex from requirements' },
+    prompt: {
+      zh: '请根据以下需求生成正则表达式。\n\n匹配需求：{requirement}\n\n请提供：\n1. 正则表达式\n2. 逐段解释每个部分的含义\n3. 5个匹配成功的示例\n4. 3个不匹配的示例\n5. 在 JavaScript/Python 中的使用代码',
+      en: 'Please generate a regex based on the following requirement.\n\nMatching Requirement: {requirement}\n\nProvide:\n1. The regex pattern\n2. Step-by-step explanation of each part\n3. 5 examples that match\n4. 3 examples that do not match\n5. Usage code in JavaScript and Python',
+    },
+    variables: ['requirement'],
+    tags: [{ zh: '正则', en: 'regex' }, { zh: '匹配', en: 'matching' }, { zh: '工具', en: 'tool' }],
+  },
+  {
+    id: 'c8',
+    category: 'coding',
+    title: { zh: 'SQL 查询优化', en: 'SQL Query Optimization' },
+    description: { zh: '优化 SQL 查询性能', en: 'Optimize SQL query performance' },
+    prompt: {
+      zh: '请优化以下 SQL 查询的性能。\n\n```sql\n{sql}\n```\n\n表结构/数据量信息：{context}\n\n请：\n1. 分析当前查询的性能瓶颈\n2. 给出优化后的 SQL\n3. 建议需要创建的索引\n4. 解释优化原理\n5. 估算优化前后的性能差异',
+      en: 'Please optimize the following SQL query for performance.\n\n```sql\n{sql}\n```\n\nTable Schema / Data Volume: {context}\n\nPlease:\n1. Analyze current performance bottlenecks\n2. Provide the optimized SQL\n3. Suggest indexes to create\n4. Explain the optimization rationale\n5. Estimate performance improvement',
+    },
+    variables: ['sql', 'context'],
+    tags: [{ zh: 'SQL', en: 'sql' }, { zh: '性能', en: 'performance' }, { zh: '数据库', en: 'database' }],
+  },
+  {
+    id: 'c9',
+    category: 'coding',
+    title: { zh: '代码解释', en: 'Code Explanation' },
+    description: { zh: '详细解释代码逻辑', en: 'Explain code logic in detail' },
+    prompt: {
+      zh: '请详细解释以下代码的逻辑和工作原理。\n\n```\n{code}\n```\n\n请：\n1. 概述代码的整体功能\n2. 逐段解释关键逻辑\n3. 说明使用的算法/设计模式\n4. 标注可能的坑点或注意事项\n5. 用通俗的比喻帮助理解复杂部分',
+      en: 'Please explain the logic and how the following code works in detail.\n\n```\n{code}\n```\n\nPlease:\n1. Outline the overall functionality\n2. Explain key logic section by section\n3. Identify algorithms/design patterns used\n4. Highlight potential pitfalls or caveats\n5. Use analogies to help understand complex parts',
+    },
+    variables: ['code'],
+    tags: [{ zh: '解释', en: 'explain' }, { zh: '学习', en: 'learning' }, { zh: '理解', en: 'understanding' }],
+  },
+  {
+    id: 'c10',
+    category: 'coding',
+    title: { zh: 'Git Commit 信息', en: 'Git Commit Message' },
+    description: { zh: '生成规范的 commit message', en: 'Generate conventional commit messages' },
+    prompt: {
+      zh: '请根据以下代码变更，生成一条规范的 Git Commit Message。\n\n变更内容：{changes}\n\n格式要求（Conventional Commits）：\n- type(scope): subject\n- 空行\n- body（详细描述）\n- 空行\n- footer（Breaking Changes 等）\n\n请给出 3 个候选 commit message，从简洁到详细。',
+      en: 'Please generate a conventional Git commit message for the following changes.\n\nChanges: {changes}\n\nFormat (Conventional Commits):\n- type(scope): subject\n- blank line\n- body (detailed description)\n- blank line\n- footer (Breaking Changes, etc.)\n\nProvide 3 candidate commit messages, from concise to detailed.',
+    },
+    variables: ['changes'],
+    tags: [{ zh: 'Git', en: 'git' }, { zh: 'Commit', en: 'commit' }, { zh: '规范', en: 'convention' }],
+  },
+]
