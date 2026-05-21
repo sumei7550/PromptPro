@@ -112,10 +112,10 @@ promptpro/
 ---
 
 ## 文档 / Docs
-
-- [PRD.md](PRD.md) — 产品需求文档
-- [ARCHITECTURE.md](ARCHITECTURE.md) — 技术架构设计
-- [CHANGELOG.md](CHANGELOG.md) — 变更日志
+- [PRD.md](doc/PRD.md) — 产品需求文档
+- [ARCHITECTURE.md](doc/ARCHITECTURE.md) — 技术架构设计
+- [CHANGELOG.md](doc/CHANGELOG.md) — 变更日志
+- [CONVERSATION_LOG.md](doc/CONVERSATION_LOG.md) — 会话日志
 
 ---
 
