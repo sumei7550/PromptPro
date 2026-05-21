@@ -11,7 +11,7 @@ const manifest: ManifestV3Export = {
     '48': 'src/assets/icons/icon48.png',
     '128': 'src/assets/icons/icon128.png',
   },
-  permissions: ['storage', 'activeTab', 'tabs', 'scripting'],
+  permissions: ['storage', 'activeTab', 'scripting'],
   host_permissions: [
     'https://chatgpt.com/*',
     'https://claude.ai/*',
@@ -41,6 +41,7 @@ const manifest: ManifestV3Export = {
     default_icon: {
       '16': 'src/assets/icons/icon16.png',
       '48': 'src/assets/icons/icon48.png',
+      '128': 'src/assets/icons/icon128.png'
     },
   },
 }
