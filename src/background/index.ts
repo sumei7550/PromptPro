@@ -1,6 +1,7 @@
-import { PLATFORM_URLS, META_PROMPT, MAX_FREE_DAILY_USAGE } from '@/shared/constants'
-import { incrementUsage } from '@/shared/storage'
+import { PLATFORM_URLS, MAX_FREE_DAILY_USAGE } from '@/shared/constants'
+import { incrementUsage, getSettings } from '@/shared/storage'
 import { Platform } from '@/shared/types'
+import { buildOptimizePrompt } from '@/content/optimizer'
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'OPTIMIZE_PROMPT') {
@@ -20,13 +21,17 @@ async function handleOptimize(
   payload: { text: string; platform: Platform },
   _sourceTabId?: number
 ): Promise<{ success: boolean; text?: string; error?: string }> {
-  const usage = await incrementUsage()
-  if (usage > MAX_FREE_DAILY_USAGE) {
+  const settings = await getSettings()
+  const today = new Date().toISOString().split('T')[0]
+  const usage = settings.lastResetDate === today ? settings.dailyUsage : 0
+
+  if (usage >= MAX_FREE_DAILY_USAGE) {
     return { success: false, error: 'Daily limit reached' }
   }
 
   try {
     const result = await optimizeViaHiddenTab(payload.text, payload.platform)
+    await incrementUsage()
     return { success: true, text: result }
   } catch (err) {
     return { success: false, error: String(err) }
@@ -43,7 +48,7 @@ async function optimizeViaHiddenTab(userText: string, platform: Platform): Promi
   await waitForTabReady(tab.id)
   await sleep(2000)
 
-  const prompt = META_PROMPT.replace('{user_input}', userText)
+  const prompt = buildOptimizePrompt(userText)
 
   const response = await chrome.tabs.sendMessage(tab.id, {
     type: 'HIDDEN_TAB_OPTIMIZE',

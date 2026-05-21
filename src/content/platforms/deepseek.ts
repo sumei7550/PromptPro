@@ -1,4 +1,4 @@
-import { PlatformAdapter } from './base'
+import { PlatformAdapter, FloatingButtonPlacement } from './base'
 
 export class DeepSeekAdapter extends PlatformAdapter {
   readonly name = 'deepseek'
@@ -45,5 +45,9 @@ export class DeepSeekAdapter extends PlatformAdapter {
   getFloatingButtonAnchor(): HTMLElement | null {
     const input = this.getInputElement()
     return input?.parentElement || null
+  }
+
+  getFloatingButtonPlacement(): FloatingButtonPlacement {
+    return { position: 'top-right-outside', offsetX: 8, offsetY: 6 }
   }
 }

@@ -1,3 +1,9 @@
+export interface FloatingButtonPlacement {
+  position: 'top-right-inside' | 'top-right-outside'
+  offsetX?: number
+  offsetY?: number
+}
+
 export abstract class PlatformAdapter {
   abstract readonly name: string
   abstract readonly urlPattern: RegExp
@@ -7,6 +13,10 @@ export abstract class PlatformAdapter {
   abstract setInputContent(text: string): Promise<void>
   abstract triggerSend(): void
   abstract getFloatingButtonAnchor(): HTMLElement | null
+
+  getFloatingButtonPlacement(): FloatingButtonPlacement {
+    return { position: 'top-right-inside', offsetX: 8, offsetY: 8 }
+  }
 
   matches(url: string): boolean {
     return this.urlPattern.test(url)

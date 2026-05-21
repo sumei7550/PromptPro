@@ -6,6 +6,7 @@ export interface PromptTemplate {
   prompt: { zh: string; en: string }
   variables?: string[]
   tags: { zh: string; en: string }[]
+  keywords?: string[]
 }
 
 export type Platform = 'chatgpt' | 'claude' | 'gemini' | 'deepseek' | 'doubao'

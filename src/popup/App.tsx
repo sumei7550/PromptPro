@@ -1,20 +1,32 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
+import Fuse from 'fuse.js'
 import { CategoryNav } from './components/CategoryNav'
 import { SearchBar } from './components/SearchBar'
 import { TemplateLibrary } from './components/TemplateLibrary'
 import { SettingsPanel } from './components/SettingsPanel'
+import { OnboardingBanner } from './components/OnboardingBanner'
 import { allTemplates } from '@/shared/templates'
-import { getSettings, saveSettings } from '@/shared/storage'
+import { getSettings, saveSettings, getRemainingUsage } from '@/shared/storage'
 import { Locale } from '@/shared/types'
+import logoSvg from '@/assets/icons/icon.svg'
+
+const ONBOARDING_KEY = 'promptpro_popup_onboarded'
 
 export default function App() {
   const [locale, setLocale] = useState<Locale>('zh')
   const [category, setCategory] = useState<string>('writing')
+  const [categoryActive, setCategoryActive] = useState(true)
   const [search, setSearch] = useState('')
   const [showSettings, setShowSettings] = useState(false)
+  const [showOnboarding, setShowOnboarding] = useState(false)
+  const [remaining, setRemaining] = useState<number | null>(null)
 
   useEffect(() => {
     getSettings().then(s => setLocale(s.locale))
+    getRemainingUsage().then(setRemaining)
+    chrome.storage.local.get(ONBOARDING_KEY).then(result => {
+      if (!result[ONBOARDING_KEY]) setShowOnboarding(true)
+    })
   }, [])
 
   const handleLocaleToggle = () => {
@@ -23,13 +35,51 @@ export default function App() {
     saveSettings({ locale: next })
   }
 
-  const filtered = allTemplates.filter(t => {
-    const matchCategory = t.category === category
-    const matchSearch = !search ||
-      t.title[locale].toLowerCase().includes(search.toLowerCase()) ||
-      t.tags.some(tag => tag[locale].toLowerCase().includes(search.toLowerCase()))
-    return matchCategory && matchSearch
-  })
+  const handleCategoryChange = (id: string) => {
+    setCategory(id)
+    setCategoryActive(true)
+  }
+
+  const handleSearchChange = (value: string) => {
+    setSearch(value)
+    if (value.trim()) setCategoryActive(false)
+    else setCategoryActive(true)
+  }
+
+  const isSearching = search.trim().length > 0
+  const query = search.trim()
+  const isGlobalSearch = isSearching && !categoryActive
+
+  const fuse = useMemo(() => new Fuse(allTemplates, {
+    keys: [
+      { name: 'title.zh', weight: 0.3 },
+      { name: 'title.en', weight: 0.3 },
+      { name: 'keywords', weight: 0.25 },
+      { name: 'description.zh', weight: 0.15 },
+      { name: 'description.en', weight: 0.15 },
+      { name: 'tags.zh', weight: 0.1 },
+      { name: 'tags.en', weight: 0.1 },
+      { name: 'category', weight: 0.05 },
+    ],
+    threshold: 0.3,
+    ignoreLocation: true,
+    includeScore: true,
+  }), [])
+
+  const filtered = useMemo(() => {
+    if (!isSearching) {
+      return allTemplates.filter(t => t.category === category)
+    }
+    const hasCJK = /[一-鿿]/.test(query)
+    const maxScore = hasCJK ? 0.35 : (query.length <= 3 ? 0.15 : 0.3)
+    const results = fuse.search(query)
+      .filter(r => (r.score ?? 1) <= maxScore)
+      .map(r => r.item)
+    if (categoryActive) {
+      return results.filter(t => t.category === category)
+    }
+    return results
+  }, [isSearching, query, categoryActive, category, fuse])
 
   if (showSettings) {
     return <SettingsPanel locale={locale} onLocaleChange={(l) => { setLocale(l); saveSettings({ locale: l }) }} onBack={() => setShowSettings(false)} />
@@ -39,10 +89,15 @@ export default function App() {
     <div className="flex flex-col h-full bg-gray-50">
       <header className="flex items-center justify-between px-4 py-3 bg-white border-b">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
-            <span className="text-white text-xs font-bold">P</span>
-          </div>
+          <img src={logoSvg} alt="PromptPro" className="w-7 h-7" />
           <h1 className="text-base font-semibold text-gray-800">PromptPro</h1>
+          {remaining !== null && (
+            <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
+              remaining <= 3 ? 'bg-red-50 text-red-500' : 'bg-gray-100 text-gray-500'
+            }`}>
+              {locale === 'zh' ? `${remaining}次` : `${remaining} left`}
+            </span>
+          )}
         </div>
         <div className="flex items-center gap-2">
           <button
@@ -63,14 +118,31 @@ export default function App() {
         </div>
       </header>
 
+      {showOnboarding && (
+        <OnboardingBanner
+          locale={locale}
+          onDismiss={() => {
+            setShowOnboarding(false)
+            chrome.storage.local.set({ [ONBOARDING_KEY]: true })
+          }}
+        />
+      )}
+
       <div className="px-4 py-2">
-        <SearchBar value={search} onChange={setSearch} locale={locale} />
+        <SearchBar value={search} onChange={handleSearchChange} locale={locale} />
       </div>
 
-      <CategoryNav current={category} onChange={setCategory} locale={locale} />
+      <CategoryNav current={category} onChange={handleCategoryChange} locale={locale} disabled={isGlobalSearch} />
 
       <div className="flex-1 overflow-y-auto px-4 py-2">
-        <TemplateLibrary templates={filtered} locale={locale} />
+        <TemplateLibrary
+          templates={filtered}
+          locale={locale}
+          isSearching={isSearching}
+          isGlobalSearch={isGlobalSearch}
+          query={query}
+          onCategoryClick={handleCategoryChange}
+        />
       </div>
     </div>
   )

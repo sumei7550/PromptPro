@@ -1,4 +1,4 @@
-import { PlatformAdapter } from './base'
+import { PlatformAdapter, FloatingButtonPlacement } from './base'
 
 export class GeminiAdapter extends PlatformAdapter {
   readonly name = 'gemini'
@@ -47,5 +47,9 @@ export class GeminiAdapter extends PlatformAdapter {
   getFloatingButtonAnchor(): HTMLElement | null {
     const richTextarea = document.querySelector('rich-textarea')
     return richTextarea?.parentElement as HTMLElement || null
+  }
+
+  getFloatingButtonPlacement(): FloatingButtonPlacement {
+    return { position: 'top-right-outside', offsetX: 8, offsetY: 6 }
   }
 }

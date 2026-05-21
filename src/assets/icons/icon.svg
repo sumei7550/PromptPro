@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7C3AED"/>
+      <stop offset="100%" stop-color="#4F46E5"/>
+    </linearGradient>
+    <linearGradient id="sparkle" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+  </defs>
+  <!-- Rounded square background -->
+  <rect x="4" y="4" width="120" height="120" rx="24" ry="24" fill="url(#bg)"/>
+  <!-- Text cursor / prompt symbol ">" -->
+  <path d="M30 44 L58 64 L30 84" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.95"/>
+  <!-- Horizontal line (text representation) -->
+  <line x1="66" y1="64" x2="98" y2="64" stroke="white" stroke-width="7" stroke-linecap="round" opacity="0.7"/>
+  <!-- Magic wand sparkle top-right -->
+  <g fill="url(#sparkle)">
+    <!-- Main star -->
+    <path d="M96 24 L98.5 31 L106 33.5 L98.5 36 L96 43 L93.5 36 L86 33.5 L93.5 31 Z"/>
+    <!-- Small star -->
+    <path d="M78 20 L79.5 23.5 L83 25 L79.5 26.5 L78 30 L76.5 26.5 L73 25 L76.5 23.5 Z"/>
+    <!-- Tiny dot -->
+    <circle cx="104" cy="22" r="2.5"/>
+  </g>
+</svg>

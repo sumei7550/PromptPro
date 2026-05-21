@@ -12,6 +12,7 @@ export const workplaceTemplates: PromptTemplate[] = [
     },
     variables: ['position', 'duration', 'work_content'],
     tags: [{ zh: '转正', en: 'probation' }, { zh: '述职', en: 'review' }, { zh: '职场', en: 'workplace' }],
+    keywords: ['试用期', '实习转正', '转正答辩', '入职总结', '试用期总结', 'probation', 'onboarding'],
   },
   {
     id: 'wp2',
@@ -24,6 +25,7 @@ export const workplaceTemplates: PromptTemplate[] = [
     },
     variables: ['position', 'work_content', 'achievements'],
     tags: [{ zh: '年终', en: 'annual' }, { zh: '总结', en: 'summary' }, { zh: '职场', en: 'workplace' }],
+    keywords: ['年度总结', '年度汇报', '年终汇报', '述职报告', '年度回顾'],
   },
   {
     id: 'wp3',
@@ -36,6 +38,7 @@ export const workplaceTemplates: PromptTemplate[] = [
     },
     variables: ['role', 'direction'],
     tags: [{ zh: 'OKR', en: 'okr' }, { zh: '目标', en: 'goal' }, { zh: '规划', en: 'planning' }],
+    keywords: ['KPI', '目标管理', '季度目标', '绩效目标', '目标制定'],
   },
   {
     id: 'wp4',
@@ -48,6 +51,7 @@ export const workplaceTemplates: PromptTemplate[] = [
     },
     variables: ['current_level', 'target_level', 'achievements'],
     tags: [{ zh: '晋升', en: 'promotion' }, { zh: '答辩', en: 'defense' }, { zh: '职场', en: 'workplace' }],
+    keywords: ['升职', '职级晋升', '晋级', '答辩PPT', '晋升材料'],
   },
   {
     id: 'wp5',
@@ -60,6 +64,7 @@ export const workplaceTemplates: PromptTemplate[] = [
     },
     variables: ['work_content'],
     tags: [{ zh: '周报', en: 'weekly-report' }, { zh: '工作', en: 'work' }, { zh: '汇报', en: 'report' }],
+    keywords: ['日报', '月报', '工作汇报', '进度汇报', '工作日志', 'daily report', 'status update'],
   },
   {
     id: 'wp6',
@@ -72,6 +77,7 @@ export const workplaceTemplates: PromptTemplate[] = [
     },
     variables: ['meeting_content'],
     tags: [{ zh: '会议', en: 'meeting' }, { zh: '纪要', en: 'minutes' }, { zh: '整理', en: 'organize' }],
+    keywords: ['会议记录', '会议总结', '会议笔记', '会议备忘'],
   },
   {
     id: 'wp7',
@@ -84,6 +90,7 @@ export const workplaceTemplates: PromptTemplate[] = [
     },
     variables: ['email_content'],
     tags: [{ zh: '邮件', en: 'email' }, { zh: '润色', en: 'polish' }, { zh: '商务', en: 'business' }],
+    keywords: ['邮件优化', '商务邮件', '工作邮件', '英文邮件', '邮件改写'],
   },
   {
     id: 'wp8',
@@ -96,6 +103,7 @@ export const workplaceTemplates: PromptTemplate[] = [
     },
     variables: ['project_name', 'duration', 'results', 'issues'],
     tags: [{ zh: '复盘', en: 'retrospective' }, { zh: '项目', en: 'project' }, { zh: '总结', en: 'summary' }],
+    keywords: ['项目总结', '项目回顾', '复盘会', 'postmortem', '项目反思'],
   },
   {
     id: 'wp9',
@@ -108,6 +116,7 @@ export const workplaceTemplates: PromptTemplate[] = [
     },
     variables: ['position', 'responsibilities', 'ongoing_projects'],
     tags: [{ zh: '交接', en: 'handover' }, { zh: '文档', en: 'document' }, { zh: '职场', en: 'workplace' }],
+    keywords: ['离职交接', '工作移交', '交接清单', '岗位交接'],
   },
   {
     id: 'wp10',
@@ -120,5 +129,6 @@ export const workplaceTemplates: PromptTemplate[] = [
     },
     variables: ['position', 'work_content', 'metrics'],
     tags: [{ zh: '绩效', en: 'performance' }, { zh: '自评', en: 'self-review' }, { zh: '考核', en: 'evaluation' }],
+    keywords: ['绩效考核', '自我评价', '绩效评估', '考核自评', '绩效面谈', 'KPI', 'review'],
   },
 ]

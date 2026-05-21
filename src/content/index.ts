@@ -1,7 +1,29 @@
 import { detectPlatform } from './platform-detector'
 import { FloatingButton } from './floating-button'
-import { localOptimize, buildOptimizePrompt } from './optimizer'
+import { localOptimize } from './optimizer'
 import { Platform } from '@/shared/types'
+import { incrementUsage, getRemainingUsage } from '@/shared/storage'
+
+function showToast(message: string, type: 'info' | 'error' = 'info') {
+  const existing = document.getElementById('promptpro-toast')
+  if (existing) existing.remove()
+
+  const toast = document.createElement('div')
+  toast.id = 'promptpro-toast'
+  const bg = type === 'error' ? '#ef4444' : '#667eea'
+  toast.style.cssText = `
+    position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+    background: ${bg}; color: white; padding: 10px 20px;
+    border-radius: 8px; font-size: 14px; z-index: 2147483647;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: opacity 0.3s;
+  `
+  toast.textContent = message
+  document.body.appendChild(toast)
+  setTimeout(() => {
+    toast.style.opacity = '0'
+    setTimeout(() => toast.remove(), 300)
+  }, 3000)
+}
 
 function init() {
   const platform = detectPlatform()
@@ -13,6 +35,12 @@ function init() {
   floatingBtn.onClick(async () => {
     const text = platform.getInputContent().trim()
     if (!text) return
+
+    const remaining = await getRemainingUsage()
+    if (remaining <= 0) {
+      showToast('今日免费次数已用完', 'error')
+      return
+    }
 
     floatingBtn.setState('loading')
 
@@ -31,11 +59,13 @@ function init() {
       } else {
         const fallback = localOptimize(text)
         await platform.setInputContent(fallback)
+        await incrementUsage()
         floatingBtn.setState('success')
       }
     } catch {
       const fallback = localOptimize(text)
       await platform.setInputContent(fallback)
+      await incrementUsage()
       floatingBtn.setState('success')
     }
   })

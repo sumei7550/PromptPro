@@ -12,6 +12,7 @@ export const codingTemplates: PromptTemplate[] = [
     },
     variables: ['code'],
     tags: [{ zh: '代码审查', en: 'code-review' }, { zh: '质量', en: 'quality' }, { zh: '最佳实践', en: 'best-practice' }],
+    keywords: ['review', 'PR', 'pull request', '代码评审', 'merge request'],
   },
   {
     id: 'c2',
@@ -24,6 +25,7 @@ export const codingTemplates: PromptTemplate[] = [
     },
     variables: ['requirement', 'tech_stack'],
     tags: [{ zh: '实现', en: 'implementation' }, { zh: '需求', en: 'requirements' }, { zh: '编码', en: 'coding' }],
+    keywords: ['功能开发', '写代码', '编程实现', 'feature', '开发需求'],
   },
   {
     id: 'c3',
@@ -36,6 +38,7 @@ export const codingTemplates: PromptTemplate[] = [
     },
     variables: ['code', 'error'],
     tags: [{ zh: '调试', en: 'debug' }, { zh: 'Bug', en: 'bug' }, { zh: '修复', en: 'fix' }],
+    keywords: ['报错', '异常', 'error', '排查', '故障', 'crash', 'exception'],
   },
   {
     id: 'c4',
@@ -72,6 +75,7 @@ export const codingTemplates: PromptTemplate[] = [
     },
     variables: ['scenario'],
     tags: [{ zh: 'API', en: 'api' }, { zh: 'REST', en: 'rest' }, { zh: '设计', en: 'design' }],
+    keywords: ['接口设计', 'restful', 'graphql', 'swagger', 'openapi', '微服务'],
   },
   {
     id: 'c7',
@@ -96,6 +100,7 @@ export const codingTemplates: PromptTemplate[] = [
     },
     variables: ['sql', 'context'],
     tags: [{ zh: 'SQL', en: 'sql' }, { zh: '性能', en: 'performance' }, { zh: '数据库', en: 'database' }],
+    keywords: ['mysql', 'postgresql', 'oracle', 'mariadb', 'sqlite', '慢查询', '索引优化', 'mongodb'],
   },
   {
     id: 'c9',
@@ -120,5 +125,6 @@ export const codingTemplates: PromptTemplate[] = [
     },
     variables: ['changes'],
     tags: [{ zh: 'Git', en: 'git' }, { zh: 'Commit', en: 'commit' }, { zh: '规范', en: 'convention' }],
+    keywords: ['github', 'gitlab', 'gitee', '提交信息', 'commit message', '版本控制'],
   },
 ]
