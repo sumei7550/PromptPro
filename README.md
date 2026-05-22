@@ -79,6 +79,18 @@ npm run build
 
 ---
 
+## 开发规范 / Development Rules
+
+本项目使用 Claude Code 进行 AI 辅助开发。所有通过 AI 修改代码的操作必须遵守：
+
+👉 **[Claude Code 工作规则](./.claude/instructions.md)**
+
+**使用要求：**
+- 在让 Claude 执行修改前，确保 `.claude/instructions.md` 文件存在
+- 在对话开头引用规则，或直接粘贴规则内容
+
+---
+
 ## 项目结构 / Structure
 
 ```
@@ -116,7 +128,7 @@ promptpro/
 - [ARCHITECTURE.md](doc/ARCHITECTURE.md) — 技术架构设计
 - [CHANGELOG.md](doc/CHANGELOG.md) — 变更日志
 - [CONVERSATION_LOG.md](doc/CONVERSATION_LOG.md) — 会话日志
-
+- [Claude Code 工作规则](.claude/instructions.md)
 ---
 
 ## 更新日志 / Changelog

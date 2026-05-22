@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "PromptPro - AI Prompt Optimizer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "__MSG_extDescription__",
   "default_locale": "zh_CN",
   "icons": {
@@ -12,7 +12,6 @@
   "permissions": [
     "storage",
     "activeTab",
-    "tabs",
     "scripting"
   ],
   "host_permissions": [
@@ -29,7 +28,7 @@
   "content_scripts": [
     {
       "js": [
-        "assets/index.ts-loader-35YH95L7.js"
+        "assets/index.ts-loader-CFFdehL-.js"
       ],
       "matches": [
         "https://chatgpt.com/*",
@@ -45,7 +44,8 @@
     "default_popup": "src/popup/index.html",
     "default_icon": {
       "16": "src/assets/icons/icon16.png",
-      "48": "src/assets/icons/icon48.png"
+      "48": "src/assets/icons/icon48.png",
+      "128": "src/assets/icons/icon128.png"
     }
   },
   "web_accessible_resources": [
@@ -58,9 +58,8 @@
         "https://www.doubao.com/*"
       ],
       "resources": [
-        "assets/optimizer-e7QT5hFp.js",
-        "assets/storage-uFEKXZ0D.js",
-        "assets/index.ts-LfaaeAi9.js"
+        "assets/storage-BLSQ23hI.js",
+        "assets/index.ts-wOOftBSd.js"
       ],
       "use_dynamic_url": false
     }

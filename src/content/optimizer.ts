@@ -382,14 +382,6 @@ export function quickEnhance(userInput: string): string {
   return smartOptimize(userInput, 'light')
 }
 
-/**
- * 构建用于隐藏标签页优化的 meta prompt
- * 发给 AI 的指令也必须要求输出自然语言，禁止 #角色/#任务 格式
- */
-export function buildOptimizePrompt(userInput: string): string {
-  return META_PROMPT_NATURAL.replace('{user_input}', userInput)
-}
-
 // ==================== 内部辅助函数 ====================
 
 function inferRole(category: string): string {
@@ -551,25 +543,3 @@ function humanizePro(data: PromptData): string {
 
   return lines.join('\n')
 }
-
-// ==================== 自然语言风格的 META_PROMPT ====================
-// 用于隐藏标签页优化路径，要求 AI 输出也是自然语言风格
-
-const META_PROMPT_NATURAL = `你是一位提示词优化专家。请将下方用户的粗略输入改写为一个更清晰、更专业的提问。
-
-改写规则：
-- 输出必须是自然语言，像一个专业的人类在提问
-- 禁止使用 # 角色、# 任务、# 背景信息、# 输出结构 等 markdown 标题格式
-- 禁止输出 System Prompt 风格或 Prompt Engineering 模板
-- 保持口语化、自然、可直接发送给 AI
-- 补全用户意图中隐含的要求（平台风格、语气、受众等）
-- 适当添加具体的输出要求，但用自然语言表达
-- 保留用户原始语言（中文输入则中文输出）
-- 不输出解释，只输出改写后的提问
-
-用户原始输入：
-"""
-{user_input}
-"""
-
-请直接输出改写后的自然语言提问。`

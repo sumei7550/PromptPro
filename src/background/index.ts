@@ -1,11 +1,9 @@
-import { PLATFORM_URLS, MAX_FREE_DAILY_USAGE } from '@/shared/constants'
-import { incrementUsage, getSettings } from '@/shared/storage'
-import { Platform } from '@/shared/types'
-import { buildOptimizePrompt } from '@/content/optimizer'
+import { MAX_FREE_DAILY_USAGE } from '@/shared/constants'
+import { getSettings } from '@/shared/storage'
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message.type === 'OPTIMIZE_PROMPT') {
-    handleOptimize(message.payload, sender.tab?.id)
+    handleOptimize()
       .then(sendResponse)
       .catch(() => sendResponse({ success: false, error: 'Optimization failed' }))
     return true
@@ -17,10 +15,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 })
 
-async function handleOptimize(
-  payload: { text: string; platform: Platform },
-  _sourceTabId?: number
-): Promise<{ success: boolean; text?: string; error?: string }> {
+/**
+ * 优化逻辑全部在 content script 中本地完成（localOptimize）。
+ * Background 仅负责配额校验，不再打开任何隐藏 tab，不向第三方平台投递文本。
+ */
+async function handleOptimize(): Promise<{ success: boolean; error?: string }> {
   const settings = await getSettings()
   const today = new Date().toISOString().split('T')[0]
   const usage = settings.lastResetDate === today ? settings.dailyUsage : 0
@@ -29,56 +28,8 @@ async function handleOptimize(
     return { success: false, error: 'Daily limit reached' }
   }
 
-  try {
-    const result = await optimizeViaHiddenTab(payload.text, payload.platform)
-    await incrementUsage()
-    return { success: true, text: result }
-  } catch (err) {
-    return { success: false, error: String(err) }
-  }
-}
-
-async function optimizeViaHiddenTab(userText: string, platform: Platform): Promise<string> {
-  const url = PLATFORM_URLS[platform]
-  if (!url) throw new Error(`Unknown platform: ${platform}`)
-
-  const tab = await chrome.tabs.create({ url, active: false })
-  if (!tab.id) throw new Error('Failed to create tab')
-
-  await waitForTabReady(tab.id)
-  await sleep(2000)
-
-  const prompt = buildOptimizePrompt(userText)
-
-  const response = await chrome.tabs.sendMessage(tab.id, {
-    type: 'HIDDEN_TAB_OPTIMIZE',
-    payload: { prompt },
-  })
-
-  await chrome.tabs.remove(tab.id)
-
-  if (response?.text) {
-    return response.text
-  }
-  throw new Error('No response from hidden tab')
-}
-
-function waitForTabReady(tabId: number): Promise<void> {
-  return new Promise((resolve, reject) => {
-    const timeout = setTimeout(() => {
-      chrome.tabs.onUpdated.removeListener(listener)
-      reject(new Error('Tab load timeout'))
-    }, 30000)
-
-    const listener = (id: number, info: chrome.tabs.TabChangeInfo) => {
-      if (id === tabId && info.status === 'complete') {
-        chrome.tabs.onUpdated.removeListener(listener)
-        clearTimeout(timeout)
-        resolve()
-      }
-    }
-    chrome.tabs.onUpdated.addListener(listener)
-  })
+  // 让 content script 走本地 fallback 优化路径
+  return { success: false, error: 'local-only' }
 }
 
 async function handleInsertTemplate(payload: { text: string }) {
@@ -91,7 +42,7 @@ async function handleInsertTemplate(payload: { text: string }) {
       payload,
     })
   } catch {
-    // Content script not loaded yet — inject it dynamically then retry
+    // Content script 尚未注入 — 动态注入一次性插入函数
     try {
       await chrome.scripting.executeScript({
         target: { tabId: tab.id },
@@ -99,7 +50,7 @@ async function handleInsertTemplate(payload: { text: string }) {
         args: [payload.text],
       })
     } catch {
-      // Tab is not a supported platform or no permission
+      // 当前页不在支持的平台域内，或无权限
     }
   }
 }
@@ -140,8 +91,4 @@ function insertTextToInput(text: string) {
       el.dispatchEvent(new InputEvent('input', { bubbles: true, inputType: 'insertText', data: text }))
     }
   }
-}
-
-function sleep(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms))
 }

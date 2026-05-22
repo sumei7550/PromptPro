@@ -18,7 +18,7 @@ export function SettingsPanel({ locale, onLocaleChange, onBack }: Props) {
       <header className="flex items-center gap-3 px-4 py-3 bg-white border-b">
         <button onClick={onBack} className="p-1 rounded hover:bg-gray-100" aria-label="Back">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
+            <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
         </button>
         <h1 className="text-base font-semibold text-gray-800">
@@ -34,21 +34,19 @@ export function SettingsPanel({ locale, onLocaleChange, onBack }: Props) {
           <div className="flex gap-2">
             <button
               onClick={() => handleLocaleChange('zh')}
-              className={`flex-1 py-2 rounded-md text-sm font-medium transition-colors ${
-                locale === 'zh'
-                  ? 'bg-indigo-100 text-indigo-700 border border-indigo-200'
-                  : 'bg-gray-50 text-gray-600 border border-gray-200 hover:bg-gray-100'
-              }`}
+              className={`flex-1 py-2 rounded-md text-sm font-medium transition-colors ${locale === 'zh'
+                ? 'bg-indigo-100 text-indigo-700 border border-indigo-200'
+                : 'bg-gray-50 text-gray-600 border border-gray-200 hover:bg-gray-100'
+                }`}
             >
               中文
             </button>
             <button
               onClick={() => handleLocaleChange('en')}
-              className={`flex-1 py-2 rounded-md text-sm font-medium transition-colors ${
-                locale === 'en'
-                  ? 'bg-indigo-100 text-indigo-700 border border-indigo-200'
-                  : 'bg-gray-50 text-gray-600 border border-gray-200 hover:bg-gray-100'
-              }`}
+              className={`flex-1 py-2 rounded-md text-sm font-medium transition-colors ${locale === 'en'
+                ? 'bg-indigo-100 text-indigo-700 border border-indigo-200'
+                : 'bg-gray-50 text-gray-600 border border-gray-200 hover:bg-gray-100'
+                }`}
             >
               English
             </button>
@@ -60,7 +58,7 @@ export function SettingsPanel({ locale, onLocaleChange, onBack }: Props) {
             {locale === 'zh' ? '关于' : 'About'}
           </h3>
           <p className="text-xs text-gray-500">
-            PromptPro v1.0.0
+            PromptPro v1.0.1
           </p>
           <p className="text-xs text-gray-400 mt-1">
             {locale === 'zh'
@@ -78,6 +76,18 @@ export function SettingsPanel({ locale, onLocaleChange, onBack }: Props) {
               ? '每日免费优化次数：10 次'
               : 'Daily free optimizations: 10'}
           </p>
+        </div>
+
+        {/* 隐私政策 - 底部链接 */}
+        <div className="mt-4 pt-3 border-t border-gray-100 -mb-4">
+          <a
+            href={locale === 'zh' ? chrome.runtime.getURL('privacy_zh.html') : chrome.runtime.getURL('privacy_en.html')}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block text-center text-xs text-gray-400 hover:text-gray-600 transition-colors"
+          >
+            {locale === 'zh' ? '隐私政策' : 'Privacy Policy'}
+          </a>
         </div>
       </div>
     </div>

@@ -4,6 +4,21 @@ All notable changes to PromptPro are documented here.
 格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)。
 
 ---
+## [1.0.1] - 2026-05-22
+
+### 修复与优化
+
+**提示词优化**
+- `localOptimize()` 默认使用 smart 模式输出自然语言。
+- 支持三种模式：`light` / `smart`（默认） / `pro`。
+- 新增 `META_PROMPT_NATURAL` 用于隐藏标签页路径。
+- 修复 fallback 路径未调用 `incrementUsage()`，保证优化次数统计正确。
+- 版本号统一为 `1.0.1`，确保与 CHANGELOG 记录一致。
+
+**文件调整**
+- 删除未引用文件：`smartOptimizer.js`（逻辑已复用在 `optimizer.ts`）。
+- 保留 dist 下的隐私政策文件供插件用户访问。
+- 清理无用注释和调试代码（console.log），保留 `// TODO` 或 `// @keep`。
 
 ## [1.0.1] — 2026-05-21
 
@@ -15,7 +30,7 @@ All notable changes to PromptPro are documented here.
 - 搜索支持结果跳转分类 + 自动滚动定位
 - 中英文关键词模糊匹配、同义联想（sql ↔ mysql、test ↔ 测试）
 - 提示词优化模板 B 方案正式落地
-- 新增 smartOptimizer.js 本地优化核心模块
+- 新增 smartOptimizer.js 本地优化核心模块（逻辑已迁移至 `optimizer.ts`，文件已删除）
 - 免费次数耗尽弹窗提示机制
 
 ### Changed / 变更
