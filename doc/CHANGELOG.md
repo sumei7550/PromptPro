@@ -4,6 +4,21 @@ All notable changes to PromptPro are documented here.
 格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)。
 
 ---
+## [1.0.2] - 2026-06-02
+
+### Fixed / 修复
+
+**浮动按钮位置**
+- 修复 ChatGPT 浮动按钮遮挡发送按钮：`ChatGPTAdapter` 新增 `getFloatingButtonPlacement()`，改用 `top-right-outside` 放在输入框右上方外侧。
+- 修复 Gemini 浮动按钮落在输入框中部：`getFloatingButtonAnchor()` 改为从发送按钮回溯到包含 `rich-textarea` 的共同祖先，使 `rect.right` 对齐输入框真正的右边缘；placement `offsetX` 调整为 `2`。
+
+**Claude 输入排版**
+- 修复 Claude 输入框写入后丢失换行格式：`ClaudeAdapter` 覆盖 `setInputContent()`，按 `\n` 分割文本生成多个 `<p>`，保留段落结构，空行用 `<br>` 占位。
+
+**构建验证**
+- `npm run build` 通过，无 TS 报错。
+
+---
 ## [1.0.1] - 2026-05-22
 
 ### 修复与优化

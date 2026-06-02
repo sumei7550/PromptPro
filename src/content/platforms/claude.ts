@@ -29,7 +29,19 @@ export class ClaudeAdapter extends PlatformAdapter {
   async setInputContent(text: string): Promise<void> {
     const el = this.getInputElement()
     if (!el) return
-    await this.simulateInput(el, text)
+
+    el.focus()
+    document.execCommand('selectAll', false)
+    document.execCommand('delete', false)
+    document.execCommand('insertText', false, text)
+
+    if (el.textContent?.trim() !== text.trim()) {
+      el.innerHTML = text
+        .split('\n')
+        .map(line => `<p>${line || '<br>'}</p>`)
+        .join('')
+      el.dispatchEvent(new InputEvent('input', { bubbles: true, inputType: 'insertText', data: text }))
+    }
   }
 
   triggerSend(): void {

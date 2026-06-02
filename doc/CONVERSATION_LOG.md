@@ -241,6 +241,66 @@ Popup 点击插入
 - 重建并补全 PRD.md 产品需求文档
 - 完善会话日志CHANGELOG.md、版本日志归档CONVERSATION_LOG.md
 
+## [1.0.1] - 2026-05-22
+
+### 修复与优化
+
+**提示词优化**
+- `localOptimize()` 默认使用 smart 模式输出自然语言。
+- 支持三种模式：`light` / `smart`（默认） / `pro`。
+- 新增 `META_PROMPT_NATURAL` 用于隐藏标签页路径。
+- 修复 fallback 路径未调用 `incrementUsage()`，保证优化次数统计正确。
+- 版本号统一为 `1.0.1`，确保与 CHANGELOG 一致。
+
+**文件调整**
+- 删除未引用文件：`smartOptimizer.js`（逻辑已复用在 `optimizer.ts`）。
+- 保留 dist 下的隐私政策文件供插件用户访问。
+- 清理无用注释和调试代码（console.log），保留 `// TODO` 或 `// @keep`。
+- 动态 import (`src/shared/storage.ts`) 保留原写法，可选优化为静态 import。
+
+**隐私政策 & Web Store**
+- 用户访问：dist 下保留 `privacy.html`。
+- 审核访问：部署到 GitHub Pages，manifest.json `privacy_policy_url` 指向公网 URL。
+- 截图：1280×800 截图需在 Web Store dashboard 上传，不在 zip 包内。
+
+**构建与验证**
+- 构建通过：`npm run build` / `tsc --noEmit`。
+- 核心功能测试通过：优化按钮、文本替换、次数统计、fallback 逻辑正常。
+
+**可选优化**
+- 图标路径可迁移至 `public/icons/` 并修改 manifest.ts。
+- 动态 import 可改为静态 import 消除构建警告。
+
+---
+
+## [1.0.2] - 2026-06-02
+
+### 本次会话修复内容
+
+**1. ChatGPT 浮动按钮遮挡发送按钮**
+- 现象：ChatGPT 初始页面浮动按钮叠在原生发送按钮上，无法发送。
+- 原因：`ChatGPTAdapter` 未覆盖 `getFloatingButtonPlacement()`，沿用基类默认的 `top-right-inside`。
+- 修复：[src/content/platforms/chatgpt.ts](../src/content/platforms/chatgpt.ts) 新增 `getFloatingButtonPlacement()`，返回 `top-right-outside`，与 Gemini、DeepSeek 一致，按钮浮在输入框右上方外侧。
+
+**2. Gemini 浮动按钮落在输入框中部**
+- 现象：浮动按钮位置不在输入框右边缘，而是飘在输入框中间。
+- 原因：`getFloatingButtonAnchor()` 返回的是 `richTextarea.parentElement`，该容器只覆盖输入区，不包含右侧的发送按钮，`rect.right` 因此落在输入框中部。
+- 修复：[src/content/platforms/gemini.ts](../src/content/platforms/gemini.ts) 改为从发送按钮（`button.send-button` / `aria-label="Send message"` / `mattooltip="Send"`）向上回溯，找到能同时容纳 `rich-textarea` 的最近祖先节点作为 anchor；placement `offsetX` 由 `8` 调整为 `2`，使按钮贴近右边缘。
+- 兜底：找不到发送按钮时退回原 `parentElement`，避免按钮丢失。
+
+**3. Claude 输入框写入后无段落格式**
+- 现象：写入到 Claude 输入框的优化后文本变成一整段，原有的换行/分段全丢失。
+- 原因：基类 `simulateInput()` 的 fallback 把整段文本塞进单个 `<p>`，ProseMirror 不识别 `\n`。
+- 修复：[src/content/platforms/claude.ts](../src/content/platforms/claude.ts) 覆盖 `setInputContent()`，按 `\n` 分割文本生成多个 `<p>` 元素插入 ProseMirror，空行用 `<br>` 占位，保留段落结构。
+
+### 构建验证
+- `npm run build` 通过，无 TS 报错，仅保留既有的 `constants.ts` 动态/静态混合 import 警告（与本次改动无关）。
+
+### 涉及文件
+- [src/content/platforms/chatgpt.ts](../src/content/platforms/chatgpt.ts)
+- [src/content/platforms/gemini.ts](../src/content/platforms/gemini.ts)
+- [src/content/platforms/claude.ts](../src/content/platforms/claude.ts)
+
 ---
 
 ## 九、使用说明

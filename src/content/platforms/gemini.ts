@@ -46,10 +46,20 @@ export class GeminiAdapter extends PlatformAdapter {
 
   getFloatingButtonAnchor(): HTMLElement | null {
     const richTextarea = document.querySelector('rich-textarea')
-    return richTextarea?.parentElement as HTMLElement || null
+    if (!richTextarea) return null
+
+    const sendBtn = document.querySelector('button.send-button, button[aria-label="Send message"], button[mattooltip="Send"]')
+    if (sendBtn) {
+      let el: HTMLElement | null = sendBtn as HTMLElement
+      while (el && !el.contains(richTextarea)) {
+        el = el.parentElement
+      }
+      if (el) return el
+    }
+    return richTextarea.parentElement as HTMLElement || null
   }
 
   getFloatingButtonPlacement(): FloatingButtonPlacement {
-    return { position: 'top-right-outside', offsetX: 8, offsetY: 6 }
+    return { position: 'top-right-outside', offsetX: 2, offsetY: 6 }
   }
 }

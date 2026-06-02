@@ -1,4 +1,4 @@
-import { PlatformAdapter } from './base'
+import { PlatformAdapter, FloatingButtonPlacement } from './base'
 
 export class ChatGPTAdapter extends PlatformAdapter {
   readonly name = 'chatgpt'
@@ -42,5 +42,9 @@ export class ChatGPTAdapter extends PlatformAdapter {
   getFloatingButtonAnchor(): HTMLElement | null {
     const input = this.getInputElement()
     return input?.closest('form') as HTMLElement || input?.parentElement || null
+  }
+
+  getFloatingButtonPlacement(): FloatingButtonPlacement {
+    return { position: 'top-right-outside', offsetX: 8, offsetY: 6 }
   }
 }
