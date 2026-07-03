@@ -6,7 +6,7 @@ import { TemplateLibrary } from './components/TemplateLibrary'
 import { SettingsPanel } from './components/SettingsPanel'
 import { OnboardingBanner } from './components/OnboardingBanner'
 import { allTemplates } from '@/shared/templates'
-import { getSettings, saveSettings, getRemainingUsage } from '@/shared/storage'
+import { initializeLocale, saveSettings, getRemainingUsage } from '@/shared/storage'
 import { Locale } from '@/shared/types'
 import logoSvg from '@/assets/icons/icon.svg'
 
@@ -22,7 +22,7 @@ export default function App() {
   const [remaining, setRemaining] = useState<number | null>(null)
 
   useEffect(() => {
-    getSettings().then(s => setLocale(s.locale))
+    initializeLocale().then(setLocale)
     getRemainingUsage().then(setRemaining)
     chrome.storage.local.get(ONBOARDING_KEY).then(result => {
       if (!result[ONBOARDING_KEY]) setShowOnboarding(true)
@@ -32,7 +32,7 @@ export default function App() {
   const handleLocaleToggle = () => {
     const next: Locale = locale === 'zh' ? 'en' : 'zh'
     setLocale(next)
-    saveSettings({ locale: next })
+    saveSettings({ locale: next, localeSetByUser: true })
   }
 
   const handleCategoryChange = (id: string) => {
@@ -82,7 +82,7 @@ export default function App() {
   }, [isSearching, query, categoryActive, category, fuse])
 
   if (showSettings) {
-    return <SettingsPanel locale={locale} onLocaleChange={(l) => { setLocale(l); saveSettings({ locale: l }) }} onBack={() => setShowSettings(false)} />
+    return <SettingsPanel locale={locale} onLocaleChange={(l) => { setLocale(l); saveSettings({ locale: l, localeSetByUser: true }) }} onBack={() => setShowSettings(false)} />
   }
 
   return (

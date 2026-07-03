@@ -1,9 +1,27 @@
-import { Settings } from './types'
+import { Settings, Locale } from './types'
 import { DEFAULT_SETTINGS } from './constants'
 
 export async function getSettings(): Promise<Settings> {
   const result = await chrome.storage.sync.get('settings')
   return { ...DEFAULT_SETTINGS, ...result.settings }
+}
+
+export async function initializeLocale(): Promise<Locale> {
+  const settings = await getSettings()
+
+  // 如果用户已手动设置过语言，直接返回
+  if (settings.localeSetByUser) {
+    return settings.locale
+  }
+
+  // 首次打开，检测浏览器语言
+  const browserLang = chrome.i18n.getUILanguage()
+  const detectedLocale: Locale = browserLang.startsWith('zh') ? 'zh' : 'en'
+
+  // 保存检测到的语言（但不设置 localeSetByUser 标记）
+  await saveSettings({ locale: detectedLocale })
+
+  return detectedLocale
 }
 
 export async function saveSettings(settings: Partial<Settings>): Promise<void> {

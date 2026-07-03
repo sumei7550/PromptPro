@@ -10,7 +10,7 @@ interface Props {
 export function SettingsPanel({ locale, onLocaleChange, onBack }: Props) {
   const handleLocaleChange = (newLocale: Locale) => {
     onLocaleChange(newLocale)
-    saveSettings({ locale: newLocale })
+    saveSettings({ locale: newLocale, localeSetByUser: true })
   }
 
   const handleKoFiSupport = () => {

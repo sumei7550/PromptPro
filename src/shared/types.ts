@@ -18,6 +18,7 @@ export interface Settings {
   optimizeStyle: 'detailed' | 'concise' | 'academic' | 'casual'
   dailyUsage: number
   lastResetDate: string
+  localeSetByUser?: boolean
 }
 
 export interface Message {
