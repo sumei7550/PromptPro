@@ -6,6 +6,16 @@ All notable changes to PromptPro are documented here.
 ---
 ## [1.0.2] - 2026-06-02
 
+### Added / 新增
+
+**用户支持功能**
+- 新增 Ko-fi 支持链接，用户可通过「设置」面板支持开发者。
+
+### Changed / 变更
+
+**描述文案**
+- 优化扩展插件在商店中的描述文案（中英文）。
+
 ### Fixed / 修复
 
 **浮动按钮位置**

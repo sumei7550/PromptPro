@@ -71,7 +71,7 @@ export function SettingsPanel({ locale, onLocaleChange, onBack }: Props) {
             {locale === 'zh' ? '关于' : 'About'}
           </h3>
           <p className="text-xs text-gray-500">
-            PromptPro v1.0.1
+            PromptPro v1.0.2
           </p>
           <p className="text-xs text-gray-400 mt-1">
             {locale === 'zh'
