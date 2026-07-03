@@ -13,6 +13,17 @@ export function SettingsPanel({ locale, onLocaleChange, onBack }: Props) {
     saveSettings({ locale: newLocale })
   }
 
+  const handleKoFiSupport = () => {
+    const confirmed = window.confirm(
+      locale === 'zh'
+        ? '感谢您的支持！❤️\n点击"确定"前往 Ko-fi 请我喝杯咖啡'
+        : 'Thanks for your support! ❤️\nClick "OK" to buy me a coffee on Ko-fi'
+    )
+    if (confirmed) {
+      window.open('https://ko-fi.com/sumei7550', '_blank')
+    }
+  }
+
   return (
     <div className="flex flex-col h-full bg-gray-50">
       <header className="flex items-center gap-3 px-4 py-3 bg-white border-b">
@@ -34,19 +45,21 @@ export function SettingsPanel({ locale, onLocaleChange, onBack }: Props) {
           <div className="flex gap-2">
             <button
               onClick={() => handleLocaleChange('zh')}
-              className={`flex-1 py-2 rounded-md text-sm font-medium transition-colors ${locale === 'zh'
-                ? 'bg-indigo-100 text-indigo-700 border border-indigo-200'
-                : 'bg-gray-50 text-gray-600 border border-gray-200 hover:bg-gray-100'
-                }`}
+              className={`flex-1 py-2 rounded-md text-sm font-medium transition-colors ${
+                locale === 'zh'
+                  ? 'bg-indigo-100 text-indigo-700 border border-indigo-200'
+                  : 'bg-gray-50 text-gray-600 border border-gray-200 hover:bg-gray-100'
+              }`}
             >
               中文
             </button>
             <button
               onClick={() => handleLocaleChange('en')}
-              className={`flex-1 py-2 rounded-md text-sm font-medium transition-colors ${locale === 'en'
-                ? 'bg-indigo-100 text-indigo-700 border border-indigo-200'
-                : 'bg-gray-50 text-gray-600 border border-gray-200 hover:bg-gray-100'
-                }`}
+              className={`flex-1 py-2 rounded-md text-sm font-medium transition-colors ${
+                locale === 'en'
+                  ? 'bg-indigo-100 text-indigo-700 border border-indigo-200'
+                  : 'bg-gray-50 text-gray-600 border border-gray-200 hover:bg-gray-100'
+              }`}
             >
               English
             </button>
@@ -75,6 +88,23 @@ export function SettingsPanel({ locale, onLocaleChange, onBack }: Props) {
             {locale === 'zh'
               ? '每日免费优化次数：10 次'
               : 'Daily free optimizations: 10'}
+          </p>
+        </div>
+
+        {/* Ko-fi 支持按钮 */}
+        <div className="bg-white rounded-lg p-4 border border-gray-100">
+          <button
+            onClick={handleKoFiSupport}
+            className="w-full py-2.5 rounded-lg text-sm font-semibold text-white transition-opacity hover:opacity-80 flex items-center justify-center gap-2"
+            style={{ backgroundColor: '#29abe0' }}
+          >
+            <span>☕</span>
+            {locale === 'zh' ? '请我喝杯咖啡' : 'Buy me a coffee'}
+          </button>
+          <p className="text-xs text-gray-400 text-center mt-2">
+            {locale === 'zh'
+              ? '支持项目持续发展 ❤️'
+              : 'Support the project ❤️'}
           </p>
         </div>
 
