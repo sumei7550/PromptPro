@@ -1,4 +1,6 @@
 import { PlatformAdapter } from './platforms/base'
+import { getSettings } from '../shared/storage'
+import { Locale } from '../shared/types'
 
 const BUTTON_STYLES = `
   :host {
@@ -129,8 +131,10 @@ export class FloatingButton {
   private shadow: ShadowRoot
   private button: HTMLButtonElement
   private container: HTMLDivElement
+  private tooltip: HTMLDivElement
   private onClickCallback: (() => void) | null = null
   private observer: MutationObserver | null = null
+  private locale: Locale = 'en'
 
   constructor(private platform: PlatformAdapter) {
     this.host = document.createElement('div')
@@ -151,14 +155,26 @@ export class FloatingButton {
       this.onClickCallback?.()
     })
 
-    const tooltip = document.createElement('div')
-    tooltip.className = 'pp-tooltip'
-    tooltip.textContent = 'PromptPro 优化'
+    this.tooltip = document.createElement('div')
+    this.tooltip.className = 'pp-tooltip'
+    this.tooltip.textContent = 'PromptPro Optimize'
 
     this.container.appendChild(this.button)
-    this.container.appendChild(tooltip)
+    this.container.appendChild(this.tooltip)
     this.shadow.appendChild(style)
     this.shadow.appendChild(this.container)
+
+    this.initLocale()
+  }
+
+  private async initLocale(): Promise<void> {
+    try {
+      const settings = await getSettings()
+      this.locale = settings.locale
+      this.tooltip.textContent = this.locale === 'zh' ? 'PromptPro 优化' : 'PromptPro Optimize'
+    } catch {
+      // keep default
+    }
   }
 
   mount(): void {
@@ -218,11 +234,13 @@ export class FloatingButton {
 
     const text = document.createElement('p')
     text.className = 'pp-guide-text'
-    text.textContent = '输入提示词后，点击此按钮一键优化，让 AI 更好地理解你的意图'
+    text.textContent = this.locale === 'zh'
+      ? '输入提示词后，点击此按钮一键优化，让 AI 更好地理解你的意图'
+      : 'After entering your prompt, click this button to optimize it and help AI better understand your intent'
 
     const dismiss = document.createElement('button')
     dismiss.className = 'pp-guide-dismiss'
-    dismiss.textContent = '知道了'
+    dismiss.textContent = this.locale === 'zh' ? '知道了' : 'Got it'
     dismiss.addEventListener('click', () => this.dismissGuide())
 
     guide.appendChild(text)

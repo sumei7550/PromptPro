@@ -3,7 +3,7 @@
   "name": "PromptPro - AI Prompt Optimizer",
   "version": "1.0.1",
   "description": "__MSG_extDescription__",
-  "default_locale": "zh_CN",
+  "default_locale": "en",
   "icons": {
     "16": "src/assets/icons/icon16.png",
     "48": "src/assets/icons/icon48.png",
@@ -28,7 +28,7 @@
   "content_scripts": [
     {
       "js": [
-        "assets/index.ts-loader-DrfjAKUh.js"
+        "assets/index.ts-loader-BBav-okt.js"
       ],
       "matches": [
         "https://chatgpt.com/*",
@@ -58,8 +58,8 @@
         "https://www.doubao.com/*"
       ],
       "resources": [
-        "assets/storage-BLSQ23hI.js",
-        "assets/index.ts-EssHrQyH.js"
+        "assets/storage-CaNsMRkD.js",
+        "assets/index.ts-CQFp0S2J.js"
       ],
       "use_dynamic_url": false
     }

@@ -1,6 +1,6 @@
 {
   "name": "promptpro",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "AI 提示词优化器 + 模板库 Chrome 插件",
   "type": "module",
   "scripts": {

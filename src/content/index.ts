@@ -3,6 +3,7 @@ import { FloatingButton } from './floating-button'
 import { localOptimize } from './optimizer'
 import { Platform } from '@/shared/types'
 import { incrementUsage, getRemainingUsage } from '@/shared/storage'
+import { t } from '@/shared/i18n'
 
 function showToast(message: string, type: 'info' | 'error' = 'info') {
   const existing = document.getElementById('promptpro-toast')
@@ -38,7 +39,7 @@ function init() {
 
     const remaining = await getRemainingUsage()
     if (remaining <= 0) {
-      showToast('今日免费次数已用完', 'error')
+      showToast(t('toast.limit'), 'error')
       return
     }
 

@@ -4,7 +4,7 @@ import { en } from './en-US'
 
 const messages: Record<Locale, Record<string, string>> = { zh, en }
 
-let currentLocale: Locale = 'zh'
+let currentLocale: Locale = 'en'
 
 export function setLocale(locale: Locale) {
   currentLocale = locale

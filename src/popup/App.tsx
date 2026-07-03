@@ -13,7 +13,7 @@ import logoSvg from '@/assets/icons/icon.svg'
 const ONBOARDING_KEY = 'promptpro_popup_onboarded'
 
 export default function App() {
-  const [locale, setLocale] = useState<Locale>('zh')
+  const [locale, setLocale] = useState<Locale>('en')
   const [category, setCategory] = useState<string>('writing')
   const [categoryActive, setCategoryActive] = useState(true)
   const [search, setSearch] = useState('')

@@ -10,7 +10,7 @@ export const CATEGORIES = [
 ] as const
 
 export const DEFAULT_SETTINGS = {
-  locale: 'zh' as const,
+  locale: 'en' as const,
   optimizeStyle: 'detailed' as const,
   dailyUsage: 0,
   lastResetDate: new Date().toISOString().split('T')[0],
