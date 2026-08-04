@@ -11,9 +11,10 @@ export const CATEGORIES = [
 
 export const DEFAULT_SETTINGS = {
   locale: 'en' as const,
-  optimizeStyle: 'detailed' as const,
+  optimizeStyle: 'structured' as const,
   dailyUsage: 0,
   lastResetDate: new Date().toISOString().split('T')[0],
 }
 
 export const MAX_FREE_DAILY_USAGE = 10
+export const MAX_PERSONAL_TEMPLATES = 10

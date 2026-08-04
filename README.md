@@ -1,19 +1,19 @@
 # PromptPro
 
-> AI 提示词优化器 + 模板库 Chrome 插件  
-> AI Prompt Optimizer + Template Library Chrome Extension
+> Local-first prompt enhancement with fully local processing
+> Prompt template library Chrome Extension
 
-一款面向中英文用户的 Chrome 插件，在 ChatGPT / Claude / Gemini / DeepSeek / 豆包上提供一键提示词优化和 62 个分类模板。完全本地运行，无后端、无账号。
+A Chrome extension for Chinese and English AI users. It provides fully local prompt enhancement and 66 categorized templates for ChatGPT, Claude, Gemini, DeepSeek, Doubao, Perplexity, Copilot, Grok, Google AI Studio, Cursor, v0, and Lovable. No backend or account required.
 
-A Chrome extension for Chinese and English AI users. One-click prompt optimization and 62 categorized templates on ChatGPT, Claude, Gemini, DeepSeek, and Doubao. Fully local — no backend, no account required.
+Prompt enhancement runs locally in the browser. Prompt content stays on-device for local optimization.
 
 ---
 
 ## 功能 / Features
 
 - **一键优化** — 浮动按钮读取输入框文本，自动改写为结构化提示词
-- **62 个模板** — 覆盖写作、职场、编程、翻译、营销、学术、分析、创意 8 大分类
-- **5 平台适配** — ChatGPT · Claude · Gemini · DeepSeek · 豆包
+- **66 个模板** — 覆盖写作、职场、编程、翻译、营销、学术、分析、创意 8 大分类
+- **12 平台适配** — ChatGPT · Claude · Gemini · DeepSeek · 豆包 · Perplexity · Copilot · Grok · Google AI Studio · Cursor · v0 · Lovable
 - **中英双语** — UI 和模板内容均可切换
 - **隐私优先** — 数据 100% 存储在 `chrome.storage.local`
 
@@ -39,7 +39,7 @@ npm install
 npm run dev
 ```
 
-Vite + CRXJS 会输出到 `dist/`，支持 HMR 热更新。
+Vite + CRXJS 会输出到 `dist-new/`，支持 HMR 热更新。
 
 ### 生产构建
 
@@ -52,7 +52,7 @@ npm run build
 1. 打开 `chrome://extensions/`
 2. 开启右上角 **开发者模式**
 3. 点击 **加载已解压的扩展程序**
-4. 选择项目 `dist/` 目录
+4. 选择项目 `dist-new/` 目录
 5. 修改代码后点击插件卡片刷新按钮即可更新
 
 ---
@@ -112,7 +112,7 @@ promptpro/
 │       ├── constants.ts         # 分类、Meta Prompt
 │       ├── storage.ts           # chrome.storage 封装
 │       ├── i18n/                # 中英双语文案
-│       └── templates/           # 62 个模板数据
+│       └── templates/           # 66 个模板数据
 ├── public/_locales/             # 浏览器原生 i18n
 ├── package.json
 ├── vite.config.ts
@@ -145,7 +145,7 @@ promptpro/
 
 ### v1.0 (已发布)
 - 初始版本上线，支持 5 个主流 AI 平台
-- 内置 62 个中英双语提示词模板
+- 内置 66 个中英双语提示词模板
 - 基础提示词优化功能
 
 ---

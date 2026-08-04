@@ -205,7 +205,7 @@ interface Settings {
 PromptPro is a Chrome MV3 extension built with Vite + CRXJS + React 18 + TypeScript + Tailwind CSS. It consists of three layers:
 
 1. **Content Script** — Injected into 5 AI platforms. Provides a Shadow DOM floating button and platform-specific input adapters.
-2. **Background Service Worker** — Routes messages between Popup and Content Script. Handles hidden-tab optimization and scripting injection fallback.
+2. **Background Service Worker** — Routes messages between Popup and Content Script, validates the daily quota, and handles template insertion fallback. Prompt optimization runs locally in the Content Script by default.
 3. **Popup** — React SPA for browsing/searching 62 bilingual templates and managing settings.
 
 All data stays local (`chrome.storage.local`). No backend, no telemetry. Platform adapters are abstracted behind a base class, making it trivial to add new platforms.

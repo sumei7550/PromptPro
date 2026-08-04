@@ -36,10 +36,12 @@ export class ClaudeAdapter extends PlatformAdapter {
     document.execCommand('insertText', false, text)
 
     if (el.textContent?.trim() !== text.trim()) {
-      el.innerHTML = text
-        .split('\n')
-        .map(line => `<p>${line || '<br>'}</p>`)
-        .join('')
+      const fragment = document.createDocumentFragment()
+      text.split('\n').forEach((line, index) => {
+        if (index > 0) fragment.appendChild(document.createElement('br'))
+        fragment.appendChild(document.createTextNode(line))
+      })
+      el.replaceChildren(fragment)
       el.dispatchEvent(new InputEvent('input', { bubbles: true, inputType: 'insertText', data: text }))
     }
   }

@@ -35,9 +35,10 @@
 ### F1 提示词优化（核心）
 - F1.1 在支持的 AI 平台页面右上角注入紫色浮动按钮
 - F1.2 点击后读取当前输入框文本，生成优化后的提示词并写回
-- F1.3 主方案：Background 创建隐藏 tab 调用 AI 完成优化
-- F1.4 Fallback：本地规则引擎（角色补充、输出格式、结构化包装）
-- F1.5 状态反馈：idle / loading / success / error
+- F1.3 默认方案：在当前页面使用本地规则完成优化；Prompt 默认不离开用户设备
+- F1.4 可选 AI 优化：若未来启用远程或平台 AI 优化，必须明确标注调用状态、失败原因和数据边界
+- F1.5 本地优化失败：不得静默替换为另一种结果，必须明确提示用户
+- F1.6 状态反馈：idle / loading / success / error
 
 ### F2 模板库
 - F2.1 8 大分类共 62 个模板，全部支持中英双语
@@ -51,7 +52,8 @@
 - F3.3 Gemini (`gemini.google.com`) — `rich-textarea` Web Component（穿透 Shadow DOM）
 - F3.4 DeepSeek (`chat.deepseek.com`) — 原生 textarea
 - F3.5 豆包 (`www.doubao.com`) — textarea / contenteditable 运行时检测
-- F3.6 各平台需正确触发 React/Vue 受控组件的 input 事件
+- F3.6 Perplexity、Copilot、Grok、Google AI Studio、Cursor、v0、Lovable — 通用 textarea/contenteditable 适配
+- F3.7 各平台需正确触发 React/Vue 受控组件的 input 事件
 
 ### F4 i18n 与设置
 - F4.1 中英双语 UI（Popup 顶部 EN/中 切换按钮）
@@ -69,7 +71,7 @@
 - **性能：** Popup 首屏 < 200ms；浮动按钮注入 < 100ms；优化耗时取决于 AI 平台
 - **包体：** 构建产物 ≤ 300KB（实际约 250KB）
 - **兼容：** Chrome 114+，Manifest V3
-- **安全：** 不申请 `<all_urls>` 权限；host_permissions 严格枚举 5 个平台
+- **安全：** 不申请 `<all_urls>` 权限；host_permissions 严格枚举支持的平台
 - **可维护：** 平台适配统一抽象为 `PlatformAdapter` 基类，新增平台 < 50 行代码
 
 ## 六、商业化路径 / Monetization
@@ -138,9 +140,10 @@ Runs fully locally — **no backend, no account, no data upload**. All user data
 ### F1 Prompt Optimization (Core)
 - F1.1 Inject a purple floating button at top-right on supported AI sites
 - F1.2 On click, read the current input, generate an optimized prompt, write it back
-- F1.3 Primary path: Background creates a hidden tab and invokes the AI itself
-- F1.4 Fallback: local rule engine (role injection, output formatting, structural wrap)
-- F1.5 States: idle / loading / success / error
+- F1.3 Default path: run local rule optimization in the current page; prompt content stays on the user's device by default
+- F1.4 Optional AI optimization: if enabled in the future, clearly disclose invocation status, failure reason, and data boundary
+- F1.5 Optimization failure: never silently replace the result with another mode; show an explicit notice
+- F1.6 States: idle / loading / success / error
 
 ### F2 Template Library
 - F2.1 62 templates across 8 categories, all bilingual

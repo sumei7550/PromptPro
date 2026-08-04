@@ -2,10 +2,11 @@ import { detectPlatform } from './platform-detector'
 import { FloatingButton } from './floating-button'
 import { localOptimize } from './optimizer'
 import { Platform } from '@/shared/types'
-import { incrementUsage, getRemainingUsage } from '@/shared/storage'
-import { t } from '@/shared/i18n'
+import { initializeLocale, incrementUsage, getRemainingUsage, getSettings, recordOptimization } from '@/shared/storage'
+import { getLocale, setLocale, t } from '@/shared/i18n'
+import { previewOptimization } from './preview'
 
-function showToast(message: string, type: 'info' | 'error' = 'info') {
+function showToast(message: string, type: 'info' | 'error' = 'info', action?: { label: string; onClick: () => void }) {
   const existing = document.getElementById('promptpro-toast')
   if (existing) existing.remove()
 
@@ -18,7 +19,20 @@ function showToast(message: string, type: 'info' | 'error' = 'info') {
     border-radius: 8px; font-size: 14px; z-index: 2147483647;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: opacity 0.3s;
   `
-  toast.textContent = message
+  const messageNode = document.createElement('span')
+  messageNode.textContent = message
+  toast.appendChild(messageNode)
+  if (action) {
+    const actionButton = document.createElement('button')
+    actionButton.type = 'button'
+    actionButton.textContent = action.label
+    actionButton.style.cssText = 'margin-left:12px;border:1px solid rgba(255,255,255,.65);border-radius:5px;background:transparent;color:#fff;padding:3px 8px;cursor:pointer;font-size:12px;'
+    actionButton.addEventListener('click', () => {
+      action.onClick()
+      toast.remove()
+    })
+    toast.appendChild(actionButton)
+  }
   document.body.appendChild(toast)
   setTimeout(() => {
     toast.style.opacity = '0'
@@ -26,9 +40,15 @@ function showToast(message: string, type: 'info' | 'error' = 'info') {
   }, 3000)
 }
 
-function init() {
+async function init() {
   const platform = detectPlatform()
   if (!platform) return
+
+  try {
+    setLocale(await initializeLocale())
+  } catch {
+    // Keep the default locale when extension storage is unavailable.
+  }
 
   const floatingBtn = new FloatingButton(platform)
   floatingBtn.mount()
@@ -54,20 +74,34 @@ function init() {
         },
       })
 
-      if (result?.success && result.text) {
-        await platform.setInputContent(result.text)
-        floatingBtn.setState('success')
-      } else {
-        const fallback = localOptimize(text)
-        await platform.setInputContent(fallback)
-        await incrementUsage()
-        floatingBtn.setState('success')
+      const settings = await getSettings()
+      const usedFallback = !result?.success && result?.error !== 'local-only'
+      if (usedFallback) showToast(t('toast.fallback'), 'error')
+      const initialOptimized = result?.success && result.text ? result.text : localOptimize(text, settings.optimizeStyle)
+      const preview = await previewOptimization(
+        text,
+        initialOptimized,
+        getLocale(),
+        settings.optimizeStyle,
+        async style => localOptimize(text, style),
+      )
+      if (preview.decision === 'cancel') {
+        floatingBtn.setState('idle')
+        return
       }
-    } catch {
-      const fallback = localOptimize(text)
-      await platform.setInputContent(fallback)
+
+      await platform.setInputContent(preview.text)
+      await recordOptimization({ originalText: text, optimizedText: preview.text, style: preview.style })
       await incrementUsage()
       floatingBtn.setState('success')
+      showToast(t('toast.optimized'), 'info', {
+        label: t('btn.undo'),
+        onClick: () => platform.setInputContent(text),
+      })
+    } catch (error) {
+      console.error('[PromptPro] optimization failed', error)
+      floatingBtn.setState('error')
+      showToast(t('toast.error'), 'error')
     }
   })
 

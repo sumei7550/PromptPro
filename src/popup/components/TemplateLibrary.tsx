@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { PromptTemplate, Locale } from '@/shared/types'
 import { CATEGORIES } from '@/shared/constants'
+import { PromptVariableForm, getTemplateVariables } from './PromptVariableForm'
 
 interface Props {
   templates: PromptTemplate[]
@@ -64,22 +65,24 @@ interface CardProps {
 
 function TemplateCard({ template, locale, showCategoryBadge, onCategoryClick }: CardProps) {
   const [status, setStatus] = useState<'idle' | 'copied' | 'inserted' | 'fallback'>('idle')
+  const [formMode, setFormMode] = useState<'insert' | 'copy' | null>(null)
   const cat = CATEGORY_MAP[template.category]
+  const variables = getTemplateVariables(template)
 
-  const handleCopy = async () => {
-    await navigator.clipboard.writeText(template.prompt[locale])
+  const copyText = async (text: string) => {
+    await navigator.clipboard.writeText(text)
     setStatus('copied')
     setTimeout(() => setStatus('idle'), 1500)
   }
 
-  const handleInsert = async () => {
+  const handleInsertText = async (text: string) => {
     try {
       const [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
-      const supportedUrls = ['chatgpt.com', 'claude.ai', 'gemini.google.com', 'chat.deepseek.com', 'www.doubao.com']
+      const supportedUrls = ['chatgpt.com', 'claude.ai', 'gemini.google.com', 'chat.deepseek.com', 'www.doubao.com', 'perplexity.ai', 'copilot.microsoft.com', 'copilot.com', 'grok.com', 'x.com/i/grok', 'aistudio.google.com', 'cursor.com', 'v0.dev', 'lovable.dev']
       const isSupported = tab?.url && supportedUrls.some(u => tab.url!.includes(u))
 
       if (!isSupported) {
-        await navigator.clipboard.writeText(template.prompt[locale])
+        await copyText(text)
         setStatus('fallback')
         setTimeout(() => setStatus('idle'), 2000)
         return
@@ -87,18 +90,35 @@ function TemplateCard({ template, locale, showCategoryBadge, onCategoryClick }: 
 
       chrome.runtime.sendMessage({
         type: 'INSERT_TEMPLATE',
-        payload: { text: template.prompt[locale] },
+        payload: { text },
       })
       setStatus('inserted')
       setTimeout(() => setStatus('idle'), 1500)
     } catch {
-      await navigator.clipboard.writeText(template.prompt[locale])
+      await copyText(text)
       setStatus('fallback')
       setTimeout(() => setStatus('idle'), 2000)
     }
   }
 
+  const handleCopy = async () => {
+    if (variables.length > 0) {
+      setFormMode('copy')
+      return
+    }
+    await copyText(template.prompt[locale])
+  }
+
+  const handleInsert = async () => {
+    if (variables.length > 0) {
+      setFormMode('insert')
+      return
+    }
+    await handleInsertText(template.prompt[locale])
+  }
+
   return (
+    <>
     <div className="bg-white rounded-lg border border-gray-100 p-3 hover:border-indigo-200 hover:shadow-sm transition-all">
       <div className="flex items-start justify-between gap-2 mb-1">
         <h3 className="text-sm font-medium text-gray-800 flex-1">
@@ -151,5 +171,19 @@ function TemplateCard({ template, locale, showCategoryBadge, onCategoryClick }: 
         </div>
       </div>
     </div>
+    {formMode && (
+      <PromptVariableForm
+        template={template}
+        locale={locale}
+        mode={formMode}
+        onCancel={() => setFormMode(null)}
+        onSubmit={async text => {
+          setFormMode(null)
+          if (formMode === 'copy') await copyText(text)
+          else await handleInsertText(text)
+        }}
+      />
+    )}
+    </>
   )
 }

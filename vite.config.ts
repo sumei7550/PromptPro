@@ -5,6 +5,10 @@ import { resolve } from 'path'
 import manifest from './src/manifest'
 
 export default defineConfig({
+  build: {
+    // dist/ may be locked by a loaded extension on Windows; keep builds isolated.
+    outDir: 'dist-new',
+  },
   plugins: [
     react(),
     crx({ manifest }),

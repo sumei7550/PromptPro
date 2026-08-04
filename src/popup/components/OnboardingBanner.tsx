@@ -10,6 +10,13 @@ const platforms = [
   { name: 'Claude', color: '#d97706' },
   { name: 'DeepSeek', color: '#4f6ef7' },
   { name: 'Gemini', color: '#4285f4' },
+  { name: 'Perplexity', color: '#20b8cd' },
+  { name: 'Copilot', color: '#7c3aed' },
+  { name: 'Grok', color: '#111827' },
+  { name: 'Google AI Studio', color: '#4285f4' },
+  { name: 'Cursor', color: '#111827' },
+  { name: 'v0', color: '#111827' },
+  { name: 'Lovable', color: '#fb7185' },
   { name: '豆包', color: '#3b82f6' },
 ]
 

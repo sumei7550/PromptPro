@@ -1,6 +1,16 @@
 import { MAX_FREE_DAILY_USAGE } from '@/shared/constants'
 import { getSettings } from '@/shared/storage'
 
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.contextMenus.create({ id: 'save-selection-as-template', title: 'Save selection as PromptPro template', contexts: ['selection'] })
+})
+
+chrome.contextMenus.onClicked.addListener((info) => {
+  if (info.menuItemId === 'save-selection-as-template' && info.selectionText?.trim()) {
+    chrome.storage.local.set({ pendingTemplateDraft: info.selectionText.trim() })
+  }
+})
+
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message.type === 'OPTIMIZE_PROMPT') {
     handleOptimize()
@@ -87,7 +97,9 @@ function insertTextToInput(text: string) {
     document.execCommand('delete', false)
     document.execCommand('insertText', false, text)
     if (!el.textContent?.trim()) {
-      el.innerHTML = `<p>${text}</p>`
+      const paragraph = document.createElement('p')
+      paragraph.textContent = text
+      el.replaceChildren(paragraph)
       el.dispatchEvent(new InputEvent('input', { bubbles: true, inputType: 'insertText', data: text }))
     }
   }

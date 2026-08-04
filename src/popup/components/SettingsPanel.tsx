@@ -1,5 +1,6 @@
-import { Locale } from '@/shared/types'
-import { saveSettings } from '@/shared/storage'
+import { Locale, OptimizeStyle } from '@/shared/types'
+import { getSettings, saveSettings } from '@/shared/storage'
+import { useEffect, useState } from 'react'
 
 interface Props {
   locale: Locale
@@ -8,10 +9,14 @@ interface Props {
 }
 
 export function SettingsPanel({ locale, onLocaleChange, onBack }: Props) {
+  const [style, setStyle] = useState<OptimizeStyle>('structured')
+  useEffect(() => { getSettings().then(settings => setStyle(settings.optimizeStyle)) }, [])
   const handleLocaleChange = (newLocale: Locale) => {
     onLocaleChange(newLocale)
     saveSettings({ locale: newLocale, localeSetByUser: true })
   }
+
+  const styles: OptimizeStyle[] = ['concise', 'professional', 'structured', 'deep-analysis', 'content-creation', 'code']
 
   const handleKoFiSupport = () => {
     const confirmed = window.confirm(
@@ -67,16 +72,23 @@ export function SettingsPanel({ locale, onLocaleChange, onBack }: Props) {
         </div>
 
         <div className="bg-white rounded-lg p-4 border border-gray-100">
+          <h3 className="text-sm font-medium text-gray-700 mb-2">{locale === 'zh' ? '优化风格' : 'Optimization style'}</h3>
+          <select value={style} onChange={event => { const next = event.target.value as OptimizeStyle; setStyle(next); saveSettings({ optimizeStyle: next }) }} className="w-full rounded-md border border-gray-200 px-3 py-2 text-sm text-gray-700">
+            {styles.map(value => <option key={value} value={value}>{locale === 'zh' ? ({ concise: '简洁', professional: '专业', structured: '结构化', 'deep-analysis': '深度分析', 'content-creation': '内容创作', code: '适合代码' }[value]) : ({ concise: 'Concise', professional: 'Professional', structured: 'Structured', 'deep-analysis': 'Deep analysis', 'content-creation': 'Content creation', code: 'Code' }[value])}</option>)}
+          </select>
+        </div>
+
+        <div className="bg-white rounded-lg p-4 border border-gray-100">
           <h3 className="text-sm font-medium text-gray-700 mb-2">
             {locale === 'zh' ? '关于' : 'About'}
           </h3>
           <p className="text-xs text-gray-500">
-            PromptPro v1.0.2
+            PromptPro v1.1.0
           </p>
           <p className="text-xs text-gray-400 mt-1">
             {locale === 'zh'
-              ? '一键优化 AI 提示词，内置专业模板库'
-              : 'One-click AI prompt optimizer with template library'}
+              ? '完全本地运行的提示词增强；内置专业模板库'
+              : 'Fully local prompt enhancement with a professional template library.'}
           </p>
         </div>
 

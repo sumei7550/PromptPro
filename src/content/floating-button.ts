@@ -224,8 +224,13 @@ export class FloatingButton {
   }
 
   private async showGuideIfNeeded(): Promise<void> {
-    const result = await chrome.storage.local.get(STORAGE_KEY)
-    if (result[STORAGE_KEY]) return
+    try {
+      const result = await chrome.storage.local.get(STORAGE_KEY)
+      if (result[STORAGE_KEY]) return
+    } catch {
+      // The page can outlive an extension reload. Do not let a stale
+      // content script prevent the floating button from being mounted.
+    }
 
     this.button.classList.add('pulse')
 
@@ -252,7 +257,14 @@ export class FloatingButton {
     const guide = this.container.querySelector('.pp-guide')
     if (guide) guide.remove()
     this.button.classList.remove('pulse')
-    chrome.storage.local.set({ [STORAGE_KEY]: true })
+    try {
+      // Persisting the guide state is secondary to the button action. A
+      // content script may remain on the page after the extension reloads,
+      // in which case this Promise rejects with "Extension context invalidated".
+      void chrome.storage.local.set({ [STORAGE_KEY]: true }).catch(() => undefined)
+    } catch {
+      // Ignore synchronous failures from an invalidated extension context.
+    }
   }
 
   onClick(callback: () => void): void {

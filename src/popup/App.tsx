@@ -5,9 +5,10 @@ import { SearchBar } from './components/SearchBar'
 import { TemplateLibrary } from './components/TemplateLibrary'
 import { SettingsPanel } from './components/SettingsPanel'
 import { OnboardingBanner } from './components/OnboardingBanner'
+import { PersonalAssets } from './components/PersonalAssets'
 import { allTemplates } from '@/shared/templates'
-import { initializeLocale, saveSettings, getRemainingUsage } from '@/shared/storage'
-import { Locale } from '@/shared/types'
+import { initializeLocale, saveSettings, getRemainingUsage, getSettings } from '@/shared/storage'
+import { Locale, OptimizeStyle } from '@/shared/types'
 import logoSvg from '@/assets/icons/icon.svg'
 
 const ONBOARDING_KEY = 'promptpro_popup_onboarded'
@@ -20,13 +21,37 @@ export default function App() {
   const [showSettings, setShowSettings] = useState(false)
   const [showOnboarding, setShowOnboarding] = useState(false)
   const [remaining, setRemaining] = useState<number | null>(null)
+  const [showAssets, setShowAssets] = useState(false)
+  const [assetDraft, setAssetDraft] = useState('')
+  const [optimizeStyle, setOptimizeStyle] = useState<OptimizeStyle>('structured')
 
   useEffect(() => {
     initializeLocale().then(setLocale)
+    getSettings().then(settings => setOptimizeStyle(settings.optimizeStyle))
     getRemainingUsage().then(setRemaining)
     chrome.storage.local.get(ONBOARDING_KEY).then(result => {
       if (!result[ONBOARDING_KEY]) setShowOnboarding(true)
     })
+    chrome.storage.local.get('pendingTemplateDraft').then(result => {
+      if (typeof result.pendingTemplateDraft === 'string' && result.pendingTemplateDraft.trim()) {
+        setAssetDraft(result.pendingTemplateDraft)
+        setShowAssets(true)
+        chrome.storage.local.remove('pendingTemplateDraft')
+      }
+    })
+  }, [])
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault(); document.querySelector<HTMLInputElement>('input[placeholder*="Search"], input[placeholder*="鎼滅储"]')?.focus()
+      }
+      if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key.toLowerCase() === 's') {
+        event.preventDefault(); setShowAssets(true)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
   const handleLocaleToggle = () => {
@@ -85,12 +110,16 @@ export default function App() {
     return <SettingsPanel locale={locale} onLocaleChange={(l) => { setLocale(l); saveSettings({ locale: l, localeSetByUser: true }) }} onBack={() => setShowSettings(false)} />
   }
 
+  if (showAssets) {
+    return <PersonalAssets locale={locale} draft={assetDraft} onBack={() => { setShowAssets(false); setAssetDraft('') }} />
+  }
+
   return (
     <div className="flex flex-col h-full bg-gray-50">
-      <header className="flex items-center justify-between px-4 py-3 bg-white border-b">
-        <div className="flex items-center gap-2">
+      <header className="bg-white border-b px-4 py-2.5">
+        <div className="flex min-w-0 items-center gap-2.5">
           <img src={logoSvg} alt="PromptPro" className="w-7 h-7" />
-          <h1 className="text-base font-semibold text-gray-800">PromptPro</h1>
+          <h1 className="whitespace-nowrap text-base font-semibold text-gray-800">PromptPro</h1>
           {remaining !== null && (
             <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${
               remaining <= 3 ? 'bg-red-50 text-red-500' : 'bg-gray-100 text-gray-500'
@@ -99,16 +128,30 @@ export default function App() {
             </span>
           )}
         </div>
-        <div className="flex items-center gap-2">
+        <div className="mt-2 flex w-full items-center gap-2">
+          <button
+            onClick={() => setShowAssets(true)}
+            className="flex min-w-0 flex-1 items-center justify-center whitespace-nowrap rounded-md bg-indigo-50 px-2 py-1.5 text-[11px] font-medium text-indigo-600 hover:bg-indigo-100"
+          >
+            {locale === 'zh' ? '我的资产' : 'My assets'}
+          </button>
+          <select
+            aria-label={locale === 'zh' ? '优化风格' : 'Optimization style'}
+            value={optimizeStyle}
+            onChange={event => { const next = event.target.value as OptimizeStyle; setOptimizeStyle(next); saveSettings({ optimizeStyle: next }) }}
+            className="min-w-0 flex-[1.2] rounded-md bg-gray-100 px-2 py-1.5 text-[10px] text-gray-600"
+          >
+            {(['concise', 'professional', 'structured', 'deep-analysis', 'content-creation', 'code'] as OptimizeStyle[]).map(value => <option key={value} value={value}>{locale === 'zh' ? ({ concise: '简洁', professional: '专业', structured: '结构化', 'deep-analysis': '深度分析', 'content-creation': '内容创作', code: '适合代码' }[value]) : ({ concise: 'Concise', professional: 'Professional', structured: 'Structured', 'deep-analysis': 'Deep analysis', 'content-creation': 'Content creation', code: 'Code' }[value])}</option>)}
+          </select>
           <button
             onClick={handleLocaleToggle}
-            className="text-xs px-2 py-1 rounded bg-gray-100 hover:bg-gray-200 text-gray-600"
+            className="h-8 w-10 shrink-0 rounded-md bg-gray-100 px-1 text-xs text-gray-600 hover:bg-gray-200"
           >
             {locale === 'zh' ? 'EN' : '中'}
           </button>
           <button
             onClick={() => setShowSettings(true)}
-            className="p-1.5 rounded hover:bg-gray-100 text-gray-500"
+            className="shrink-0 rounded p-1.5 text-gray-500 hover:bg-gray-100"
             aria-label="Settings"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

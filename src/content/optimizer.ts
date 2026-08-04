@@ -1,4 +1,5 @@
 // ============================================================
+import { OptimizeStyle } from '@/shared/types'
 // PromptPro Smart Optimizer
 // 纯前端智能提示词优化器，无 API，无第三方依赖
 // 将模糊的用户输入转化为清晰、自然的 AI 友好提示词
@@ -523,20 +524,32 @@ function humanizePrompt(data: PromptData): string {
  * 本地优化主入口（替代旧的 localOptimize）
  * 默认使用 smart 模式，输出自然语言
  */
-export function localOptimize(text: string): string {
-  return smartOptimize(text, 'smart')
+export function localOptimize(text: string, style: OptimizeStyle = 'structured'): string {
+  return smartOptimize(text, 'smart', style)
 }
 
 /**
  * 智能优化主函数
  */
-export function smartOptimize(userInput: string, mode: string = 'smart'): string {
+export function smartOptimize(userInput: string, mode: string = 'smart', style: OptimizeStyle = 'structured'): string {
   if (!userInput || !userInput.trim()) return userInput || ''
 
   const trimmed = userInput.trim()
   const category = detectCategory(trimmed)
   const promptData = buildPrompt(trimmed, category, mode)
-  return humanizePrompt(promptData)
+  return applyStyle(humanizePrompt(promptData), style, detectLanguage(trimmed))
+}
+
+function applyStyle(prompt: string, style: OptimizeStyle, lang: Language): string {
+  const guidance: Record<OptimizeStyle, { zh: string; en: string }> = {
+    concise: { zh: '请保持简洁，优先给出结论和必要步骤，避免冗余。', en: 'Keep the response concise. Prioritize the conclusion and necessary steps; avoid redundancy.' },
+    professional: { zh: '请使用专业、准确、克制的表达，明确说明假设和限制。', en: 'Use precise, professional, and measured language. State assumptions and limitations clearly.' },
+    structured: { zh: '请使用清晰的层级、编号或列表组织输出。', en: 'Organize the output with clear hierarchy, numbering, or bullet points.' },
+    'deep-analysis': { zh: '请深入分析原因、权衡、风险和可执行建议，不要停留在表面结论。', en: 'Analyze causes, trade-offs, risks, and actionable recommendations in depth; do not stop at surface conclusions.' },
+    'content-creation': { zh: '请优先考虑受众、可读性、表达张力和适合发布的内容结构。', en: 'Prioritize audience fit, readability, engaging expression, and a publishable content structure.' },
+    code: { zh: '请提供可运行、可维护的代码，并说明关键实现、边界情况和测试方法。', en: 'Provide runnable, maintainable code and explain key implementation choices, edge cases, and testing.' },
+  }
+  return `${prompt}\n\n${guidance[style][lang]}`
 }
 
 /**
