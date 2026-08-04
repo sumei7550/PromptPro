@@ -13,26 +13,30 @@
 </head>
 <body>
     <h1>Privacy Policy</h1>
-    <p>Last updated: 2026-05-22</p>
+    <p>Last updated: 2026-08-04</p>
 
-    <h2>1. Data Collection</h2>
-    <p>PromptPro does not collect any personal information, user input, browsing history, or other sensitive data.</p>
+    <h2>1. Data Handling</h2>
+    <p>When you actively use PromptPro, the extension reads the text in the supported AI page's input field to provide prompt optimization or template insertion. This may include personal information, website content, form data, personal communications, or other user-generated content that you choose to enter.</p>
+    <p>PromptPro processes this content locally in your browser. It does not collect, upload, sell, share, or use your prompt content for advertising or model training. PromptPro does not passively record browsing history or read page content unrelated to the input field.</p>
 
     <h2>2. Data Usage</h2>
-    <p>All functions run locally in the user's browser, and no data is transmitted to any server or third party.</p>
+    <p>Prompt optimization and template processing run locally in the user's browser. The original prompt and optimized result may be saved in local Chrome storage as optimization history, together with custom templates, settings, language preference, and usage counters. The history is limited to the most recent 50 entries and can be removed by clearing the extension's local data.</p>
 
     <h2>3. Permissions</h2>
     <ul>
-        <li><strong>storage</strong>: Used only to save local data such as language preference, UI settings, and the daily free-quota counter on the user's device.</li>
-        <li><strong>activeTab</strong>: Used only when the user actively clicks the PromptPro floating button or the "Insert Template" button to read/write text in the input field of the current AI platform page.</li>
-        <li><strong>scripting</strong>: Used only when the user clicks "Insert Template" on a page where the content script is not yet attached, to inject a one-shot input-writing function.</li>
-        <li><strong>host_permissions</strong>: Used only to mount the floating button on the user's already-signed-in ChatGPT, Claude, Gemini, DeepSeek, and Doubao pages. The extension never auto-navigates or sends messages on the user's behalf.</li>
+        <li><strong>storage</strong>: Used for local settings, templates, optimization history, usage counters, and migration of legacy settings from Chrome Sync storage. PromptPro does not use Sync storage for ongoing storage.</li>
+        <li><strong>scripting</strong>: Used only after the user clicks "Insert Template" when the content script is unavailable, to inject a one-time input-writing function on the active supported page.</li>
+        <li><strong>contextMenus</strong>: Used to provide the menu item that saves user-selected text as a local template draft.</li>
+        <li><strong>host_permissions</strong>: Used only to mount the floating button on supported AI pages, including ChatGPT, Claude, Gemini, DeepSeek, Doubao, Perplexity, Copilot, Grok, Google AI Studio, Cursor, v0, and Lovable. The extension never auto-navigates or sends messages on the user's behalf.</li>
     </ul>
 
     <h2>4. Third-party Services</h2>
     <p>This extension does not use any third-party analytics, tracking, or advertising services, and does not upload user input or browsing data to any remote server. All prompt-optimization logic runs locally in the user's browser.</p>
 
-    <h2>5. Contact</h2>
+    <h2>5. Chrome Web Store User Data Policy</h2>
+    <p>PromptPro's use of information received from Chrome and supported webpages complies with the Chrome Web Store User Data Policy, including the Limited Use requirements. Data is used only to provide the extension's single purpose: local prompt optimization, template management, and user-requested insertion. PromptPro does not sell, use for advertising, or transfer this data to third parties, and does not allow human review of user content.</p>
+
+    <h2>6. Contact</h2>
     <p>For any privacy-related questions, please contact the developer via GitHub repository: <br>
        <a href="https://github.com/sumei7550/PromptPro" target="_blank">https://github.com/sumei7550/PromptPro</a></p>
 </body>
