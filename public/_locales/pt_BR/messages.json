@@ -1,8 +1,8 @@
 {
   "extName": {
-    "message": "PromptPro: Otimizador de prompts local"
+    "message": "PromptPro: Otimizador local de prompts de IA"
   },
   "extDescription": {
-    "message": "Melhore prompts localmente e reutilize 66 modelos bilíngues em sites de IA."
+    "message": "Melhore prompts de IA localmente e reutilize 66 modelos bilíngues em sites de IA."
   }
 }

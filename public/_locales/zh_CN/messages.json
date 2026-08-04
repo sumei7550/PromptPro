@@ -1,8 +1,8 @@
 {
   "extName": {
-    "message": "PromptPro\uff1a\u672c\u5730\u63d0\u793a\u8bcd\u4f18\u5316\u5668"
+    "message": "PromptPro：本地 AI 提示词优化器"
   },
   "extDescription": {
-    "message": "\u672c\u5730\u4f18\u5316\u63d0\u793a\u8bcd\uff0c\u5feb\u901f\u4f7f\u7528 66 \u4e2a\u4e2d\u82f1\u53cc\u8bed\u6a21\u677f\u3002"
+    "message": "本地优化 AI 提示词，快速复用 66 个中英双语模板。"
   }
 }

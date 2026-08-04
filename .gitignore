@@ -1,0 +1,9 @@
+node_modules/
+dist-new/
+dist/
+dist-1.1.0/
+release/
+release-overrides/
+*.zip
+.claude/settings.local.json
+
