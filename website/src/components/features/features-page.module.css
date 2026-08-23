@@ -1,0 +1,37 @@
+.hero { background: linear-gradient(135deg, var(--color-brand-50), var(--color-white) 62%); padding-block: var(--space-20) var(--space-24); text-align: center; }
+.heroInner { display: flex; align-items: center; flex-direction: column; }
+.eyebrow { margin-bottom: var(--space-3); color: var(--color-brand-700); font-size: 13px; font-weight: var(--font-bold); letter-spacing: .06em; text-transform: uppercase; }
+.hero h1 { max-width: 780px; }
+.heroDescription { max-width: 680px; margin-top: var(--space-6); font-size: 20px; }
+.heroActions { margin-top: var(--space-8); }
+.heroNote { max-width: 680px; margin-top: var(--space-4); color: var(--color-muted-text); font-size: 13px; }
+.showcases { background: var(--color-background); }
+.showcase:nth-child(even) { background: var(--color-background-subtle); }
+.showcaseGrid { display: grid; align-items: center; gap: var(--space-12); grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr); }
+.reverse .showcaseGrid { grid-template-columns: minmax(0, 1.22fr) minmax(0, .78fr); }
+.reverse .showcaseCopy { grid-column: 2; grid-row: 1; }
+.reverse .showcaseGrid > figure { grid-column: 1; grid-row: 1; }
+.showcaseCopy { max-width: 520px; }
+.showcaseCopy h2, .sectionIntro h2, .finalCta h2 { margin-bottom: var(--space-4); }
+.showcaseDescription, .sectionIntro > p:last-child { font-size: 17px; }
+.showcaseCopy ul { display: grid; gap: var(--space-3); margin: var(--space-8) 0 0; padding: 0; list-style: none; }
+.showcaseCopy li { position: relative; padding-left: 28px; color: var(--color-text-secondary); }
+.showcaseCopy li::before { position: absolute; top: .7em; left: 2px; width: 8px; height: 8px; border-radius: 50%; background: var(--color-brand-600); content: ""; }
+.sectionIntro { max-width: 760px; margin-bottom: var(--space-10); }
+.workflowSection { background: var(--color-surface-brand); }
+.workflowGrid { display: grid; gap: var(--space-6); grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; counter-reset: workflow; }
+.workflowGrid li { padding: var(--space-6); border: 1px solid var(--color-brand-200); border-radius: var(--radius-lg); background: var(--color-surface); }
+.stepNumber { display: inline-grid; width: 40px; height: 40px; place-items: center; margin-bottom: var(--space-5); border-radius: var(--radius-md); background: var(--color-brand-100); color: var(--color-brand-700); font-size: 13px; font-weight: var(--font-bold); }
+.workflowGrid h3 { margin-bottom: var(--space-2); font-size: 22px; }
+.workflowGrid p { font-size: 15px; }
+.finalCta { background: var(--color-slate-900); padding-block: var(--space-20); }
+.finalCtaInner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-8); }
+.finalCta h2 { color: var(--color-white); }
+.finalCta p:last-child { max-width: 680px; color: var(--color-slate-300); }
+.finalCta .eyebrow { color: var(--color-brand-300); }
+.finalCtaButton { border: 1px solid rgb(124 58 237 / 15%); background: var(--color-brand-50); color: var(--color-slate-900); }
+.finalCtaButton:hover { border-color: rgb(124 58 237 / 20%); background: var(--color-brand-100); }
+.finalCtaButton:focus-visible { box-shadow: 0 0 0 4px var(--color-slate-900); }
+.relatedLinks { display: flex; justify-content: center; gap: var(--space-2); padding: var(--space-8) var(--page-padding); font-weight: var(--font-semibold); }
+@media (max-width: 1023px) { .showcaseGrid, .reverse .showcaseGrid { gap: var(--space-8); grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+@media (max-width: 767px) { .hero { padding-block: var(--space-12) var(--space-16); } .heroDescription { font-size: 18px; } .showcaseGrid, .reverse .showcaseGrid { grid-template-columns: 1fr; } .reverse .showcaseCopy, .reverse .showcaseGrid > figure { grid-column: auto; grid-row: auto; } .showcaseCopy { max-width: none; } .showcaseGrid > figure { max-width: 520px; margin-inline: auto; } .workflowGrid { grid-template-columns: 1fr; } .finalCta { padding-block: var(--space-16); } .finalCtaInner { align-items: flex-start; flex-direction: column; } .finalCtaInner > * { width: 100%; } .finalCta :global(.button) { width: 100%; } }

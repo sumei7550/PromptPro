@@ -1,0 +1,49 @@
+.header { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--color-border); background: var(--color-white); }
+.headerInner { display: flex; min-height: var(--header-height); max-width: var(--container-max); align-items: center; gap: var(--space-8); margin-inline: auto; padding-inline: var(--page-padding); }
+.logo { display: inline-flex; min-height: 44px; align-items: center; gap: var(--space-2); color: var(--color-slate-900); font-size: 18px; font-weight: var(--font-semibold); text-decoration: none; white-space: nowrap; }
+.logo img { flex: 0 0 auto; }
+.desktopNavigation { flex: 0 0 auto; margin-left: 56px; }
+.navigation { display: flex; align-items: center; gap: var(--space-6); }
+.navigation a, .unavailableLink { display: inline-flex; min-height: 44px; align-items: center; color: var(--color-slate-700); font-size: 14px; font-weight: var(--font-medium); text-decoration: none; }
+.navigation a:hover, .navigation a[aria-current="page"] { color: var(--color-brand-700); }
+.unavailableLink { color: var(--color-slate-500); cursor: not-allowed; }
+.headerActions .button { white-space: nowrap; }
+.languageRoot { position: relative; }
+.languageTrigger { display: inline-flex; min-height: 44px; align-items: center; gap: 6px; border: 0; background: transparent; color: var(--color-slate-700); padding: 0 var(--space-2); font-size: 14px; font-weight: var(--font-medium); cursor: pointer; }
+.languageTrigger:hover { color: var(--color-brand-700); }
+.globeIcon { width: 21px; height: 21px; flex: 0 0 auto; }
+.chevron { width: 18px; height: 18px; flex: 0 0 auto; }
+.languageMenu { position: absolute; top: 100%; right: 0; z-index: 20; display: none; min-width: 132px; gap: 2px; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-white); padding: var(--space-2); box-shadow: var(--shadow-md); }
+.languageRoot:hover .languageMenu, .languageRoot:focus-within .languageMenu, .languageRoot[data-open="true"] .languageMenu { display: grid; }
+.languageOption { display: flex; min-height: 40px; align-items: center; border-radius: var(--radius-sm); padding-inline: var(--space-3); color: var(--color-slate-700); font-size: 14px; text-decoration: none; }
+.languageOption:hover, .languageOption[aria-current="true"] { background: var(--color-brand-50); color: var(--color-brand-700); }
+.desktopActions, .headerActions { display: flex; align-items: center; gap: var(--space-3); }
+.desktopActions { margin-left: auto; }
+.menuButton { display: none; width: 44px; height: 44px; margin-left: auto; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-white); color: var(--color-slate-900); font-size: 22px; line-height: 1; }
+.menuButton:focus-visible, .navigation a:focus-visible, .languageTrigger:focus-visible, .languageOption:focus-visible, .logo:focus-visible, .footer a:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+.mobileNavigation { display: grid; gap: var(--space-6); }
+.mobileNavigation .navigation { display: grid; justify-content: stretch; gap: var(--space-2); }
+.mobileNavigation .navigation a { min-height: 44px; }
+.mobileNavigation .headerActions { display: grid; justify-items: stretch; align-items: stretch; }
+.mobileNavigation .headerActions .language-switcher { justify-content: center; }
+.mobileMenuPanel { position: absolute; inset: var(--header-height) 0 auto; z-index: 60; border-bottom: 1px solid var(--color-border); background: var(--color-white); padding: var(--space-5) var(--page-padding) var(--space-6); box-shadow: var(--shadow-md); animation: menu-in 200ms ease both; }
+.mobileMenuBackdrop { position: fixed; inset: var(--header-height) 0 0; z-index: 55; width: 100%; border: 0; background: rgb(15 23 42 / 24%); cursor: default; animation: fade-in 180ms ease both; }
+.footer { border-top: 1px solid var(--color-border); background: var(--color-slate-50); padding-block: var(--space-12) var(--space-6); }
+.footerGrid { display: grid; grid-template-columns: 1.7fr repeat(3, 1fr); gap: var(--space-8); }
+.footerBrand { display: grid; align-content: start; gap: var(--space-4); }
+.footerBrand p { max-width: 270px; font-size: 14px; line-height: 1.55; }
+.footerInstallLink { display: inline-flex; width: fit-content; align-items: center; color: var(--color-slate-900) !important; font-weight: var(--font-semibold); }
+.footerInstallLink:hover { color: var(--color-brand-700) !important; text-decoration: underline; }
+.footerInstallLink:focus-visible { border-radius: var(--radius-sm); }
+.footerLegal { font-size: 14px; }
+.footerHeading { margin: 0 0 var(--space-3); color: var(--color-slate-900); font-size: 14px; font-weight: var(--font-semibold); }
+.footerLinks { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.footer a { color: var(--color-slate-700); font-size: 14px; text-decoration: none; }
+.footer a:hover { color: var(--color-brand-700); text-decoration: underline; }
+.footerInstall p { margin: 0 0 var(--space-3); color: var(--color-slate-900); font-size: 14px; font-weight: var(--font-semibold); }
+.footerCopyright { margin: var(--space-12) 0 0; border-top: 1px solid var(--color-border); padding-top: var(--space-4); color: var(--color-muted-text); font-size: 13px; }
+@keyframes menu-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@media (max-width: 1023px) { .headerInner { height: var(--header-height); min-height: var(--header-height); } .desktopNavigation, .desktopActions { display: none; } .menuButton { display: inline-grid; place-items: center; } .languageRoot:hover .languageMenu, .languageRoot:focus-within .languageMenu { display: none; } .languageRoot[data-open="true"] .languageMenu { display: grid; } }
+@media (max-width: 639px) { .headerInner { gap: var(--space-4); } .footerGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .footerGrid > :first-child { grid-column: 1 / -1; } }
+@media (prefers-reduced-motion: reduce) { .mobile-menu-panel, .mobile-menu-backdrop { animation: none; } }

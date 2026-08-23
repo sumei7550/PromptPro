@@ -9,12 +9,12 @@ export const metadata: Metadata = {
     default: "PromptPro",
     template: "%s | PromptPro",
   },
-  description: "TODO",
+  description: "A local-first prompt optimizer and template library for AI websites.",
   openGraph: {
     type: "website",
     siteName: "PromptPro",
     title: "PromptPro",
-    description: "TODO",
+    description: "A local-first prompt optimizer and template library for AI websites.",
     url: siteUrl,
   },
   icons: {

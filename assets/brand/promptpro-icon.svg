@@ -7,10 +7,16 @@
       <stop offset="1" stop-color="#4C1D95" />
     </linearGradient>
   </defs>
+
   <rect width="128" height="128" rx="26" fill="url(#background)" />
+
   <clipPath id="tail-exposure">
     <path d="M86 83 101 87 92 94 96 102 89 105 84 95Z" />
   </clipPath>
+
+  <!-- The restrained tail stays behind the P; only its directional tip is exposed. -->
   <path d="M65 72 100 89 87 92 94 104 86 108 79 96 70 106Z" fill="#FBBF24" clip-path="url(#tail-exposure)" />
+
+  <!-- Final P proportions: approximately +8% height and -4% width from the base candidate. -->
   <path d="M45 97V33h29c12 0 20 8 20 19s-8 19-20 19H45" fill="none" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" />
 </svg>

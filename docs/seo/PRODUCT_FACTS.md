@@ -13,7 +13,7 @@
 
 ## A. 项目与入口
 
-当前仓库没有独立官网应用、页面路由或官网构建目录。官网相关规划目前仅位于 `docs/seo/`，可复用的产品素材位于 `store-assets/`，扩展隐私静态页面位于 `public/privacy_en.html` 和 `public/privacy_zh.html`。
+仓库已存在独立的 Next.js 官网工程，位于 `website/`，当前已完成 Homepage、Website IA v2、Header/Footer v2 和基础语言切换实现。Features、Privacy、Platforms、Templates 仍需完成正式正文，Pricing、FAQ、Support、About、Terms、Changelog 仍属于规划页面；官网 SEO Implementation 和 Release QA 尚未完成。可复用的扩展产品素材位于 `store-assets/`，扩展隐私静态页面位于 `public/privacy_en.html` 和 `public/privacy_zh.html`。
 
 插件主要代码位置：
 
@@ -94,7 +94,7 @@
 
 ## F. 未实现、未确认或不应宣传的内容
 
-- 没有独立官网、官网路由、sitemap、robots、canonical、结构化数据或中英文官网页面。
+- 官网工程和中英文 Homepage/Header/Footer 路由已经存在，但正式内容页、完整 SEO metadata、canonical、hreflang、结构化数据和发布级 sitemap 仍未完成；官网代码不应被当作扩展产品事实证据。
 - 没有本轮真实 Chrome 验证，因此不能确认任一平台当前页面版本下的输入框识别、优化写回、模板插入、刷新后恢复或控制台表现。
 - 2026-08-21 的 Chrome 连接和页面检查没有形成任何插件功能的通过证据；不要将现有 ChatGPT 标签页可打开误记为插件已验证。
 - 不能宣传云端 AI 模型、先进模型改写、联网增强或远程优化；当前源码证据支持的是本地规则处理。
@@ -145,6 +145,6 @@
 
 - Manifest 配置的 12 类站点尚未经过本轮真实 Chrome 验证，不能直接作为稳定支持承诺。
 - README、商店文案、隐私页和历史架构文档存在数量/范围表述差异；例如部分旧文档仍写 62 个模板或 5 个平台，应以代码与实测为准并逐步清理过时表述。
-- 当前项目没有官网代码，下一步会涉及新建官网工程/目录，需先确定部署方式，避免把 SEO 文档误当成已上线页面。
+- 官网工程已经创建并独立于扩展；后续仍需完成剩余页面、正式域名、部署方式和 SEO 发布核对，避免把已存在的官网代码误当作已上线或已完成的页面。
 - Chrome 页面 DOM、登录状态和平台更新可能导致通用适配器或专用适配器失效。
 - 隐私页已写有较强的本地处理承诺；任何官网文案必须与代码、发布版本和权限保持同步。

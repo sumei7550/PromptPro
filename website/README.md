@@ -1,6 +1,6 @@
 # PromptPro Website
 
-PromptPro 官网基础工程，使用 Next.js App Router、TypeScript 和 Vercel。当前阶段采用静态优先策略，页面内容暂以 `TODO` 占位，不代表任何产品功能或平台已经完成官网发布。
+PromptPro 官网基础工程，使用 Next.js App Router、TypeScript 和 Vercel。当前阶段为 Website MVP Foundation + Core Pages：Homepage 与 Features 已完成实现，Privacy、Platforms、Templates 仍在开发中。
 
 ## 本地启动
 
@@ -18,18 +18,20 @@ npm run dev
 
 未来规划语言配置为 `ja`、`ko`、`de`、`fr`、`es`，当前只作为可扩展配置保留，不生成页面、不加入 sitemap，也不作为正式支持语言。
 
-当前路由骨架包括：
+当前正式 URL strategy 与路由范围包括：
 
-- `/en`
-- `/en/features`
-- `/en/privacy`
-- `/en/platforms`
-- `/en/templates`
+- `/`
+- `/features`
+- `/privacy`
+- `/platforms`
+- `/templates`
 - `/zh-CN`
 - `/zh-CN/features`
 - `/zh-CN/privacy`
 - `/zh-CN/platforms`
 - `/zh-CN/templates`
+
+English 是 default locale，不使用 `/en` 前缀；中文使用 `/zh-CN` 前缀。Privacy、Platforms、Templates 当前由开发中页面骨架承载，不代表页面内容已完成或已经通过发布验收。
 
 ## 构建
 
