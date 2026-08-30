@@ -25,6 +25,7 @@ export function LanguageSwitcher({ locale, pathname = locale === "en" ? "/" : "/
   const [open, setOpen] = useState(false);
   const [mobile, setMobile] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const pathWithoutLocale = pathname.replace(/^\/zh-CN(?=\/|$)/, "") || "/";
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 1023px)");
@@ -32,10 +33,15 @@ export function LanguageSwitcher({ locale, pathname = locale === "en" ? "/" : "/
     updateViewport();
     mediaQuery.addEventListener("change", updateViewport);
     const handlePointerDown = (event: PointerEvent) => { if (!rootRef.current?.contains(event.target as Node)) setOpen(false); };
-    const handleKeyDown = (event: KeyboardEvent) => { if (event.key === "Escape") setOpen(false); };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && open) {
+        setOpen(false);
+        triggerRef.current?.focus();
+      }
+    };
     document.addEventListener("pointerdown", handlePointerDown); document.addEventListener("keydown", handleKeyDown);
     return () => { mediaQuery.removeEventListener("change", updateViewport); document.removeEventListener("pointerdown", handlePointerDown); document.removeEventListener("keydown", handleKeyDown); };
-  }, []);
+  }, [open]);
   const targetPath = (targetLocale: SupportedLocale) => targetLocale === "en"
     ? pathWithoutLocale
     : `/zh-CN${pathWithoutLocale === "/" ? "" : pathWithoutLocale}`;
@@ -43,8 +49,8 @@ export function LanguageSwitcher({ locale, pathname = locale === "en" ? "/" : "/
     if (!mobile && event.detail > 0) return;
     setOpen((value) => !value);
   };
-  return <div className={styles.languageRoot} ref={rootRef} data-open={open || undefined}>
-    <button className={styles.languageTrigger} type="button" aria-expanded={open} aria-haspopup="menu" aria-label={label} onClick={handleClick}><GlobeIcon /><span>{languageNames[locale]}</span><ChevronIcon open={open} /></button>
+  return <div className={styles.languageRoot} ref={rootRef} data-open={open || undefined} onMouseEnter={() => { if (!mobile) setOpen(true); }} onMouseLeave={() => { if (!mobile) setOpen(false); }}>
+    <button className={styles.languageTrigger} ref={triggerRef} type="button" aria-expanded={open} aria-haspopup="menu" aria-label={label} onClick={handleClick} onKeyDown={(event) => { if (!mobile && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); setOpen(true); } }} onMouseEnter={() => { if (!mobile) setOpen(true); }}><GlobeIcon /><span>{languageNames[locale]}</span><ChevronIcon open={open} /></button>
     <div className={styles.languageMenu} role="menu" aria-label={label}>{(["en", "zh-CN"] as const).map((targetLocale) => <Link key={targetLocale} className={styles.languageOption} href={targetPath(targetLocale)} hrefLang={targetLocale} role="menuitem" aria-current={locale === targetLocale ? "true" : undefined} onClick={() => setOpen(false)}>{languageNames[targetLocale]}</Link>)}</div>
   </div>;
 }

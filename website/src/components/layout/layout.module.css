@@ -14,18 +14,18 @@
 .globeIcon { width: 21px; height: 21px; flex: 0 0 auto; }
 .chevron { width: 18px; height: 18px; flex: 0 0 auto; }
 .languageMenu { position: absolute; top: 100%; right: 0; z-index: 20; display: none; min-width: 132px; gap: 2px; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-white); padding: var(--space-2); box-shadow: var(--shadow-md); }
-.languageRoot:hover .languageMenu, .languageRoot:focus-within .languageMenu, .languageRoot[data-open="true"] .languageMenu { display: grid; }
+.languageRoot[data-open="true"] .languageMenu { display: grid; }
 .languageOption { display: flex; min-height: 40px; align-items: center; border-radius: var(--radius-sm); padding-inline: var(--space-3); color: var(--color-slate-700); font-size: 14px; text-decoration: none; }
 .languageOption:hover, .languageOption[aria-current="true"] { background: var(--color-brand-50); color: var(--color-brand-700); }
-.desktopActions, .headerActions { display: flex; align-items: center; gap: var(--space-3); }
+.desktopActions, .headerActions, .mobileTopActions { display: flex; align-items: center; gap: var(--space-3); }
 .desktopActions { margin-left: auto; }
+.mobileTopActions { display: none; margin-left: auto; }
 .menuButton { display: none; width: 44px; height: 44px; margin-left: auto; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-white); color: var(--color-slate-900); font-size: 22px; line-height: 1; }
 .menuButton:focus-visible, .navigation a:focus-visible, .languageTrigger:focus-visible, .languageOption:focus-visible, .logo:focus-visible, .footer a:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
 .mobileNavigation { display: grid; gap: var(--space-6); }
 .mobileNavigation .navigation { display: grid; justify-content: stretch; gap: var(--space-2); }
 .mobileNavigation .navigation a { min-height: 44px; }
-.mobileNavigation .headerActions { display: grid; justify-items: stretch; align-items: stretch; }
-.mobileNavigation .headerActions .language-switcher { justify-content: center; }
+.mobileInstall .button { width: 100%; height: 44px; min-height: 44px; flex: 0 0 44px; justify-content: center; white-space: nowrap; }
 .mobileMenuPanel { position: absolute; inset: var(--header-height) 0 auto; z-index: 60; border-bottom: 1px solid var(--color-border); background: var(--color-white); padding: var(--space-5) var(--page-padding) var(--space-6); box-shadow: var(--shadow-md); animation: menu-in 200ms ease both; }
 .mobileMenuBackdrop { position: fixed; inset: var(--header-height) 0 0; z-index: 55; width: 100%; border: 0; background: rgb(15 23 42 / 24%); cursor: default; animation: fade-in 180ms ease both; }
 .footer { border-top: 1px solid var(--color-border); background: var(--color-slate-50); padding-block: var(--space-12) var(--space-6); }
@@ -44,6 +44,6 @@
 .footerCopyright { margin: var(--space-12) 0 0; border-top: 1px solid var(--color-border); padding-top: var(--space-4); color: var(--color-muted-text); font-size: 13px; }
 @keyframes menu-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-@media (max-width: 1023px) { .headerInner { height: var(--header-height); min-height: var(--header-height); } .desktopNavigation, .desktopActions { display: none; } .menuButton { display: inline-grid; place-items: center; } .languageRoot:hover .languageMenu, .languageRoot:focus-within .languageMenu { display: none; } .languageRoot[data-open="true"] .languageMenu { display: grid; } }
+@media (max-width: 1023px) { .headerInner { height: var(--header-height); min-height: var(--header-height); } .desktopNavigation, .desktopActions { display: none; } .mobileTopActions { display: flex; } .menuButton { display: inline-grid; place-items: center; } }
 @media (max-width: 639px) { .headerInner { gap: var(--space-4); } .footerGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .footerGrid > :first-child { grid-column: 1 / -1; } }
 @media (prefers-reduced-motion: reduce) { .mobile-menu-panel, .mobile-menu-backdrop { animation: none; } }
