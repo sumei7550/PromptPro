@@ -3,11 +3,14 @@ import { notFound } from "next/navigation";
 import { TodoPage } from "@/components/todo-page";
 import { FeaturesPage } from "@/components/features/features-page";
 import { HomePage } from "@/components/home/home-page";
+import { PrivacyPage } from "@/components/privacy/privacy-page";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { featuresContent as enFeaturesContent } from "@/content/en/features";
 import { homeContent as zhHomeContent } from "@/content/zh-CN/home";
 import { featuresContent as zhFeaturesContent } from "@/content/zh-CN/features";
+import { privacyContent as enPrivacyContent } from "@/content/en/privacy";
+import { privacyContent as zhPrivacyContent } from "@/content/zh-CN/privacy";
 import { getMetadata } from "@/lib/seo";
 
 const pages = new Set(["features", "privacy", "platforms", "templates"]);
@@ -40,5 +43,6 @@ export default async function SegmentsPage({ params }: SegmentsPageProps) {
   }
   const pathname = isChinese ? `/zh-CN/${page}` : `/${page}`;
   const content = isChinese ? zhFeaturesContent : enFeaturesContent;
-  return <><SiteHeader locale={locale} pathname={pathname} />{page === "features" ? <FeaturesPage locale={locale} content={content} /> : <TodoPage locale={locale} path={pathname} />}<SiteFooter locale={locale} /></>;
+  const privacyContent = isChinese ? zhPrivacyContent : enPrivacyContent;
+  return <><SiteHeader locale={locale} pathname={pathname} />{page === "features" ? <FeaturesPage locale={locale} content={content} /> : page === "privacy" ? <PrivacyPage locale={locale} content={privacyContent} /> : <TodoPage locale={locale} path={pathname} />}<SiteFooter locale={locale} /></>;
 }

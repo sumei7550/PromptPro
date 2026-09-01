@@ -23,6 +23,7 @@
 - Homepage implementation：首页已完成当前阶段实现，使用已确认的产品事实和现有设计系统。
 - Features implementation：Features 页面已完成当前阶段实现，包含功能展示、工作流和 Final CTA。
 - Homepage / Features 360/390/768/1024/1280/1440 QA：已完成对应视口的页面溢出、Header、Footer、Mobile Menu、语言切换和基础交互检查。
+- Privacy implementation：英文 `/privacy` 与中文 `/zh-CN/privacy` 已完成，正文基于 `docs/website/PRIVACY_FACT_AUDIT.md`。
 
 ### 当前阶段
 
@@ -32,7 +33,7 @@
 
 ### 未完成阶段
 
-- Privacy：开发中
+- Privacy：已完成（English `/privacy`、中文 `/zh-CN/privacy`；正文基于 `PRIVACY_FACT_AUDIT.md`）
 - Platforms：开发中
 - Templates：开发中
 - SEO implementation：未开始
