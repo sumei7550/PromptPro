@@ -1,6 +1,6 @@
 # PromptPro 官网当前状态
 
-更新时间：2026-08-24
+更新时间：2026-09-02
 
 本文档记录 PromptPro 官网当前真实开发状态、已经冻结的工程决策和仍需解决的问题。它是当前阶段状态记录，不代表官网页面已经完成或已经部署上线。
 
@@ -24,23 +24,27 @@
 - Features implementation：Features 页面已完成当前阶段实现，包含功能展示、工作流和 Final CTA。
 - Homepage / Features 360/390/768/1024/1280/1440 QA：已完成对应视口的页面溢出、Header、Footer、Mobile Menu、语言切换和基础交互检查。
 - Privacy implementation：英文 `/privacy` 与中文 `/zh-CN/privacy` 已完成，正文基于 `docs/website/PRIVACY_FACT_AUDIT.md`。
+- Templates implementation：英文 `/templates` 与中文 `/zh-CN/templates` 已完成，展示真实的八个模板分类、搜索/选择/变量/插入或复制流程，以及本地自定义模板能力。
+- FAQ implementation：英文 `/faq` 与中文 `/zh-CN/faq` 已完成，基于产品、隐私、模板和平台事实提供静态可访问问答。
+- Support implementation：英文 `/support` 与中文 `/zh-CN/support` 已完成，提供 FAQ、GitHub、开发者邮箱和 Ko-fi 支持入口，以及基础问题排查和兼容性说明。
+- Terms implementation：英文 `/terms` 与中文 `/zh-CN/terms` 已完成，覆盖使用规则、用户责任、第三方网站边界、免责声明、责任限制、条款变更和联系方式。
 
 ### 当前阶段
 
 > **Website MVP Foundation + Core Pages**
 
-当前作为 GitHub checkpoint 整理。已完成 Brand Logo Final、Header/Footer IA v2、Default English locale URL strategy、Homepage、Features Page 和 CTA system；Privacy、Platforms、Templates 进入下一阶段开发。
+当前作为 Git checkpoint 前的 Core Website MVP Freeze Audit。Homepage、Features、Privacy、Platforms、Templates、FAQ、Support 和 Terms of Use 的英文/中文正式页面均已完成；Pricing、About、Changelog、SEO Finalization 和 Deployment 延后。
 
 ### 未完成阶段
 
 - Privacy：已完成（English `/privacy`、中文 `/zh-CN/privacy`；正文基于 `PRIVACY_FACT_AUDIT.md`）
-- Platforms：开发中
-- Templates：开发中
-- SEO implementation：未开始
-- JSON-LD、canonical、hreflang：未开始
-- sitemap production URL：未配置正式域名
-- Changelog：未开始；没有真实版本内容前保持 planned
-- Release QA：未完成
+- Platforms：已完成
+- Templates：已完成
+- Pricing：未完成；保持不可用项
+- About：未完成；保持不可用项
+- Changelog：未完成；保持不可用项
+- SEO Finalization：未开始
+- Deployment：未完成；生产域名尚未确认
 
 ## 2. 当前工程状态
 
@@ -51,10 +55,10 @@
 | 正式语言 | `en`、`zh-CN` |
 | 规划语言 | `ja`、`ko`、`de`、`fr`、`es`，当前不生成正式页面 |
 | 部署方式 | Vercel，Root Directory = `website` |
-| 页面状态 | Homepage、Features 已实现；Privacy、Platforms、Templates 为开发中页面骨架；Pricing、FAQ、Support、About、Terms、Changelog 尚未创建 |
+| 页面状态 | Homepage、Features、Privacy、Platforms、Templates、FAQ、Support、Terms 已实现；Pricing、About、Changelog 尚未创建 |
 | 数据和运行边界 | 静态优先，不读取插件运行时用户数据，不调用 `chrome.*` |
 
-当前工程包含以下正式语言路由骨架：
+当前工程包含以下正式语言路由：
 
 ```text
 /
@@ -62,12 +66,22 @@
 /privacy
 /platforms
 /templates
+/faq
+/support
+/terms
 /zh-CN
 /zh-CN/features
 /zh-CN/privacy
 /zh-CN/platforms
 /zh-CN/templates
+/zh-CN/faq
+/zh-CN/support
+/zh-CN/terms
 ```
+
+Platforms 页面已完成 `/platforms` 与 `/zh-CN/platforms`。平台状态依据当前源码配置、适配器结构和现有验证记录区分为“历史验证”和“代码配置 · 未验证”；页面没有将 host permission 表述为稳定支持，也没有新增平台详情页或 SEO 扩展。
+
+Platforms 页面已完成 `/platforms` 与 `/zh-CN/platforms`。平台状态依据当前源码配置、适配器结构和现有验证记录区分为“历史验证”和“代码配置 · 未验证”；页面没有将 host permission 表述为稳定支持，也没有新增平台详情页或 SEO 扩展。
 
 这些路由的存在只表示工程骨架已经生成，不表示页面内容、SEO metadata、视觉设计或产品能力宣传已经完成。
 

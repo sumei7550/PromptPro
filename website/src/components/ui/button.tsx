@@ -21,7 +21,8 @@ export function Button({ variant = "primary", size = "medium", className = "", .
 
   if ("href" in props) {
     const { href, ...anchorProps } = props as LinkProps;
-    return <a className={classNames} href={href} {...anchorProps} />;
+    const isChromeWebStoreLink = href.startsWith("https://chromewebstore.google.com/");
+    return <a className={classNames} href={href} {...anchorProps} target={isChromeWebStoreLink ? "_blank" : anchorProps.target} rel={isChromeWebStoreLink ? "noreferrer" : anchorProps.rel} />;
   }
 
   const buttonProps = props as ButtonProps;

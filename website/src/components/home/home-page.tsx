@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import type { HomeContent, SupportedLocale } from "@/content/locales";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
@@ -9,6 +8,7 @@ import { ProductScreenshot } from "@/components/ui/product-screenshot";
 import { Section } from "@/components/ui/section";
 import { chromeWebStoreUrl } from "@/lib/chrome-web-store";
 import { ChromeIcon } from "@/components/ui/chrome-icon";
+import { PlatformGroup } from "@/components/platforms/platform-group";
 import styles from "./home-page.module.css";
 
 type HomePageProps = { locale: SupportedLocale; content: HomeContent };
@@ -91,8 +91,4 @@ export function HomePage({ locale, content }: HomePageProps) {
 
 function SectionIntro({ eyebrow, title, description }: { eyebrow: string; title: string; description: string }) {
   return <div className={styles.sectionIntro}><p className={styles.kicker}>{eyebrow}</p><h2>{title}</h2><p>{description}</p></div>;
-}
-
-function PlatformGroup({ group }: { group: HomeContent["platforms"]["groups"][number] }) {
-  return <div className={styles.platformGroup}><div className={styles.platformGroupHeader}><div><h3>{group.title}</h3><p>{group.description}</p></div><Badge status={group.status}>{group.badge}</Badge></div><div className={styles.platformGrid}>{group.platforms.map((platform) => <Card key={platform.name} variant="platform"><h3>{platform.name}</h3><p>{platform.description}</p></Card>)}</div></div>;
 }

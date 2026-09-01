@@ -1,8 +1,20 @@
 # PromptPro 官网 MVP 素材清单
 
-更新时间：2026-08-23  
+更新时间：2026-09-02
 阶段：官网设计准备阶段 / Asset Inventory  
-状态：素材清单已冻结；真实截图版本、最终脱敏结果和 OG 成品仍待上线前确认
+状态：已完成 Core Website MVP 页面使用盘点；素材仍属于候选 raw 截图，最终版本、脱敏记录和 OG 成品待上线前确认
+
+## 当前页面使用盘点（Phase 4）
+
+| Asset | Used By | Status |
+|---|---|---|
+| `website/public/images/product/raw/promptpro-ai-chat-integration.png` | Homepage product preview | 已使用；候选截图，画面为合成测试内容，无明显个人信息；含第三方 AI 页面 UI，不能单独证明兼容性或商业化能力 |
+| `website/public/images/product/raw/promptpro-custom-template.png` | Features、Templates | 已使用；候选截图，展示本地个人模板流程；未见明显个人信息；画面中的 `seo` 为通用测试名称 |
+| `website/public/images/product/raw/promptpro-prompt-optimization-review.png` | Features | 已使用；候选截图，展示本地规则优化 Review 流程；提示词为通用示例 |
+| `website/public/images/product/raw/promptpro-template-library.png` | Homepage、Features、Templates | 已使用；候选截图，展示模板库和平台标签；未见明显个人信息；不应作为“所有 AI 网站兼容”证明 |
+| `website/public/images/product/raw/promptpro-template-search.png` | Features、Templates | 已使用；候选截图，展示本地模板搜索；`code` 为通用测试搜索词 |
+
+当前目录没有发现未使用的产品图片、重复文件或明显包含邮箱、头像、账号名、真实业务数据、密钥和订单信息的画面。截图仍含产品/第三方页面界面状态（例如 `Upgrade` 或剩余次数），上线前应继续确认与当前版本和公开商业化范围一致，不把它们解释为已开放的 Pro 功能。
 
 本文档只冻结官网 MVP 所需素材、来源、用途、处理规则和缺口，不创建或修改图片，不实现页面、CSS、SEO 或 Open Graph 代码。
 

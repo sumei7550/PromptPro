@@ -112,6 +112,66 @@ export type FeaturesContent = {
   finalCta: { title: string; description: string; label: string };
 };
 
+export type PlatformsContent = {
+  hero: { eyebrow: string; title: string; description: string };
+  overview: string;
+  groups: HomePlatformGroup[];
+  meaning: { eyebrow: string; title: string; description: string; items: HomePrivacyItem[] };
+  notice: string;
+  finalCta: { title: string; description: string; label: string };
+};
+
+export type TemplatesContent = {
+  hero: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    primaryCta: string;
+    note: string;
+  };
+  categories: { title: string; description: string }[];
+  workflow: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    steps: { title: string; description: string }[];
+  };
+  showcases: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    details: string[];
+    image: string;
+    imageAlt: string;
+    aspectRatio: string;
+  }[];
+  finalCta: { title: string; description: string; label: string };
+};
+
+export type FaqContent = {
+  hero: { eyebrow: string; title: string; description: string };
+  categories: {
+    title: string;
+    questions: { question: string; answer: string }[];
+  }[];
+  finalCta: { title: string; description: string; label: string };
+};
+
+export type SupportContent = {
+  hero: { eyebrow: string; title: string; description: string };
+  supportOptions: {
+    title: string;
+    description: string;
+    label: string;
+    href: string;
+    external?: boolean;
+  }[];
+  troubleshooting: { title: string; description: string }[];
+  troubleshootingTitle: string;
+  compatibilityNote: { title: string; description: string };
+  finalCta: { title: string; description: string; primaryLabel: string; secondaryLabel: string };
+};
+
 export const localeConfig: Record<Locale, { label: string; openGraphLocale: string }> = {
   en: { label: "English", openGraphLocale: "en_US" },
   "zh-CN": { label: "简体中文", openGraphLocale: "zh_CN" },

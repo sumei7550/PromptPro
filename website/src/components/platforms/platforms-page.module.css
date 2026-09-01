@@ -1,0 +1,34 @@
+.hero { background: linear-gradient(135deg, var(--color-brand-50), var(--color-white) 62%); padding-block: var(--space-20) var(--space-16); text-align: center; }
+.heroInner { display: flex; align-items: center; flex-direction: column; }
+.eyebrow { margin-bottom: var(--space-3); color: var(--color-brand-700); font-size: 13px; font-weight: var(--font-bold); letter-spacing: .06em; text-transform: uppercase; }
+.hero h1 { max-width: 820px; }
+.heroDescription { max-width: 680px; margin-top: var(--space-6); font-size: 20px; }
+.overview { padding-block: var(--space-10); background: var(--color-background); }
+.overview p { max-width: 760px; margin: 0 auto; color: var(--color-text-secondary); font-size: 17px; text-align: center; }
+.groups { background: var(--color-background-subtle); }
+.group + .group { margin-top: var(--space-12); }
+.groupHeader { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-6); margin-bottom: var(--space-5); }
+.groupHeader > div { min-width: 0; }
+.groupHeader h2 { margin-bottom: var(--space-2); font-size: 28px; }
+.groupHeader p { max-width: 760px; }
+.grid { display: grid; gap: var(--space-4); grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.card { display: flex; min-height: 178px; flex-direction: column; }
+.card h3 { margin-bottom: var(--space-3); font-size: 20px; }
+.card p { color: var(--color-text-secondary); font-size: 15px; }
+.meaningIntro { max-width: 760px; margin-bottom: var(--space-10); }
+.meaningIntro h2 { margin-bottom: var(--space-4); }
+.meaningIntro > p:last-child { font-size: 17px; }
+.meaningGrid { display: grid; gap: var(--space-4); grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.meaningGrid h3 { margin-bottom: var(--space-2); font-size: 20px; }
+.meaningGrid p { font-size: 15px; }
+.notice { border-block: 1px solid var(--color-brand-200); background: var(--color-surface-brand); padding-block: var(--space-8); }
+.notice p { max-width: 820px; margin: 0 auto; color: var(--color-text-secondary); font-size: 15px; text-align: center; }
+.finalCta { background: var(--color-slate-900); padding-block: var(--space-20); }
+.finalCtaInner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-8); }
+.finalCta h2 { margin-bottom: var(--space-4); color: var(--color-white); }
+.finalCta p:last-child { max-width: 680px; color: var(--color-slate-300); }
+.finalCta .eyebrow { color: var(--color-brand-300); }
+.finalCtaButton { border: 1px solid rgb(124 58 237 / 15%); background: var(--color-brand-50); color: var(--color-slate-900); }
+.relatedLinks { display: flex; justify-content: center; gap: var(--space-2); padding: var(--space-8) var(--page-padding); font-weight: var(--font-semibold); }
+@media (max-width: 1023px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 767px) { .hero { padding-block: var(--space-12) var(--space-12); } .heroDescription { font-size: 18px; } .groupHeader { align-items: flex-start; flex-direction: column; } .grid { display: flex; min-width: 0; overflow-x: auto; padding-bottom: var(--space-2); scroll-snap-type: x proximity; } .card { min-width: min(78vw, 300px); scroll-snap-align: start; } .meaningGrid { grid-template-columns: 1fr; } .finalCta { padding-block: var(--space-16); } .finalCtaInner { align-items: flex-start; flex-direction: column; } .finalCtaInner > * { width: 100%; } .finalCta :global(.button) { width: 100%; } }

@@ -1,6 +1,6 @@
 # PromptPro 官网信息架构
 
-更新时间：2026-08-24
+更新时间：2026-09-02
 
 本文档用于冻结 PromptPro 官网 Website IA v2、用户访问路径、导航、页面职责、CTA、内链和语言 URL 关系。本阶段不涉及页面正文开发或完整 SEO Implementation。
 
@@ -14,9 +14,12 @@
 /privacy
 /platforms
 /templates
+/faq
+/support
+/terms
 ```
 
-当前实现状态：Homepage 与 Features 已完成；Privacy、Platforms、Templates 为 In Progress。Pricing、FAQ、Support、About、Terms 未开始，不创建空路由。
+当前实现状态：Homepage、Features、Privacy、Platforms、Templates、FAQ、Support、Terms 已完成；Pricing、About、Changelog 保持未开放，不创建空路由。
 
 ### 1.2 Website IA v2
 
@@ -28,7 +31,7 @@ Company: About
 Legal: Privacy Policy · Terms of Use
 ```
 
-`Pricing`、`FAQ`、`Support`、`Changelog`、`About` 和 `Terms of Use` 已进入规划 IA，但在有真实正文前不创建空路由、不使用 `#` 或占位域名。`Features`、`Platforms`、`Templates`、`Privacy` 的现有路径保留，正文继续列入后续页面开发清单。
+`Pricing`、`Changelog` 和 `About` 仍属于规划页面；`FAQ`、`Support` 和 `Terms of Use` 已有真实正文和正式路由。未完成页面不创建空路由、不使用 `#` 或占位域名。`Features`、`Platforms`、`Templates`、`Privacy` 的现有路径保留。
 
 未来 SEO Growth IA 仅作规划：`Use Cases`（Writing、Coding、Marketing、SEO、Translation 及经事实和关键词研究确认的其他场景）。Blog 只记录为未来可能性，不进入当前导航。
 
