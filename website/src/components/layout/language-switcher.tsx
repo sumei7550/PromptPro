@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import type { MouseEvent } from "react";
 import type { SupportedLocale } from "@/content/locales";
 import styles from "./layout.module.css";
 
@@ -24,9 +23,11 @@ function ChevronIcon({ open }: { open: boolean }) {
 export function LanguageSwitcher({ locale, pathname = locale === "en" ? "/" : "/zh-CN", label, languageNames }: LanguageSwitcherProps) {
   const [open, setOpen] = useState(false);
   const [mobile, setMobile] = useState(false);
+  const openRef = useRef(open);
   const rootRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const pathWithoutLocale = pathname.replace(/^\/zh-CN(?=\/|$)/, "") || "/";
+  useEffect(() => { openRef.current = open; }, [open]);
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 1023px)");
     const updateViewport = () => { setMobile(mediaQuery.matches); if (!mediaQuery.matches) setOpen(false); };
@@ -34,22 +35,21 @@ export function LanguageSwitcher({ locale, pathname = locale === "en" ? "/" : "/
     mediaQuery.addEventListener("change", updateViewport);
     const handlePointerDown = (event: PointerEvent) => { if (!rootRef.current?.contains(event.target as Node)) setOpen(false); };
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && open) {
+      if (event.key === "Escape" && openRef.current) {
         setOpen(false);
         triggerRef.current?.focus();
       }
     };
     document.addEventListener("pointerdown", handlePointerDown); document.addEventListener("keydown", handleKeyDown);
     return () => { mediaQuery.removeEventListener("change", updateViewport); document.removeEventListener("pointerdown", handlePointerDown); document.removeEventListener("keydown", handleKeyDown); };
-  }, [open]);
+  }, []);
   const targetPath = (targetLocale: SupportedLocale) => targetLocale === "en"
     ? pathWithoutLocale
     : `/zh-CN${pathWithoutLocale === "/" ? "" : pathWithoutLocale}`;
-  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    if (!mobile && event.detail > 0) return;
-    setOpen((value) => !value);
+  const handleClick = () => {
+    setOpen(mobile ? (value) => !value : true);
   };
-  return <div className={styles.languageRoot} ref={rootRef} data-open={open || undefined} onMouseEnter={() => { if (!mobile) setOpen(true); }} onMouseLeave={() => { if (!mobile) setOpen(false); }}>
+  return <div className={styles.languageRoot} ref={rootRef} data-open={open || undefined} onMouseEnter={() => { if (!mobile) setOpen(true); }} onMouseLeave={() => { if (!mobile) setOpen(false); }} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setOpen(false); }}>
     <button className={styles.languageTrigger} ref={triggerRef} type="button" aria-expanded={open} aria-haspopup="menu" aria-label={label} onClick={handleClick} onKeyDown={(event) => { if (!mobile && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); setOpen(true); } }} onMouseEnter={() => { if (!mobile) setOpen(true); }}><GlobeIcon /><span>{languageNames[locale]}</span><ChevronIcon open={open} /></button>
     <div className={styles.languageMenu} role="menu" aria-label={label}>{(["en", "zh-CN"] as const).map((targetLocale) => <Link key={targetLocale} className={styles.languageOption} href={targetPath(targetLocale)} hrefLang={targetLocale} role="menuitem" aria-current={locale === targetLocale ? "true" : undefined} onClick={() => setOpen(false)}>{languageNames[targetLocale]}</Link>)}</div>
   </div>;

@@ -38,7 +38,11 @@ export function MobileMenu({ openLabel, closeLabel, children }: MobileMenuProps)
 
   return (
     <>
-      <button className={styles.menuButton} ref={menuButtonRef} type="button" aria-expanded={open} aria-controls="mobile-navigation" aria-label={open ? closeLabel : openLabel} onClick={() => setOpen((value) => !value)}><span aria-hidden="true">{open ? "×" : "☰"}</span></button>
+      <button className={styles.menuButton} ref={menuButtonRef} type="button" aria-expanded={open} aria-controls="mobile-navigation" aria-label={open ? closeLabel : openLabel} onClick={() => setOpen((value) => !value)}>
+        <svg className={styles.menuIcon} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d={open ? "M5 5 19 19M19 5 5 19" : "M4 6H20M4 12H20M4 18H20"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
       {open && <button className={styles.mobileMenuBackdrop} type="button" aria-label={closeLabel} onClick={onClose} />}
       {open && <aside className={styles.mobileMenuPanel} ref={panelRef} aria-label="Mobile navigation">{children}</aside>}
     </>

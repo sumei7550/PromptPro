@@ -8,7 +8,7 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { featuresContent as enFeaturesContent } from "@/content/en/features";
 import { homeContent as zhHomeContent } from "@/content/zh-CN/home";
 import { featuresContent as zhFeaturesContent } from "@/content/zh-CN/features";
-import { getOpenGraphLocale } from "@/content/locales";
+import { getMetadata } from "@/lib/seo";
 
 const pages = new Set(["features", "privacy", "platforms", "templates"]);
 const paths = [
@@ -26,8 +26,7 @@ export const dynamicParams = false;
 
 export async function generateMetadata({ params }: SegmentsPageProps): Promise<Metadata> {
   const { segments } = await params;
-  const locale = segments[0] === "zh-CN" ? "zh-CN" : "en";
-  return { openGraph: { locale: getOpenGraphLocale(locale) } };
+  return getMetadata(`/${segments.join("/")}`);
 }
 
 export default async function SegmentsPage({ params }: SegmentsPageProps) {
