@@ -39,9 +39,48 @@ The JSON-LD is valid, uses visible FAQ content, and has no duplicate or unsuppor
 
 No screenshot indicates a social-tag defect. Production HTML contains `og:title`, `og:description`, `og:url`, `og:image`, `og:type`, `og:locale`, `og:locale:alternate`, `twitter:card`, `twitter:title`, `twitter:description`, and `twitter:image`. The configured OG image is `https://prompt-pro-psi.vercel.app/og/promptpro-og.png` at 1200×630.
 
-Social previews on LinkedIn, Facebook and X remain manual validation items and are not represented as passed here.
+Facebook and LinkedIn social previews are documented below as passed; X remains an optional manual check and is not tested.
 
 **Result:** no code change.
+
+## Social Preview
+
+### Facebook / Meta Sharing Debugger
+
+- URL: `https://prompt-pro-psi.vercel.app/`
+- Result: **Passed**
+- Fetch successful; response code `200`.
+- Canonical URL correct and link preview rendered successfully.
+- `og:url`, `og:type` (`website`), `og:title`, `og:description` and `og:image` correct.
+- OG image rendered successfully; Twitter card metadata also detected.
+- No old logo, broken image or preview-rendering issue.
+
+The tool reported missing `fb:app_id`. **Ignore.** The PromptPro homepage has no Facebook App, so there is no need to create a fake `fb:app_id` solely to silence a tool warning.
+
+**Action: no code change.**
+
+### LinkedIn Post Inspector
+
+- URL: `https://prompt-pro-psi.vercel.app/`
+- Result: **Passed**
+- Fetch successful and preview card rendered successfully.
+- Title, description and image rendered correctly.
+- Fetched URL and canonical URL correct.
+- Redirect trail: `200 Success`.
+- No old-cache issue or broken image.
+
+LinkedIn showed `No author found` and `No publication date found`. **Ignore.** The PromptPro homepage is not Article/Blog content and does not need author or publication-date metadata. If the image URL is displayed as `media.licdn.com`, that is normal LinkedIn CDN caching behavior, not an OG image configuration error.
+
+**Action: no code change.**
+
+### Status
+
+- Facebook: **Passed**
+- LinkedIn: **Passed**
+- X: **Optional / Not tested**
+- Social Preview Overall: **Passed**
+
+No production code, metadata, Open Graph, Twitter metadata, JSON-LD, favicon, OG image, page content, SEO strategy, URL architecture, CTA or Vercel configuration was changed for this validation.
 
 ### Images
 
@@ -116,6 +155,18 @@ None. No production code or metadata was changed in this review.
 - FAQPage not surfaced as a Google rich result.
 - Ko-fi automated crawler HTTP 403.
 
+## Google Search Console
+
+- Property verification: **Passed**
+- Sitemap submission: **Passed**
+- Sitemap discovered URLs: `16`
+- Homepage indexing request: **Submitted**
+- `/features` indexing request: **Submitted**
+- `/templates` indexing request: **Submitted**
+- Remaining indexing requests: **Optional / Pending quota**
+
+These entries record submitted requests and verification results only; they do not claim that Google has already indexed the pages.
+
 ## Manual Checks
 
 Passed:
@@ -126,12 +177,14 @@ Passed:
 - Google Rich Results Test run for homepage, FAQ English and FAQ Chinese.
 - Production HTTP 200 and robots/sitemap response checks.
 - Production homepage and FAQ JSON-LD source sanity checks.
+- Facebook / Meta Sharing Debugger social preview validation.
+- LinkedIn Post Inspector social preview validation.
 
-Not claimed as passed:
+Optional / pending:
 
-- LinkedIn, Facebook or X social preview validation.
-- Google Search Console property, sitemap submission or indexing verification.
+- X social preview — Optional / Not tested.
+- Remaining Google Search Console indexing requests — Optional / Pending quota.
 
 ## Final Recommendation
 
-Production SEO remains ready. The review found 0 actual issues, 0 P0 issues, 0 P1 issues and 0 P2 fixes. All observed warnings are tool-only, optional, unsupported by current facts, or already manually explained. Keep the current implementation unchanged; revisit only the explicitly pending manual social-preview and Search Console checks.
+Production SEO remains ready. The review found 0 actual issues, 0 P0 issues, 0 P1 issues and 0 P2 fixes. All observed warnings are tool-only, optional, unsupported by current facts, or already manually explained. Social Preview validation overall is passed; X remains optional and untested. Keep the current implementation unchanged; revisit only the explicitly pending optional checks.
