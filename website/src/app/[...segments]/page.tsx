@@ -27,6 +27,7 @@ import { supportContent as zhSupportContent } from "@/content/zh-CN/support";
 import { TermsPage } from "@/components/terms/terms-page";
 import { termsContent as enTermsContent } from "@/content/en/terms";
 import { termsContent as zhTermsContent } from "@/content/zh-CN/terms";
+import { FaqStructuredData, HomepageStructuredData } from "@/components/seo/structured-data";
 
 const pages = new Set(["features", "privacy", "platforms", "templates", "faq", "support", "terms"]);
 const paths = [
@@ -54,7 +55,7 @@ export default async function SegmentsPage({ params }: SegmentsPageProps) {
   const locale = isChinese ? "zh-CN" : "en";
   if ((isChinese && segments.length > 2) || (!isChinese && segments.length > 1) || (isChinese && segments.length === 1 && page !== undefined) || (page !== undefined && !pages.has(page))) notFound();
   if (isChinese && segments.length === 1) {
-    return <><SiteHeader locale="zh-CN" pathname="/zh-CN" /><HomePage locale="zh-CN" content={zhHomeContent} /><SiteFooter locale="zh-CN" /></>;
+    return <><HomepageStructuredData /><SiteHeader locale="zh-CN" pathname="/zh-CN" /><HomePage locale="zh-CN" content={zhHomeContent} /><SiteFooter locale="zh-CN" /></>;
   }
   const pathname = isChinese ? `/zh-CN/${page}` : `/${page}`;
   const content = isChinese ? zhFeaturesContent : enFeaturesContent;
@@ -64,5 +65,5 @@ export default async function SegmentsPage({ params }: SegmentsPageProps) {
   const faqContent = isChinese ? zhFaqContent : enFaqContent;
   const supportContent = isChinese ? zhSupportContent : enSupportContent;
   const termsContent = isChinese ? zhTermsContent : enTermsContent;
-  return <><SiteHeader locale={locale} pathname={pathname} />{page === "features" ? <FeaturesPage locale={locale} content={content} /> : page === "privacy" ? <PrivacyPage locale={locale} content={privacyContent} /> : page === "platforms" ? <PlatformsPage locale={locale} content={platformsContent} /> : page === "templates" ? <TemplatesPage locale={locale} content={templatesContent} /> : page === "faq" ? <FaqPage locale={locale} content={faqContent} /> : page === "support" ? <SupportPage locale={locale} content={supportContent} /> : page === "terms" ? <TermsPage locale={locale} content={termsContent} /> : <TodoPage locale={locale} path={pathname} />}<SiteFooter locale={locale} /></>;
+  return <>{page === "faq" && <FaqStructuredData content={faqContent} locale={locale} path={pathname} />}<SiteHeader locale={locale} pathname={pathname} />{page === "features" ? <FeaturesPage locale={locale} content={content} /> : page === "privacy" ? <PrivacyPage locale={locale} content={privacyContent} /> : page === "platforms" ? <PlatformsPage locale={locale} content={platformsContent} /> : page === "templates" ? <TemplatesPage locale={locale} content={templatesContent} /> : page === "faq" ? <FaqPage locale={locale} content={faqContent} /> : page === "support" ? <SupportPage locale={locale} content={supportContent} /> : page === "terms" ? <TermsPage locale={locale} content={termsContent} /> : <TodoPage locale={locale} path={pathname} />}<SiteFooter locale={locale} /></>;
 }

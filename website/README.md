@@ -49,7 +49,9 @@ npm run build
 website
 ```
 
-Vercel 使用该目录中的 `package.json` 执行安装和构建。正式域名确定后，可配置 `NEXT_PUBLIC_SITE_URL`，供 metadata、sitemap 和 robots 使用；当前默认值仅为占位地址，不代表正式官网域名。
+Vercel 使用该目录中的 `package.json` 执行安装和构建。Production 环境必须定义 `NEXT_PUBLIC_SITE_URL`；当前正式值为 `https://prompt-pro-psi.vercel.app`。该变量是 metadata、canonical、hreflang、Open Graph、sitemap 和 robots 共用的 origin 来源。缺少该变量时 production build 会失败，本地开发仍使用安全 fallback。
+
+可参考 [`.env.example`](./.env.example) 配置本地环境。
 
 ## 与插件工程隔离
 

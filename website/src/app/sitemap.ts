@@ -1,11 +1,10 @@
 import type { MetadataRoute } from "next";
-import { siteUrl } from "@/lib/seo";
+import { absoluteSiteUrl } from "@/lib/seo";
 const routes = ["", "/features", "/privacy", "/platforms", "/templates", "/faq", "/support", "/terms"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const localizedRoutes = (prefix: string) => routes.map((route) => ({
-      url: route ? `${siteUrl}${prefix}${route}` : `${siteUrl}${prefix || "/"}`,
-      lastModified: new Date("2026-08-21"),
+      url: absoluteSiteUrl(`${prefix}${route}` || "/"),
     }));
   return [...localizedRoutes(""), ...localizedRoutes("/zh-CN")];
 }

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f7f5f0"/>
+  <circle cx="1030" cy="100" r="260" fill="#e5defb"/>
+  <g transform="translate(84 84) scale(.5625)">
+    <defs><linearGradient id="background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7C3AED"/><stop offset="1" stop-color="#4C1D95"/></linearGradient><clipPath id="tail-exposure"><path d="M86 83 101 87 92 94 96 102 89 105 84 95Z"/></clipPath></defs>
+    <rect width="128" height="128" rx="26" fill="url(#background)"/>
+    <path d="M65 72 100 89 87 92 94 104 86 108 79 96 70 106Z" fill="#FBBF24" clip-path="url(#tail-exposure)"/>
+    <path d="M45 97V33h29c12 0 20 8 20 19s-8 19-20 19H45" fill="none" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="180" y="138" font-family="Arial,sans-serif" font-size="42" font-weight="700" fill="#171717">PromptPro</text>
+  <text x="84" y="300" font-family="Arial,sans-serif" font-size="64" font-weight="700" fill="#171717">Improve your prompts</text>
+  <text x="84" y="374" font-family="Arial,sans-serif" font-size="64" font-weight="700" fill="#6d28d9">locally.</text>
+  <text x="84" y="458" font-family="Arial,sans-serif" font-size="28" fill="#525252">Local prompt optimization and bilingual templates for AI websites.</text>
+  <rect x="84" y="510" width="250" height="56" rx="28" fill="#171717"/><text x="209" y="547" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#fff">No account required</text>
+</svg>
