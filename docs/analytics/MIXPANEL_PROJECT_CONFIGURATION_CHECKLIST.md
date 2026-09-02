@@ -234,7 +234,7 @@ Not approved:
 - [ ] Confirm whether country reporting is needed for the MVP.
 - [ ] Update Privacy wording if country is enabled.
 
-Recommended default: leave country disabled until the actual behavior and Privacy wording are reviewed. Country is useful for Acquisition, but it is not required to validate CTA or Store-click conversion.
+Decision for PromptPro: enable IP-based Country derivation. Do not add raw IP as a custom event property. Review whether Mixpanel also exposes City/Region default properties; if they cannot be disabled, disclose that actual behavior before treating this gate as fully closed.
 
 ## 10. Event Schema Registration
 

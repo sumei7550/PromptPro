@@ -142,7 +142,7 @@ Use these rules:
 
 ### Automatic Mixpanel fields to review before enabling
 
-Mixpanel may provide technical or derived fields such as device/browser information, country, referrer, URL, and a generated distinct identifier depending on the SDK, project settings, and privacy configuration. These are not part of the custom PromptPro event contract until verified.
+Mixpanel may provide technical or derived fields such as device/browser information, country, referrer, URL, and a generated distinct identifier depending on the SDK, project settings, and privacy configuration. The current PromptPro configuration enables IP-based location derivation so Country can be used in Acquisition reporting. Raw IP is not added as a custom PromptPro event property.
 
 Before implementation, explicitly decide whether to disable or limit:
 
@@ -169,7 +169,7 @@ Purpose: understand how people arrive and what content they reach.
 - Countries from Mixpanel's approved derived/technical field, if enabled after privacy review.
 - Locale split using `locale`.
 
-Country and referrer are attribution dimensions, not custom user identity fields. Confirm the exact Mixpanel configuration and regional/privacy implications before displaying them as a production metric.
+Country and referrer are attribution dimensions, not custom user identity fields. The current Project uses US data residency; this should remain visible in Privacy and vendor review records.
 
 ### Conversion
 

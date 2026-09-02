@@ -100,7 +100,7 @@ export function WebsiteAnalytics() {
     mixpanel.init(token, {
       autocapture: false,
       disable_persistence: true,
-      ip: false,
+      ip: true,
       track_pageview: false,
     });
     initialized = true;
