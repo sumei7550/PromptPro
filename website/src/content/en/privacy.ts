@@ -64,7 +64,11 @@ export const privacyContent: PrivacyContent = {
     {
       title: "7. Analytics and Tracking",
       paragraphs: [
-        "PromptPro currently does not include analytics, advertising, or telemetry in the extension. The local daily usage counter is feature-limit state, not an analytics or tracking system.",
+        "The current PromptPro extension does not include analytics, advertising, or telemetry. The local daily usage counter is feature-limit state, not an analytics or tracking system.",
+        "The PromptPro website may use Mixpanel for website analytics when that feature is enabled. Website analytics is intended to measure page views, approved referral/source categories, calls to action, Chrome Web Store link clicks, language switches, external-link categories, and FAQ interaction.",
+        "Website analytics is limited to normalized page paths, supported locale values, and controlled interaction categories. It must not include prompt text, template text, chat content, third-party AI website content, arbitrary page content, form values, keyboard input, clipboard content, email addresses, or user identity.",
+        "The website and extension use separate event namespaces and data boundaries. Website events use the web_ prefix; any future extension analytics would require a separate review and use the extension_ prefix. PromptPro does not use website analytics to send extension prompts, templates, history, settings, or usage data.",
+        "Before website analytics is enabled, the applicable Mixpanel configuration, identifier and storage behavior, retention, and any consent or opt-out requirements should be reviewed and reflected in this policy. Optional features such as session replay, heatmaps, form capture, keystroke capture, and automatic content capture are not part of the initial analytics scope.",
       ],
     },
     {
