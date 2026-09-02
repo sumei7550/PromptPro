@@ -9,6 +9,9 @@ export const metadata: Metadata = {
     default: "PromptPro — Local Prompt Optimizer & Bilingual Templates",
     template: "%s",
   },
+  verification: {
+    google: "-1t7qtzy1DcFD03YxrjvuYazuZgi0DpPgzqf24Fwlro",
+  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "32x32", type: "image/x-icon" },
