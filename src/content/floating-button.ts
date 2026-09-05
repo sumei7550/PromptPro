@@ -134,6 +134,8 @@ export class FloatingButton {
   private tooltip: HTMLDivElement
   private onClickCallback: (() => void) | null = null
   private observer: MutationObserver | null = null
+  private positionFrame: number | null = null
+  private mounted = false
   private locale: Locale = 'en'
 
   constructor(private platform: PlatformAdapter) {
@@ -177,12 +179,20 @@ export class FloatingButton {
     }
   }
 
-  mount(): void {
+  mount(options: { observeDom?: boolean } = {}): void {
+    if (this.mounted) return
+    this.mounted = true
     this.tryMount()
-    this.observer = new MutationObserver(() => this.tryMount())
-    this.observer.observe(document.body, { childList: true, subtree: true })
+    if (options.observeDom !== false) {
+      this.observer = new MutationObserver(() => this.scheduleRefresh())
+      this.observer.observe(document.body, { childList: true, subtree: true })
+    }
     window.addEventListener('scroll', this.updatePosition, true)
     window.addEventListener('resize', this.updatePosition)
+  }
+
+  refresh(): void {
+    this.tryMount()
   }
 
   private tryMount(): void {
@@ -191,6 +201,9 @@ export class FloatingButton {
       this.host.style.display = 'none'
       return
     }
+
+    const existingHost = document.getElementById(this.host.id)
+    if (existingHost && existingHost !== this.host) existingHost.remove()
 
     if (this.host.parentElement !== document.body) {
       document.body.appendChild(this.host)
@@ -201,6 +214,14 @@ export class FloatingButton {
 
     this.host.style.display = ''
     this.updatePosition()
+  }
+
+  private scheduleRefresh(): void {
+    if (this.positionFrame !== null) return
+    this.positionFrame = requestAnimationFrame(() => {
+      this.positionFrame = null
+      this.tryMount()
+    })
   }
 
   private updatePosition = (): void => {
@@ -295,8 +316,10 @@ export class FloatingButton {
 
   destroy(): void {
     this.observer?.disconnect()
+    if (this.positionFrame !== null) cancelAnimationFrame(this.positionFrame)
     window.removeEventListener('scroll', this.updatePosition, true)
     window.removeEventListener('resize', this.updatePosition)
     this.host.remove()
+    this.mounted = false
   }
 }

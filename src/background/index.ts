@@ -1,5 +1,6 @@
 import { MAX_FREE_DAILY_USAGE } from '@/shared/constants'
 import { getSettings } from '@/shared/storage'
+import { requestPromptProOptimization } from '@/services/promptpro-api-client'
 
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({ id: 'save-selection-as-template', title: 'Save selection as PromptPro template', contexts: ['selection'] })
@@ -12,6 +13,16 @@ chrome.contextMenus.onClicked.addListener((info) => {
 })
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+  if (message.type === 'PROMPTPRO_AI_OPTIMIZE') {
+    requestPromptProOptimization(message.payload)
+      .then(sendResponse)
+      .catch(() => sendResponse({
+        ok: false,
+        error: { code: 'network-error', message: 'Could not reach the PromptPro API.' },
+      }))
+    return true
+  }
+
   if (message.type === 'OPTIMIZE_PROMPT') {
     handleOptimize()
       .then(sendResponse)
@@ -26,8 +37,8 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
 })
 
 /**
- * 优化逻辑全部在 content script 中本地完成（localOptimize）。
- * Background 仅负责配额校验，不再打开任何隐藏 tab，不向第三方平台投递文本。
+ * Legacy quota-only message retained for compatibility with older callers.
+ * The P0-03 AI path uses PROMPTPRO_AI_OPTIMIZE above.
  */
 async function handleOptimize(): Promise<{ success: boolean; error?: string }> {
   const settings = await getSettings()

@@ -1,11 +1,11 @@
 # PromptPro
 
-> Local-first prompt enhancement with fully local processing
+> AI prompt enhancement with a local-rule fallback
 > Prompt template library Chrome Extension
 
-A Chrome extension for Chinese and English AI users. It provides fully local prompt enhancement and 66 categorized templates for ChatGPT, Claude, Gemini, DeepSeek, Doubao, Perplexity, Copilot, Grok, Google AI Studio, Cursor, v0, and Lovable. No backend or account required.
+A Chrome extension for Chinese and English AI users. It provides AI prompt enhancement and 66 categorized templates for ChatGPT, Claude, Gemini, DeepSeek, Doubao, Perplexity, Copilot, Grok, Google AI Studio, Cursor, v0, and Lovable. No PromptPro account is required.
 
-Prompt enhancement runs locally in the browser. Prompt content stays on-device for local optimization.
+Prompt enhancement uses the PromptPro API and DeepSeek. Only the current prompt and minimum optimization settings are sent; templates, stored history, cookies, DOM, and conversation history are excluded. A bundled local-rule engine remains as a controlled network/service fallback.
 
 ---
 

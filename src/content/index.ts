@@ -1,10 +1,12 @@
 import { detectPlatform } from './platform-detector'
 import { FloatingButton } from './floating-button'
-import { localOptimize } from './optimizer'
 import { Platform } from '@/shared/types'
 import { initializeLocale, incrementUsage, getRemainingUsage, getSettings, recordOptimization } from '@/shared/storage'
 import { getLocale, setLocale, t } from '@/shared/i18n'
 import { previewOptimization } from './preview'
+import { ChatGPTAdapter } from './platforms/chatgpt'
+import { ChatGPTInputLifecycle } from './lifecycle'
+import { optimizePrompt } from '@/services/optimization-service'
 
 function showToast(message: string, type: 'info' | 'error' = 'info', action?: { label: string; onClick: () => void }) {
   const existing = document.getElementById('promptpro-toast')
@@ -51,10 +53,17 @@ async function init() {
   }
 
   const floatingBtn = new FloatingButton(platform)
-  floatingBtn.mount()
+  const chatGPTLifecycle = platform instanceof ChatGPTAdapter
+    ? new ChatGPTInputLifecycle(platform)
+    : null
+
+  floatingBtn.mount({ observeDom: !chatGPTLifecycle })
+  chatGPTLifecycle?.onStateChange(() => floatingBtn.refresh())
+  chatGPTLifecycle?.start()
 
   floatingBtn.onClick(async () => {
-    const text = platform.getInputContent().trim()
+    const inputSnapshot = platform.readInput()
+    const text = inputSnapshot?.text.trim() ?? ''
     if (!text) return
 
     const remaining = await getRemainingUsage()
@@ -66,37 +75,40 @@ async function init() {
     floatingBtn.setState('loading')
 
     try {
-      const result = await chrome.runtime.sendMessage({
-        type: 'OPTIMIZE_PROMPT',
-        payload: {
-          text,
-          platform: platform.name as Platform,
-        },
-      })
-
       const settings = await getSettings()
-      const usedFallback = !result?.success && result?.error !== 'local-only'
-      if (usedFallback) showToast(t('toast.fallback'), 'error')
-      const initialOptimized = result?.success && result.text ? result.text : localOptimize(text, settings.optimizeStyle)
+      const request = {
+        originalText: text,
+        locale: getLocale(),
+        platform: platform.name as Platform,
+        style: settings.optimizeStyle,
+      } as const
+      const initialResult = await optimizePrompt(request)
       const preview = await previewOptimization(
         text,
-        initialOptimized,
+        initialResult.improvedText,
         getLocale(),
         settings.optimizeStyle,
-        async style => localOptimize(text, style),
+        async style => (await optimizePrompt({ ...request, style })).improvedText,
       )
       if (preview.decision === 'cancel') {
         floatingBtn.setState('idle')
         return
       }
 
-      await platform.setInputContent(preview.text)
+      const replacement = await platform.replaceInput(preview.text, inputSnapshot ?? undefined)
+      if (!replacement.success) {
+        throw new Error(`Input replacement failed: ${replacement.reason}${replacement.detail ? ` (${replacement.detail})` : ''}`)
+      }
       await recordOptimization({ originalText: text, optimizedText: preview.text, style: preview.style })
       await incrementUsage()
       floatingBtn.setState('success')
       showToast(t('toast.optimized'), 'info', {
         label: t('btn.undo'),
-        onClick: () => platform.setInputContent(text),
+        onClick: () => {
+          void platform.replaceInput(text, replacement.snapshot).then(result => {
+            if (!result.success) showToast(t('toast.error'), 'error')
+          }).catch(() => showToast(t('toast.error'), 'error'))
+        },
       })
     } catch (error) {
       console.error('[PromptPro] optimization failed', error)
@@ -107,7 +119,9 @@ async function init() {
 
   chrome.runtime.onMessage.addListener((message) => {
     if (message.type === 'INSERT_TEMPLATE') {
-      platform.setInputContent(message.payload.text)
+      void platform.replaceInput(message.payload.text).then(result => {
+        if (!result.success) console.warn(`[PromptPro] template insertion failed: ${result.reason}`)
+      }).catch(error => console.warn('[PromptPro] template insertion failed', error))
     }
   })
 }

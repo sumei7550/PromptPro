@@ -1,5 +1,7 @@
 # PromptPro Privacy Fact Audit
 
+> Historical snapshot: this audit predates P0-03. The AI optimization path added on 2026-09-05 is documented in `docs/P0-03_AI_OPTIMIZATION_ENGINE.md`; statements below that say no PromptPro backend or remote prompt processing exists no longer describe the P0-03 source.
+
 Audit date: 2026-09-01  
 Audit type: static source and existing-copy audit  
 Scope: extension source under `src/`, packaged privacy pages under `public/`, and `docs/seo/PRODUCT_FACTS.md`

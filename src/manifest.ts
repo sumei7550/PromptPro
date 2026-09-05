@@ -28,6 +28,7 @@ const manifest: ManifestV3Export = {
     'https://cursor.com/*',
     'https://v0.dev/*',
     'https://lovable.dev/*',
+    'https://prompt-pro-psi.vercel.app/*',
   ],
   background: {
     service_worker: 'src/background/index.ts',

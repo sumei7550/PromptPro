@@ -1,5 +1,6 @@
 node_modules/
 dist-new/
+dist-dev/
 dist/
 dist-1.1.0/
 release/

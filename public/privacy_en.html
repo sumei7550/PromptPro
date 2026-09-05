@@ -13,28 +13,28 @@
 </head>
 <body>
     <h1>Privacy Policy</h1>
-    <p>Last updated: 2026-08-04</p>
+    <p>Last updated: 2026-09-05</p>
 
     <h2>1. Data Handling</h2>
     <p>When you actively use PromptPro, the extension reads the text in the supported AI page's input field to provide prompt optimization or template insertion. This may include personal information, website content, form data, personal communications, or other user-generated content that you choose to enter.</p>
-    <p>PromptPro processes this content locally in your browser. It does not collect, upload, sell, share, or use your prompt content for advertising or model training. PromptPro does not passively record browsing history or read page content unrelated to the input field.</p>
+    <p>For AI optimization, PromptPro sends only the current prompt text and the minimum optimization settings (language, style, and target platform) to the PromptPro API, which forwards the request to DeepSeek for processing. It does not send the page DOM, cookies, conversation history, saved prompts, optimization history, or unrelated page content. PromptPro does not passively record browsing history.</p>
 
     <h2>2. Data Usage</h2>
-    <p>Prompt optimization and template processing run locally in the user's browser. The original prompt and optimized result may be saved in local Chrome storage as optimization history, together with custom templates, settings, language preference, and usage counters. The history is limited to the most recent 50 entries and can be removed by clearing the extension's local data.</p>
+    <p>AI prompt optimization is processed remotely as described above. If that service has a network, timeout, or service failure, PromptPro may use its bundled local-rule fallback. Template search and variable replacement remain local. After a user accepts an optimization, the original prompt and optimized result may be saved in local Chrome storage as optimization history, together with custom templates, settings, language preference, and usage counters. The history is limited to the most recent 50 entries and can be removed by clearing the extension's local data.</p>
 
     <h2>3. Permissions</h2>
     <ul>
         <li><strong>storage</strong>: Used for local settings, templates, optimization history, usage counters, and migration of legacy settings from Chrome Sync storage. PromptPro does not use Sync storage for ongoing storage.</li>
         <li><strong>scripting</strong>: Used only after the user clicks "Insert Template" when the content script is unavailable, to inject a one-time input-writing function on the active supported page.</li>
         <li><strong>contextMenus</strong>: Used to provide the menu item that saves user-selected text as a local template draft.</li>
-        <li><strong>host_permissions</strong>: Used only to mount the floating button on supported AI pages, including ChatGPT, Claude, Gemini, DeepSeek, Doubao, Perplexity, Copilot, Grok, Google AI Studio, Cursor, v0, and Lovable. The extension never auto-navigates or sends messages on the user's behalf.</li>
+        <li><strong>host_permissions</strong>: Used to operate on the listed supported AI pages and to send user-requested optimization calls to the PromptPro API at prompt-pro-psi.vercel.app. The extension does not receive the provider API key and does not automatically submit messages on the user's behalf.</li>
     </ul>
 
     <h2>4. Third-party Services</h2>
-    <p>This extension does not use any third-party analytics, tracking, or advertising services, and does not upload user input or browsing data to any remote server. All prompt-optimization logic runs locally in the user's browser.</p>
+    <p>The extension uses the PromptPro API and DeepSeek only to process AI optimization requests initiated by the user. The server implementation does not intentionally persist prompt bodies in an application database or include them in application logs. DeepSeek processes these requests under its own applicable terms and data practices. The extension does not include analytics, tracking, or advertising services.</p>
 
     <h2>5. Chrome Web Store User Data Policy</h2>
-    <p>PromptPro's use of information received from Chrome and supported webpages complies with the Chrome Web Store User Data Policy, including the Limited Use requirements. Data is used only to provide the extension's single purpose: local prompt optimization, template management, and user-requested insertion. PromptPro does not sell, use for advertising, or transfer this data to third parties, and does not allow human review of user content.</p>
+    <p>Data is used only to provide PromptPro's user-facing purposes: AI prompt optimization, the local fallback, template management, and user-requested insertion. PromptPro does not sell prompt content or use it for advertising. AI optimization necessarily transfers the current prompt and minimum request settings to the PromptPro API and DeepSeek as described above.</p>
 
     <h2>6. Contact</h2>
     <p>For any privacy-related questions, please contact the developer via GitHub repository: <br>

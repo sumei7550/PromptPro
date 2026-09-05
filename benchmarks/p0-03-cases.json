@@ -1,0 +1,12 @@
+[
+  { "id": "writing-zh", "type": "writing", "locale": "zh", "style": "content-creation", "original": "帮我写一篇关于远程工作的文章" },
+  { "id": "business-email-en", "type": "writing", "locale": "en", "style": "professional", "original": "Write an email to a client about a delayed project" },
+  { "id": "coding-debug-zh", "type": "coding", "locale": "zh", "style": "code", "original": "这段 React 代码一直重复请求接口，帮我排查" },
+  { "id": "coding-build-en", "type": "coding", "locale": "en", "style": "code", "original": "Build a TypeScript CSV parser" },
+  { "id": "research-en", "type": "research", "locale": "en", "style": "deep-analysis", "original": "Research whether small businesses should adopt AI customer support" },
+  { "id": "marketing-zh", "type": "marketing", "locale": "zh", "style": "professional", "original": "给我的番茄钟 Chrome 插件写推广文案" },
+  { "id": "seo-en", "type": "seo", "locale": "en", "style": "structured", "original": "Create an SEO plan for a prompt template website" },
+  { "id": "image-zh", "type": "image", "locale": "zh", "style": "structured", "original": "生成一张未来城市的图片" },
+  { "id": "underspecified-en", "type": "general", "locale": "en", "style": "concise", "original": "Help me plan it" },
+  { "id": "strong-prompt-zh", "type": "research", "locale": "zh", "style": "structured", "original": "比较三款面向独立开发者的错误监控服务。先说明评价维度，再用表格比较价格、前端错误追踪、Source Map、告警和免费额度；无法确认的当前信息请标记待核实，不要猜测。最后给出适合月活 1 万以内 SaaS 的建议。" }
+]

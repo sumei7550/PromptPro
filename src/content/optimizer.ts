@@ -1,16 +1,16 @@
 // ============================================================
-import { OptimizeStyle } from '@/shared/types'
+import type { OptimizeStyle } from '../shared/types.ts'
 // PromptPro Smart Optimizer
-// 纯前端智能提示词优化器，无 API，无第三方依赖
+// 本地规则优化器，无 API、无第三方依赖；P0-03 起仅作为受控 fallback
 // 将模糊的用户输入转化为清晰、自然的 AI 友好提示词
 // 最终输出必须是自然语言，禁止 #角色 / #任务 / System Prompt 风格
 // ============================================================
 
 // ==================== 语言检测 ====================
 
-type Language = 'zh' | 'en'
+export type OptimizationLanguage = 'zh' | 'en'
 
-function detectLanguage(text: string): Language {
+function detectLanguage(text: string): OptimizationLanguage {
   const chineseChars = text.match(/[一-龥]/g)
   const chineseCount = chineseChars ? chineseChars.length : 0
   const totalChars = text.replace(/\s/g, '').length
@@ -363,7 +363,7 @@ interface PromptData {
   role: string | null
   constraints: string[]
   structure: string[]
-  lang: Language
+  lang: OptimizationLanguage
 }
 
 // ==================== 核心函数 ====================
@@ -525,7 +525,41 @@ function humanizePrompt(data: PromptData): string {
  * 默认使用 smart 模式，输出自然语言
  */
 export function localOptimize(text: string, style: OptimizeStyle = 'structured'): string {
-  return smartOptimize(text, 'smart', style)
+  return runLocalOptimization(text, style).improvedText
+}
+
+export interface LocalOptimizationOutput {
+  improvedText: string
+  detectedLanguage: OptimizationLanguage
+  detectedType: string
+}
+
+/**
+ * Structured, side-effect-free entry point used by the Local Optimization Engine.
+ * The legacy string API above remains available for callers outside the engine boundary.
+ */
+export function runLocalOptimization(
+  userInput: string,
+  style: OptimizeStyle = 'structured',
+): LocalOptimizationOutput {
+  if (!userInput || !userInput.trim()) {
+    return {
+      improvedText: userInput || '',
+      detectedLanguage: 'en',
+      detectedType: 'general',
+    }
+  }
+
+  const trimmed = userInput.trim()
+  const detectedLanguage = detectLanguage(trimmed)
+  const detectedType = detectCategory(trimmed)
+  const promptData = buildPrompt(trimmed, detectedType, 'smart')
+
+  return {
+    improvedText: applyStyle(humanizePrompt(promptData), style, detectedLanguage),
+    detectedLanguage,
+    detectedType,
+  }
 }
 
 /**
@@ -540,7 +574,7 @@ export function smartOptimize(userInput: string, mode: string = 'smart', style: 
   return applyStyle(humanizePrompt(promptData), style, detectLanguage(trimmed))
 }
 
-function applyStyle(prompt: string, style: OptimizeStyle, lang: Language): string {
+function applyStyle(prompt: string, style: OptimizeStyle, lang: OptimizationLanguage): string {
   const guidance: Record<OptimizeStyle, { zh: string; en: string }> = {
     concise: { zh: '请保持简洁，优先给出结论和必要步骤，避免冗余。', en: 'Keep the response concise. Prioritize the conclusion and necessary steps; avoid redundancy.' },
     professional: { zh: '请使用专业、准确、克制的表达，明确说明假设和限制。', en: 'Use precise, professional, and measured language. State assumptions and limitations clearly.' },
@@ -561,7 +595,7 @@ export function quickEnhance(userInput: string): string {
 
 // ==================== 内部辅助函数 ====================
 
-function inferRole(category: string, lang: Language): string {
+function inferRole(category: string, lang: OptimizationLanguage): string {
   const map: Record<string, { zh: string; en: string }> = {
     content: { zh: '资深内容创作者与新媒体运营专家', en: 'senior content creator and new media expert' },
     coding: { zh: '拥有十年经验的全栈高级工程师', en: 'senior full-stack engineer with 10 years of experience' },
@@ -575,7 +609,7 @@ function inferRole(category: string, lang: Language): string {
   return map[category]?.[lang] || map.general[lang]
 }
 
-function polishInput(input: string, lang: Language): string {
+function polishInput(input: string, lang: OptimizationLanguage): string {
   if (lang === 'zh') {
     if (input.startsWith('请')) return input
     if (input.startsWith('帮我')) return '请' + input
@@ -599,7 +633,7 @@ function polishInput(input: string, lang: Language): string {
   }
 }
 
-function fillSkeleton(template: string, userInput: string, platform: { zh: string; en: string } | null, lang: Language): string {
+function fillSkeleton(template: string, userInput: string, platform: { zh: string; en: string } | null, lang: OptimizationLanguage): string {
   let result = template
   result = result.replace('{userInput}', userInput)
   if (platform) {

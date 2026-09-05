@@ -5,13 +5,13 @@ export const privacyContent: PrivacyContent = {
     eyebrow: "Privacy",
     title: "Privacy Policy",
     description: "A clear explanation of how PromptPro handles your data.",
-    updated: "Last updated: September 1, 2026",
+    updated: "Last updated: September 5, 2026",
   },
   sections: [
     {
       title: "1. Overview",
       paragraphs: [
-        "PromptPro is a local-first browser extension for refining prompts and working with reusable templates on supported AI websites. The current prompt optimization logic runs locally in your browser, and PromptPro does not require a PromptPro account.",
+        "PromptPro is a browser extension for AI-assisted prompt refinement and reusable templates on supported AI websites. PromptPro does not require a PromptPro account.",
         "PromptPro does need to access information you choose to use with its features. This policy explains what the extension may access, how the current version processes it, and where it is stored.",
       ],
     },
@@ -27,10 +27,10 @@ export const privacyContent: PrivacyContent = {
       ],
     },
     {
-      title: "3. Local Processing",
+      title: "3. Prompt Processing",
       paragraphs: [
-        "The current prompt optimization logic runs locally in the browser using bundled rules. Template search and template-variable replacement also run locally in the extension.",
-        "The current extension source does not implement calls to OpenAI, Claude, Gemini, DeepSeek, or a PromptPro backend for prompt processing. It also does not contain functionality that sends Prompt, Template, or History content to a PromptPro backend or third-party optimization API.",
+        "When you request AI optimization, PromptPro sends the current prompt and the minimum optimization settings (language, style, and target platform) to the PromptPro API, which forwards the request to DeepSeek. The request excludes page DOM, cookies, conversation history, saved prompts, stored optimization history, and unrelated page content.",
+        "If the AI service has a network, timeout, malformed-response, or service failure, PromptPro may use its bundled local-rule fallback. Template search and template-variable replacement remain local in the extension.",
         "PromptPro writes text back to the relevant page input when you request an optimization or template insertion. It does not automatically submit an AI message on your behalf.",
       ],
     },
@@ -45,7 +45,7 @@ export const privacyContent: PrivacyContent = {
     {
       title: "5. Website Access and Permissions",
       paragraphs: [
-        "PromptPro's content script is configured for supported pages on ChatGPT, Claude, Gemini, DeepSeek, Doubao, Perplexity, Copilot, Grok, Google AI Studio, Cursor, v0, and Lovable. Host permissions allow PromptPro features to operate on those supported AI websites.",
+        "PromptPro's content script is configured for supported pages on ChatGPT, Claude, Gemini, DeepSeek, Doubao, Perplexity, Copilot, Grok, Google AI Studio, Cursor, v0, and Lovable. Host permissions allow PromptPro features to operate on those pages and allow its service worker to call the PromptPro API.",
         "PromptPro accesses page content as needed for extension functionality. When you use optimization, it reads the relevant input control; it does not query full conversation history or unrelated page content for that action. The extension may observe page changes to keep its floating control positioned as pages update.",
       ],
       items: [
@@ -57,7 +57,8 @@ export const privacyContent: PrivacyContent = {
     {
       title: "6. Network Requests",
       paragraphs: [
-        "The current extension runtime does not contain functionality that sends Prompt, Template, or History content to a PromptPro backend or third-party optimization API. No analytics transport, remote prompt processor, or telemetry request is implemented in the current source.",
+        "AI optimization sends only the current prompt and minimum request settings to the PromptPro API and DeepSeek. The server implementation does not intentionally persist prompt bodies in an application database or include them in application logs. DeepSeek processes requests under its own applicable terms and data practices.",
+        "The extension does not send saved templates, stored history, settings collections, cookies, DOM, full conversations, or unrelated page content with an optimization request. It does not include extension analytics or telemetry transport.",
         "PromptPro may open external pages when you choose to follow an available link, such as the developer's Ko-fi support page or GitHub repository. Those navigations are user-triggered, and PromptPro does not append your prompt, template, or history content to those links.",
       ],
     },
@@ -67,7 +68,7 @@ export const privacyContent: PrivacyContent = {
         "The current PromptPro extension does not include analytics, advertising, or telemetry. The local daily usage counter is feature-limit state, not an analytics or tracking system.",
         "The PromptPro website uses Mixpanel for website analytics. Website analytics measures page views, approved referral/source categories, calls to action, Chrome Web Store link clicks, language switches, external-link categories, and FAQ interaction.",
         "Website analytics is limited to normalized page paths, supported locale values, and controlled interaction categories. It must not include prompt text, template text, chat content, third-party AI website content, arbitrary page content, form values, keyboard input, clipboard content, email addresses, or user identity.",
-        "The website and extension use separate event namespaces and data boundaries. Website events use the web_ prefix; any future extension analytics would require a separate review and use the extension_ prefix. PromptPro does not use website analytics to send extension prompts, templates, history, settings, or usage data.",
+        "The website and extension use separate event namespaces and data boundaries. Website events use the web_ prefix; any future extension analytics would require a separate review and use the extension_ prefix. PromptPro does not use website analytics to send extension prompts, templates, history, settings, or usage data. AI processing requests are a product operation, not an analytics event.",
         "Mixpanel receives the client IP address for IP-based location derivation such as country. PromptPro does not add the raw IP address as a custom event property. The current Project uses US data residency. Optional features such as session replay, heatmaps, form capture, keystroke capture, and automatic content capture are not part of the initial analytics scope.",
       ],
     },
@@ -89,7 +90,7 @@ export const privacyContent: PrivacyContent = {
       title: "10. Data Control and Deletion",
       paragraphs: [
         "You can delete individual custom templates from PromptPro. The current website and extension do not provide a dedicated “Clear all optimization history” button. The temporary selected-text draft is removed after the popup reads it.",
-        "Chrome extension local data can also be removed through Chrome's extension data controls or by uninstalling the extension. Chrome removes the extension's `chrome.storage.local` data when the extension is removed. The current source does not implement a PromptPro server data store that would require a separate server deletion request.",
+        "Chrome extension local data can also be removed through Chrome's extension data controls or by uninstalling the extension. Chrome removes the extension's `chrome.storage.local` data when the extension is removed. The current PromptPro API implementation does not create an application database record for an optimization request.",
       ],
     },
     {
