@@ -47,6 +47,9 @@ export type Locale = 'zh' | 'en'
 export interface Settings {
   locale: Locale
   optimizeStyle: OptimizeStyle
+  /** Rolling-window AI Improve usage. Legacy daily fields remain for migration compatibility only. */
+  freeAiImproveUsed: number
+  freeAiImproveResetAt?: number
   dailyUsage: number
   lastResetDate: string
   localeSetByUser?: boolean

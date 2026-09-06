@@ -1,5 +1,32 @@
-import { Settings, Locale, PersonalTemplate, OptimizationHistoryEntry, OptimizeStyle } from './types'
-import { DEFAULT_SETTINGS, MAX_PERSONAL_TEMPLATES } from './constants'
+import type { Settings, Locale, PersonalTemplate, OptimizationHistoryEntry, OptimizeStyle } from './types.ts'
+import { DEFAULT_SETTINGS, FREE_IMPROVE_WINDOW, MAX_FREE_AI_IMPROVES, MAX_PERSONAL_TEMPLATES } from './constants.ts'
+
+export interface FreeUsageState {
+  used: number
+  remaining: number
+  resetAt: number
+  quotaExhausted: boolean
+}
+
+function getNextResetAt(now: number): number {
+  return now + FREE_IMPROVE_WINDOW
+}
+
+function normalizeUsed(value: unknown): number {
+  return Number.isFinite(value) ? Math.min(MAX_FREE_AI_IMPROVES, Math.max(0, Math.floor(Number(value)))) : 0
+}
+
+function isValidResetAt(value: unknown): value is number {
+  return typeof value === 'number' && Number.isFinite(value) && value > 0
+}
+
+export function formatFreeImproveResetDate(locale: Locale, resetAt: number): string {
+  const date = new Date(resetAt)
+  if (locale === 'zh') return `重置时间：${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`
+  const day = date.getDate()
+  const ordinal = day % 10 === 1 && day !== 11 ? 'st' : day % 10 === 2 && day !== 12 ? 'nd' : day % 10 === 3 && day !== 13 ? 'rd' : 'th'
+  return `Resets: ${day}${ordinal} ${date.toLocaleString('en-US', { month: 'short' })} ${date.getFullYear()}`
+}
 
 function normalizeOptimizeStyle(value: unknown): OptimizeStyle {
   if (value === 'concise' || value === 'professional' || value === 'structured' || value === 'deep-analysis' || value === 'content-creation' || value === 'code') return value
@@ -48,25 +75,39 @@ export async function saveSettings(settings: Partial<Settings>): Promise<void> {
 }
 
 export async function incrementUsage(): Promise<number> {
-  const settings = await getSettings()
-  const today = new Date().toISOString().split('T')[0]
-
-  if (settings.lastResetDate !== today) {
-    await saveSettings({ dailyUsage: 1, lastResetDate: today })
-    return 1
-  }
-
-  const newCount = settings.dailyUsage + 1
-  await saveSettings({ dailyUsage: newCount })
-  return newCount
+  return consumeFreeAiImproves(1)
 }
 
 export async function getRemainingUsage(): Promise<number> {
-  const { MAX_FREE_DAILY_USAGE } = await import('./constants')
+  return (await getFreeUsageState()).remaining
+}
+
+export async function getFreeUsageState(): Promise<FreeUsageState> {
   const settings = await getSettings()
-  const today = new Date().toISOString().split('T')[0]
-  const used = settings.lastResetDate === today ? settings.dailyUsage : 0
-  return Math.max(0, MAX_FREE_DAILY_USAGE - used)
+  const now = Date.now()
+  const used = normalizeUsed(settings.freeAiImproveUsed)
+  let resetAt = isValidResetAt(settings.freeAiImproveResetAt) ? settings.freeAiImproveResetAt : getNextResetAt(now)
+  let nextUsed = used
+  if (now >= resetAt) {
+    nextUsed = 0
+    while (resetAt <= now) resetAt += FREE_IMPROVE_WINDOW
+  }
+  if (nextUsed !== settings.freeAiImproveUsed || resetAt !== settings.freeAiImproveResetAt) {
+    await saveSettings({ freeAiImproveUsed: nextUsed, freeAiImproveResetAt: resetAt })
+  }
+  const remaining = MAX_FREE_AI_IMPROVES - nextUsed
+  return { used: nextUsed, remaining, resetAt, quotaExhausted: remaining === 0 }
+}
+
+/** Commits successful real-AI improves and preserves the rolling seven-day window. */
+export async function consumeFreeAiImproves(count = 1): Promise<number> {
+  if (!Number.isInteger(count) || count < 0) throw new Error('INVALID_USAGE_COUNT')
+  if (count === 0) return (await getFreeUsageState()).remaining
+
+  const usage = await getFreeUsageState()
+  const nextUsed = Math.min(MAX_FREE_AI_IMPROVES, usage.used + count)
+  await saveSettings({ freeAiImproveUsed: nextUsed, freeAiImproveResetAt: usage.resetAt })
+  return MAX_FREE_AI_IMPROVES - nextUsed
 }
 
 export async function getCustomTemplates(): Promise<PersonalTemplate[]> {

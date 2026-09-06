@@ -12,9 +12,12 @@ export const CATEGORIES = [
 export const DEFAULT_SETTINGS = {
   locale: 'en' as const,
   optimizeStyle: 'structured' as const,
+  freeAiImproveUsed: 0,
   dailyUsage: 0,
   lastResetDate: new Date().toISOString().split('T')[0],
 }
 
-export const MAX_FREE_DAILY_USAGE = 10
+export const MAX_FREE_AI_IMPROVES = 5
+export const FREE_IMPROVE_WINDOW = 7 * 24 * 60 * 60 * 1000
+export const PRICING_URL = 'https://prompt-pro-psi.vercel.app/pricing'
 export const MAX_PERSONAL_TEMPLATES = 10

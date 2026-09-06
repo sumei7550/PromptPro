@@ -1,5 +1,5 @@
-import { MAX_FREE_DAILY_USAGE } from '@/shared/constants'
-import { getSettings } from '@/shared/storage'
+import { getFreeUsageState } from '@/shared/storage'
+import { PRICING_URL } from '@/shared/constants'
 import { requestPromptProOptimization } from '@/services/promptpro-api-client'
 
 chrome.runtime.onInstalled.addListener(() => {
@@ -14,12 +14,7 @@ chrome.contextMenus.onClicked.addListener((info) => {
 
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (message.type === 'PROMPTPRO_AI_OPTIMIZE') {
-    requestPromptProOptimization(message.payload)
-      .then(sendResponse)
-      .catch(() => sendResponse({
-        ok: false,
-        error: { code: 'network-error', message: 'Could not reach the PromptPro API.' },
-      }))
+    handleAiOptimize(message.payload).then(sendResponse)
     return true
   }
 
@@ -34,20 +29,31 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     handleInsertTemplate(message.payload)
     return false
   }
+
+  if (message.type === 'OPEN_PRICING') {
+    void chrome.tabs.create({ url: PRICING_URL })
+    return false
+  }
 })
+
+async function handleAiOptimize(payload: Readonly<Record<string, unknown>>) {
+  const usage = await getFreeUsageState()
+  if (usage.quotaExhausted) {
+    return { ok: false, error: { code: 'quota-exhausted', message: 'Free AI Improve quota exhausted.' } }
+  }
+  return requestPromptProOptimization(payload).catch(() => ({
+    ok: false,
+    error: { code: 'network-error', message: 'Could not reach the PromptPro API.' },
+  }))
+}
 
 /**
  * Legacy quota-only message retained for compatibility with older callers.
  * The P0-03 AI path uses PROMPTPRO_AI_OPTIMIZE above.
  */
 async function handleOptimize(): Promise<{ success: boolean; error?: string }> {
-  const settings = await getSettings()
-  const today = new Date().toISOString().split('T')[0]
-  const usage = settings.lastResetDate === today ? settings.dailyUsage : 0
-
-  if (usage >= MAX_FREE_DAILY_USAGE) {
-    return { success: false, error: 'Daily limit reached' }
-  }
+  const usage = await getFreeUsageState()
+  if (usage.quotaExhausted) return { success: false, error: 'quota-exhausted' }
 
   // 让 content script 走本地 fallback 优化路径
   return { success: false, error: 'local-only' }

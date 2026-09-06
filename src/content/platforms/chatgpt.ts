@@ -110,11 +110,22 @@ export class ChatGPTAdapter extends PlatformAdapter {
 
   getFloatingButtonAnchor(): HTMLElement | null {
     const input = this.getInputHandle()?.element
-    return input?.closest('form') as HTMLElement || input?.parentElement || null
+    const composerForm = input?.closest('form[data-type="unified-composer"]') as HTMLElement | null
+    if (composerForm) return composerForm
+    const composerSurface = input?.closest('[data-composer-surface="true"]') as HTMLElement | null
+    if (composerSurface) {
+      // The data-composer-surface node is the inner grid; its direct parent
+      // is the visible rounded composer shell used by the GPT layout.
+      return composerSurface.parentElement as HTMLElement | null || composerSurface
+    }
+    const form = input?.closest('form') as HTMLElement | null
+    if (!form) return input?.parentElement || null
+
+    return form
   }
 
   getFloatingButtonPlacement(): FloatingButtonPlacement {
-    return { position: 'top-right-outside', offsetX: 8, offsetY: 6 }
+    return { position: 'top-right-outside', offsetX: 0, offsetY: 6 }
   }
 
   private findInput(): { element: HTMLElement; selector: InputSelectorDefinition } | null {

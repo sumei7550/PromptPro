@@ -9,7 +9,8 @@
     "build:dev": "tsc && vite build --mode extension-dev",
     "preview": "vite preview",
     "test:p0": "node --experimental-strip-types --test tests/*.test.ts",
-    "benchmark:p0-03": "node --experimental-strip-types scripts/run-p0-03-benchmark.mjs"
+    "benchmark:p0-03": "node --experimental-strip-types scripts/run-p0-03-benchmark.mjs",
+    "benchmark:structured": "node --experimental-strip-types scripts/run-structured-benchmark.mjs"
   },
   "dependencies": {
     "fuse.js": "^7.3.0",

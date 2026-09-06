@@ -1,6 +1,6 @@
-import { Locale } from '../types'
-import { zh } from './zh-CN'
-import { en } from './en-US'
+import type { Locale } from '../types.ts'
+import { zh } from './zh-CN.ts'
+import { en } from './en-US.ts'
 
 const messages: Record<Locale, Record<string, string>> = { zh, en }
 
@@ -11,7 +11,11 @@ export function setLocale(locale: Locale) {
 }
 
 export function t(key: string): string {
-  return messages[currentLocale]?.[key] || messages['en']?.[key] || key
+  return translate(currentLocale, key)
+}
+
+export function translate(locale: Locale, key: string): string {
+  return messages[locale]?.[key] || messages.en?.[key] || key
 }
 
 export function getLocale(): Locale {

@@ -11,12 +11,25 @@ import {
 import { optimizePrompt } from '../src/services/optimization-service.ts'
 import {
   DEEPSEEK_CHAT_COMPLETIONS_ENDPOINT,
+  OPTIMIZATION_SYSTEM_PROMPT,
   buildDeepSeekRequest,
   parseDeepSeekResponse,
   parseOptimizeInput,
   ServerOptimizationError,
   optimizeWithDeepSeek,
 } from '../website/src/lib/ai-optimization.ts'
+
+test('defines structured as adaptive minimal sufficient enhancement', () => {
+  assert.match(OPTIMIZATION_SYSTEM_PROMPT, /minimum sufficient structure and execution clarity/i)
+  assert.match(OPTIMIZATION_SYSTEM_PROMPT, /does not mean more verbose or expanded into a complete specification/i)
+  assert.match(OPTIMIZATION_SYSTEM_PROMPT, /simple task, normally use one or two natural paragraphs/i)
+  assert.match(OPTIMIZATION_SYSTEM_PROMPT, /medium task, use only a few bullets or steps/i)
+  assert.match(OPTIMIZATION_SYSTEM_PROMPT, /Reserve explicit sections.+for genuinely complex tasks/i)
+  assert.match(OPTIMIZATION_SYSTEM_PROMPT, /ask no more than three high-impact clarification questions/i)
+  assert.match(OPTIMIZATION_SYSTEM_PROMPT, /Act only as a prompt enhancer/i)
+  assert.match(OPTIMIZATION_SYSTEM_PROMPT, /do not pre-answer the task/i)
+  assert.match(OPTIMIZATION_SYSTEM_PROMPT, /Keep the improved prompt in the original input language/i)
+})
 
 const baseRequest: OptimizationRequest = {
   originalText: 'Write a product launch email',

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "structured-simple-story-en",
+    "locale": "en",
+    "style": "structured",
+    "original": "write a story",
+    "beforeSnapshot": "Write a short story with a clear beginning, middle, and end. Include engaging characters, a vivid setting, and a central conflict that resolves meaningfully. Aim for 500-800 words. Choose a genre (e.g., literary, sci-fi, fantasy, etc.) and a point of view, and maintain consistency throughout. If a specific theme or audience is intended, please specify; otherwise, use your best judgment.",
+    "afterReference": "Write an engaging story with a clear narrative arc, vivid characters, and a satisfying ending. Keep the genre, setting, length, and point of view open unless they are provided."
+  },
+  {
+    "id": "structured-leave-email-zh",
+    "locale": "zh",
+    "style": "structured",
+    "original": "写一封请假邮件",
+    "beforeSnapshot": "请以专业、礼貌的语气，写一封请假邮件。邮件应包含以下要素：\n1. 明确的主题行；\n2. 礼貌的开头称呼；\n3. 说明请假的原因和具体日期；\n4. 表达对工作交接的安排或建议；\n5. 说明请假期间的联系方式；\n6. 结尾表达感谢和期待回复。\n\n如果缺少必要信息（如收件人姓名、请假原因、日期等），请先列出需要补充的关键问题，并等待用户提供后再撰写完整邮件。",
+    "afterReference": "请写一封正式、简洁、礼貌的请假邮件，并使用占位符保留收件人、请假日期、请假原因和必要的工作交接信息；不要编造未提供的细节。输出可直接填写和发送的邮件正文。"
+  },
+  {
+    "id": "structured-payment-failure-zh",
+    "locale": "zh",
+    "style": "structured",
+    "original": "帮我分析支付失败原因",
+    "beforeSnapshot": "请分析支付失败的可能原因，并按以下结构输出：\n1. 常见原因分类（如余额不足、银行卡问题、网络故障、风控拦截、系统错误等）\n2. 每一类给出简要解释和排查建议\n3. 如果涉及到具体业务场景（如电商、App内购、企业支付），请按场景给出针对性建议\n4. 最后总结一般的处理步骤\n\n如果信息不足，请先列出需要补充的关键信息（如支付方式、平台、错误提示等），再给出分析。",
+    "afterReference": "请基于现有证据分析支付失败原因，重点检查错误信息、支付方式和失败发生阶段，并区分已确认事实、合理推测与待核实信息。若这些关键信息未提供，先询问不超过 3 个最影响判断的问题；获得信息后再给出有依据的原因分析，不要把未经验证的可能性写成结论。"
+  },
+  {
+    "id": "structured-react-login-zh",
+    "locale": "zh",
+    "style": "structured",
+    "original": "写一个react登录组件",
+    "beforeSnapshot": "请编写一个 React 登录组件，要求如下：\n1. 使用函数组件和 Hooks（如 useState、useEffect）。\n2. 包含用户名、密码输入框，以及登录按钮。\n3. 实现基本的表单验证（如空值检查、密码长度至少6位）。\n4. 提交时模拟异步请求，并处理加载中状态和错误提示（如密码错误）。\n5. 使用干净、可维护的代码结构，并添加必要的中文注释。\n6. 最终输出完整的组件代码，并简要说明如何使用。",
+    "afterReference": "请编写一个可复用的 React 登录组件，包含基本的登录输入、提交操作、必要的表单验证，以及 loading 和 error 状态。保持实现清晰、易于集成；对用户未指定的字段形式、样式方案和认证接口保留为可配置项或明确说明假设，不要自行设计完整的认证协议。输出组件代码及简短使用说明。"
+  },
+  {
+    "id": "structured-product-intro-zh",
+    "locale": "zh",
+    "style": "structured",
+    "original": "帮我写一份产品介绍",
+    "beforeSnapshot": "请帮我撰写一份产品介绍。在动笔之前，请先简要询问以下信息：产品名称、核心功能、目标用户、主要卖点、与竞品的差异以及使用场景。若尚未提供，请勿随意编造。确认这些信息后，再生成结构清晰、重点突出的介绍文案，建议包含产品定位、核心特点、用户价值及典型使用场景等模块。",
+    "afterReference": "请围绕产品是什么、解决什么问题、核心价值以及目标用户或使用场景，撰写一份自然、重点清晰的产品介绍。若关键信息尚未提供，先询问不超过 3 个最影响文案的问题，或用清晰占位符保留缺失内容；不要编造产品事实，结构以内容需要为准。"
+  }
+]
