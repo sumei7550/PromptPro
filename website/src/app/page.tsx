@@ -8,5 +8,5 @@ import { HomepageStructuredData } from "@/components/seo/structured-data";
 export const metadata = getMetadata("/");
 
 export default function HomePage() {
-  return <><HomepageStructuredData /><SiteHeader locale="en" pathname="/" /><HomeContentPage locale="en" content={homeContent} /><SiteFooter locale="en" /></>;
+  return <><HomepageStructuredData locale="en" path="/" /><SiteHeader locale="en" pathname="/" /><HomeContentPage locale="en" content={homeContent} /><SiteFooter locale="en" /></>;
 }

@@ -1,0 +1,31 @@
+.hero { background: linear-gradient(135deg, var(--color-brand-50), var(--color-white) 62%); padding-block: var(--space-20) var(--space-24); text-align: center; }
+.heroInner { display: flex; align-items: center; flex-direction: column; }
+.eyebrow { margin-bottom: var(--space-3); color: var(--color-brand-700); font-size: 13px; font-weight: var(--font-bold); letter-spacing: .06em; text-transform: uppercase; }
+.hero h1 { max-width: 820px; }
+.heroDescription { max-width: 720px; margin-top: var(--space-6); font-size: 20px; }
+.heroActions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); margin-top: var(--space-8); }
+.heroNote { margin-top: var(--space-4); color: var(--color-muted-text); font-size: 13px; }
+.sectionIntro { max-width: 760px; margin-bottom: var(--space-10); }
+.sectionIntro h2 { margin-bottom: var(--space-4); }
+.exampleGrid, .cardGrid { display: grid; gap: var(--space-6); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.cardGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.afterCard { border-color: var(--color-brand-300); background: var(--color-brand-50); }
+.cardLabel { margin-bottom: var(--space-3); color: var(--color-brand-700); font-size: 13px; font-weight: var(--font-bold); letter-spacing: .04em; text-transform: uppercase; }
+.exampleText { color: var(--color-text); font-size: 16px; line-height: 1.7; }
+.tint { background: var(--color-background-subtle); }
+.steps { display: grid; gap: var(--space-6); margin: 0; padding: 0; list-style: none; }
+.steps li { display: flex; gap: var(--space-5); align-items: flex-start; padding: var(--space-6); border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface); }
+.steps h3 { margin-bottom: var(--space-2); font-size: 22px; }
+.stepNumber { display: inline-grid; width: 40px; height: 40px; flex: 0 0 auto; place-items: center; border-radius: var(--radius-md); background: var(--color-brand-100); color: var(--color-brand-700); font-size: 13px; font-weight: var(--font-bold); }
+.faq { display: grid; gap: var(--space-3); max-width: 860px; }
+.faq details { border-bottom: 1px solid var(--color-border); padding-block: var(--space-4); }
+.faq summary { cursor: pointer; color: var(--color-text); font-size: 18px; font-weight: var(--font-semibold); }
+.faq p { max-width: 760px; margin-top: var(--space-3); }
+.finalCta { background: var(--color-slate-900); padding-block: var(--space-20); }
+.finalCtaInner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-8); }
+.finalCta h2 { color: var(--color-white); }
+.finalCta p:last-child { max-width: 680px; color: var(--color-slate-300); }
+.finalCta .eyebrow { color: var(--color-brand-300); }
+.finalButton { background: var(--color-brand-50); color: var(--color-slate-900); }
+.relatedLinks { display: flex; justify-content: center; gap: var(--space-6); padding: var(--space-8) var(--page-padding); font-weight: var(--font-semibold); }
+@media (max-width: 767px) { .hero { padding-block: var(--space-12) var(--space-16); } .heroDescription { font-size: 18px; } .heroActions { align-items: stretch; flex-direction: column; width: 100%; max-width: 360px; } .heroActions :global(.button) { width: 100%; } .exampleGrid, .cardGrid { grid-template-columns: 1fr; } .finalCta { padding-block: var(--space-16); } .finalCtaInner { align-items: flex-start; flex-direction: column; } .finalCtaInner > * { width: 100%; } .finalButton { width: 100%; } }

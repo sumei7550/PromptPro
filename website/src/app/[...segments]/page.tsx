@@ -27,13 +27,21 @@ import { supportContent as zhSupportContent } from "@/content/zh-CN/support";
 import { TermsPage } from "@/components/terms/terms-page";
 import { termsContent as enTermsContent } from "@/content/en/terms";
 import { termsContent as zhTermsContent } from "@/content/zh-CN/terms";
-import { FaqStructuredData, HomepageStructuredData } from "@/components/seo/structured-data";
+import { FaqStructuredData, HomepageStructuredData, LandingFaqStructuredData } from "@/components/seo/structured-data";
+import { getLandingFaq, SeoLandingPage, type SeoLandingKind } from "@/components/seo-pages/seo-landing-page";
 
 const pages = new Set(["features", "privacy", "platforms", "templates", "faq", "support", "terms"]);
+const landingPages = new Map<string, SeoLandingKind>([
+  ["prompt-optimizer", "prompt-optimizer"],
+  ["json-prompt-generator", "json-prompt-generator"],
+  ["chatgpt-prompt-optimizer", "chatgpt-prompt-optimizer"],
+]);
 const paths = [
   ["features"], ["privacy"], ["platforms"], ["templates"], ["faq"], ["support"], ["terms"],
   ["zh-CN"], ["zh-CN", "features"], ["zh-CN", "privacy"],
   ["zh-CN", "platforms"], ["zh-CN", "templates"], ["zh-CN", "faq"], ["zh-CN", "support"], ["zh-CN", "terms"],
+  ["tools", "prompt-optimizer"], ["tools", "json-prompt-generator"], ["use-cases", "chatgpt-prompt-optimizer"],
+  ["zh-CN", "tools", "prompt-optimizer"], ["zh-CN", "tools", "json-prompt-generator"], ["zh-CN", "use-cases", "chatgpt-prompt-optimizer"],
 ];
 type SegmentsPageProps = { params: Promise<{ segments: string[] }> };
 
@@ -52,10 +60,17 @@ export default async function SegmentsPage({ params }: SegmentsPageProps) {
   const { segments } = await params;
   const isChinese = segments[0] === "zh-CN";
   const page = isChinese ? segments[1] : segments[0];
-  const locale = isChinese ? "zh-CN" : "en";
-  if ((isChinese && segments.length > 2) || (!isChinese && segments.length > 1) || (isChinese && segments.length === 1 && page !== undefined) || (page !== undefined && !pages.has(page))) notFound();
+  const locale = isChinese ? ("zh-CN" as const) : ("en" as const);
+  const localizedSegments = isChinese ? segments.slice(1) : segments;
+  const landingKind = localizedSegments.length === 2 ? landingPages.get(localizedSegments[1]) : undefined;
+  if (landingKind && !((localizedSegments[0] === "tools" && landingKind !== "chatgpt-prompt-optimizer") || (localizedSegments[0] === "use-cases" && landingKind === "chatgpt-prompt-optimizer"))) notFound();
+  if (!landingKind && ((isChinese && segments.length > 2) || (!isChinese && segments.length > 1) || (isChinese && segments.length === 1 && page !== undefined) || (page !== undefined && !pages.has(page)))) notFound();
   if (isChinese && segments.length === 1) {
-    return <><HomepageStructuredData /><SiteHeader locale="zh-CN" pathname="/zh-CN" /><HomePage locale="zh-CN" content={zhHomeContent} /><SiteFooter locale="zh-CN" /></>;
+    return <><HomepageStructuredData locale="zh-CN" path="/zh-CN" /><SiteHeader locale="zh-CN" pathname="/zh-CN" /><HomePage locale="zh-CN" content={zhHomeContent} /><SiteFooter locale="zh-CN" /></>;
+  }
+  if (landingKind) {
+    const pathname = `/${segments.join("/")}`;
+    return <><LandingFaqStructuredData faq={getLandingFaq(landingKind, locale)} locale={locale} path={pathname} /><SiteHeader locale={locale} pathname={pathname} /><SeoLandingPage kind={landingKind} locale={locale} /><SiteFooter locale={locale} /></>;
   }
   const pathname = isChinese ? `/zh-CN/${page}` : `/${page}`;
   const content = isChinese ? zhFeaturesContent : enFeaturesContent;

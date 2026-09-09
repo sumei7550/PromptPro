@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { absoluteSiteUrl } from "@/lib/seo";
-const routes = ["", "/features", "/privacy", "/platforms", "/templates", "/faq", "/support", "/terms"];
+const routes = ["", "/features", "/privacy", "/platforms", "/templates", "/faq", "/support", "/terms", "/tools/prompt-optimizer", "/tools/json-prompt-generator", "/use-cases/chatgpt-prompt-optimizer"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const localizedRoutes = (prefix: string) => routes.map((route) => ({
