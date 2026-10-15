@@ -32,6 +32,6 @@
 .finalCtaButton { border: 1px solid rgb(124 58 237 / 15%); background: var(--color-brand-50); color: var(--color-slate-900); }
 .finalCtaButton:hover { border-color: rgb(124 58 237 / 20%); background: var(--color-brand-100); }
 .finalCtaButton:focus-visible { box-shadow: 0 0 0 4px var(--color-slate-900); }
-.relatedLinks { display: flex; justify-content: center; gap: var(--space-2); padding: var(--space-8) var(--page-padding); font-weight: var(--font-semibold); }
+.relatedLinks { display: flex; flex-wrap: wrap; justify-content: center; column-gap: var(--space-6); row-gap: var(--space-2); padding: var(--space-8) var(--page-padding); font-weight: var(--font-semibold); }
 @media (max-width: 1023px) { .showcaseGrid, .reverse .showcaseGrid { gap: var(--space-8); grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
 @media (max-width: 767px) { .hero { padding-block: var(--space-12) var(--space-16); } .heroDescription { font-size: 18px; } .showcaseGrid, .reverse .showcaseGrid { grid-template-columns: 1fr; } .reverse .showcaseCopy, .reverse .showcaseGrid > figure { grid-column: auto; grid-row: auto; } .showcaseCopy { max-width: none; } .showcaseGrid > figure { max-width: 520px; margin-inline: auto; } .workflowGrid { grid-template-columns: 1fr; } .finalCta { padding-block: var(--space-16); } .finalCtaInner { align-items: flex-start; flex-direction: column; } .finalCtaInner > * { width: 100%; } .finalCta :global(.button) { width: 100%; } }

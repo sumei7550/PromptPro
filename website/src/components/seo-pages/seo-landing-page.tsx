@@ -248,7 +248,12 @@ export function SeoLandingPage({ kind, locale }: { kind: SeoLandingKind; locale:
     <Section><Container><div className={styles.sectionIntro}><p className={styles.eyebrow}>{locale === "en" ? "A repeatable workflow" : "可复用的流程"}</p><h2>{content.stepsTitle}</h2></div><ol className={styles.steps}>{content.steps.map((step, index) => <li key={step.title}><span className={styles.stepNumber}>0{index + 1}</span><div><h3>{step.title}</h3><p>{step.description}</p></div></li>)}</ol></Container></Section>
     <Section className={styles.tint}><Container><div className={styles.sectionIntro}><p className={styles.eyebrow}>{locale === "en" ? "Questions" : "常见问题"}</p><h2>{content.faqTitle}</h2></div><div className={styles.faq}>{content.faq.map((item) => <details key={item.question}><summary>{item.question}</summary><p>{item.answer}</p></details>)}</div></Container></Section>
     <section className={styles.finalCta}><Container className={styles.finalCtaInner}><div><p className={styles.eyebrow}>{locale === "en" ? "Get started" : "开始使用"}</p><h2>{content.finalTitle}</h2><p>{content.finalDescription}</p></div><Button href={chromeWebStoreUrl} className={styles.finalButton}>{content.finalCta}</Button></Container></section>
-    <nav className={styles.relatedLinks} aria-label={locale === "en" ? "Related pages" : "相关页面"}><Link href={`${base}/features`}>{locale === "en" ? "Features" : "功能"}</Link><Link href={`${base}/templates`}>{locale === "en" ? "Templates" : "模板"}</Link><Link href={`${base}/faq`}>FAQ</Link></nav>
+    <nav className={styles.relatedLinks} aria-label={locale === "en" ? "Related pages" : "相关页面"}>
+      {kind !== "prompt-optimizer" && <Link href={`${base}/tools/prompt-optimizer`}>{locale === "en" ? "Prompt optimization" : "提示词优化"}</Link>}
+      {kind !== "json-prompt-generator" && <Link href={`${base}/tools/json-prompt-generator`}>{locale === "en" ? "JSON prompts" : "JSON 提示词"}</Link>}
+      {kind !== "chatgpt-prompt-optimizer" && <Link href={`${base}/use-cases/chatgpt-prompt-optimizer`}>{locale === "en" ? "ChatGPT prompts" : "ChatGPT 提示词"}</Link>}
+      <Link href={`${base}/features`}>{locale === "en" ? "Features" : "功能"}</Link><Link href={`${base}/templates`}>{locale === "en" ? "Templates" : "模板"}</Link><Link href={`${base}/faq`}>FAQ</Link>
+    </nav>
   </main>;
 }
 

@@ -53,6 +53,7 @@ export function HomePage({ locale, content }: HomePageProps) {
         <div className={styles.featureGrid}>
           {content.features.items.map((item) => <Card key={item.title} variant="feature"><span className={styles.marker} aria-hidden="true">{item.marker}</span><h3>{item.title}</h3><p>{item.description}</p></Card>)}
         </div>
+        <Link className={styles.inlineLink} href={`${base}/tools/prompt-optimizer`}>{locale === "en" ? "See how prompt optimization works" : "了解提示词如何优化"} <span aria-hidden="true">→</span></Link>
       </Section>
 
       <Section>

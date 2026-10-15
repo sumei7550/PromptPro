@@ -24,7 +24,7 @@ export function TemplatesPage({ locale, content }: { locale: SupportedLocale; co
     <Section className={styles.workflowSection}><div className={styles.sectionIntro}><p className={styles.eyebrow}>{content.workflow.eyebrow}</p><h2>{content.workflow.title}</h2><p>{content.workflow.description}</p></div><ol className={styles.workflowGrid}>{content.workflow.steps.map((step, index) => <li key={step.title}><span className={styles.stepNumber} aria-hidden="true">0{index + 1}</span><h3>{step.title}</h3><p>{step.description}</p></li>)}</ol></Section>
 
     <section className={styles.finalCta}><Container className={styles.finalCtaInner}><div><p className={styles.eyebrow}>{locale === "en" ? "Get started" : "开始使用"}</p><h2>{content.finalCta.title}</h2><p>{content.finalCta.description}</p></div>{storeCta(content.finalCta.label, styles.finalCtaButton)}</Container></section>
-    <p className={styles.relatedLinks}><Link href={`${base}/features`}>{locale === "en" ? "Explore features" : "查看功能"}</Link><span aria-hidden="true"> · </span><Link href={`${base}/privacy`}>{locale === "en" ? "Read privacy details" : "阅读隐私说明"}</Link></p>
+    <nav className={styles.relatedLinks} aria-label={locale === "en" ? "Related pages" : "相关页面"}><Link href={`${base}/tools/json-prompt-generator`}>{locale === "en" ? "Structure a JSON prompt" : "编写 JSON 输出提示词"}</Link><Link href={`${base}/features`}>{locale === "en" ? "Explore features" : "查看功能"}</Link><Link href={`${base}/privacy`}>{locale === "en" ? "Read privacy details" : "阅读隐私说明"}</Link></nav>
   </main>;
 }
 

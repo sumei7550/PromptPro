@@ -27,5 +27,5 @@
 .finalCta p:last-child { max-width: 680px; color: var(--color-slate-300); }
 .finalCta .eyebrow { color: var(--color-brand-300); }
 .finalButton { background: var(--color-brand-50); color: var(--color-slate-900); }
-.relatedLinks { display: flex; justify-content: center; gap: var(--space-6); padding: var(--space-8) var(--page-padding); font-weight: var(--font-semibold); }
+.relatedLinks { display: flex; flex-wrap: wrap; justify-content: center; column-gap: var(--space-6); row-gap: var(--space-2); padding: var(--space-8) var(--page-padding); font-weight: var(--font-semibold); }
 @media (max-width: 767px) { .hero { padding-block: var(--space-12) var(--space-16); } .heroDescription { font-size: 18px; } .heroActions { align-items: stretch; flex-direction: column; width: 100%; max-width: 360px; } .heroActions :global(.button) { width: 100%; } .exampleGrid, .cardGrid { grid-template-columns: 1fr; } .finalCta { padding-block: var(--space-16); } .finalCtaInner { align-items: flex-start; flex-direction: column; } .finalCtaInner > * { width: 100%; } .finalButton { width: 100%; } }

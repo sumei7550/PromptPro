@@ -36,7 +36,7 @@ export function FeaturesPage({ locale, content }: FeaturesPageProps) {
     </Section>
 
     <section className={styles.finalCta}><Container className={styles.finalCtaInner}><div><p className={styles.eyebrow}>Get started</p><h2>{content.finalCta.title}</h2><p>{content.finalCta.description}</p></div>{storeCta(content.finalCta.label, "large", styles.finalCtaButton)}</Container></section>
-    <p className={styles.relatedLinks}><Link href={`${base}/templates`}>{locale === "en" ? "Explore templates" : "查看模板"}</Link><span aria-hidden="true"> · </span><Link href={`${base}/privacy`}>{locale === "en" ? "Read privacy details" : "阅读隐私说明"}</Link></p>
+    <nav className={styles.relatedLinks} aria-label={locale === "en" ? "Related pages" : "相关页面"}><Link href={`${base}/use-cases/chatgpt-prompt-optimizer`}>{locale === "en" ? "Improve prompts for ChatGPT" : "优化 ChatGPT 提示词"}</Link><Link href={`${base}/templates`}>{locale === "en" ? "Explore templates" : "查看模板"}</Link><Link href={`${base}/privacy`}>{locale === "en" ? "Read privacy details" : "阅读隐私说明"}</Link></nav>
   </main>;
 }
 
