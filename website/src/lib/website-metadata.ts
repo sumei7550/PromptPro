@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import "@/styles/globals.css";
 
 import { siteUrl } from "@/lib/seo";
-import { WebsiteAnalytics } from "@/components/analytics/website-analytics";
 
-export const metadata: Metadata = {
+export const websiteMetadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: "PromptPro — Local Prompt Optimizer & Bilingual Templates",
@@ -21,11 +19,3 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
 };
-
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return (
-    <html lang="en">
-      <body><WebsiteAnalytics />{children}</body>
-    </html>
-  );
-}
